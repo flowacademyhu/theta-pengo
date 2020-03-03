@@ -6,7 +6,6 @@ stdin.setEncoding('utf8');
 const matrixF = require('./matrixFunctions');
 const obj = require('./objects');
 const fs = require('fs');
-const matrix = matrixF.generateMatrix(15, 13);
 const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
@@ -73,20 +72,19 @@ const destroyIce = (player, matrix) => {
     matrix[player.xCoord][player.yCoord - 1] = '0';
   }
 };
-const placePlayer = (matrix, player) => {
-  matrix[player.xCoord][player.yCoord] = 'P';
-};
+
+
+const matrix = matrixF.generateMatrix(15, 13);
 
 const init = () => {
   matrixF.fillMatrixFromFile(matrix, dataFromFile);
-  placePlayer(matrix, player);
   matrixF.printMatrix(matrix);
 };
 
 const loop = () => {
   setInterval(() => {
+    console.log(matrix);
     console.clear();
-    placePlayer(matrix, player);
     matrixF.printMatrix(matrix);
   }, 1000);
 };

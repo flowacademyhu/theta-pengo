@@ -1,3 +1,4 @@
+let objects = require('./objects');
 
 const generateMatrix = (x, y) => {
   const matrix = new Array(x);
@@ -12,16 +13,25 @@ const printMatrix = (matrix) => {
   let line = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
+
       if (matrix[i][j] === '0') {
-        output = ' ';
-      } else if (matrix[i][j] === '1') {
-        output = 'J';
-      } else output = matrix[i][j];
+        output = matrix[i][j].symbol;
+      } 
+      else if (matrix[i][j] === '1') {
+        output = {symbol:'J'}
+      } 
+      else if (matrix[i][j] === '2'){
+        output = {symbol:'@'}
+      }
+      else if (matrix[i][j] === '3') {
+        output = {symbol: 'P'}
+      }
       line += (output + ' ');
     }
     console.log(line);
     line = '';
   }
+  return output;
 };
 
 const fillMatrixFromFile = (matrix, data) => {
@@ -31,8 +41,20 @@ const fillMatrixFromFile = (matrix, data) => {
     for (let j = 0; j < matrix[i].length; j++) {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
+      if (matrix[i][j] === '0') {
+          matrix[i][j] = {type:'floor', symbol:' '};
+      }
+      if ( matrix[i][j] === '1') {
+        matrix[i][j] = {type:'iceblock', symbol: 'J'}
+      }
+      if (matrix[i][j] === '2') {
+        matrix[i][j] = {type:'enemy', symbol: '@'}
+      }
+      if (matrix[i][j] === '3') {
+        matrix[i][j] = {type:'player', symbol: 'P'}
+      }
     }
   }
-};
+};      
 
-module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };
+module.exports = { generateMatrix, printMatrix, fillMatrixFromFile }
