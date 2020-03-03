@@ -66,20 +66,20 @@ const destroyIce = (player, matrix) => {
     matrix[player.xCoord - 1][player.yCoord] = '0';
   } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === '1') {
     console.log(player.direction);
-    matrix[player.xCoord - 1][player.yCoord] = '0';
+    matrix[player.xCoord + 1][player.yCoord] = '0';
   } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === '1') {
-    matrix[player.xCoord][player.yCoord + 1] = '0';
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === '1') {
     matrix[player.xCoord][player.yCoord - 1] = '0';
+  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === '1') {
+    matrix[player.xCoord][player.yCoord + 1] = '0';
   }
 };
-const placePlayer = (matrix, player) => {
+const placePlayer = (matrix, player) => { // ki kell dobni
   matrix[player.xCoord][player.yCoord] = 'P';
 };
 
 const init = () => {
   matrixF.fillMatrixFromFile(matrix, dataFromFile);
-  placePlayer(matrix, player);
+  placePlayer(matrix, player); // ki kell dobni
   matrixF.printMatrix(matrix);
 };
 
