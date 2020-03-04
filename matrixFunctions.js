@@ -11,7 +11,11 @@ const generateMatrix = (x, y) => {
 const printMatrix = (matrix) => {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-      process.stdout.write(matrix[i][j].symbol + ' ');
+      if (matrix[i][j].type === 'wall') {
+        process.stdout.write(matrix[i][j].symbol);
+      } else {
+        process.stdout.write(matrix[i][j].symbol + ' ');
+      }
     }
     console.log();
   }
@@ -49,6 +53,9 @@ const fillMatrixFromFile = (matrix, data) => {
         matrix[i][j] = objects.player;
         objects.player.xCoord = i;
         objects.player.yCoord = j;
+      }
+      if (matrix[i][j] === 'X') {
+        matrix[i][j] = objects.wall;
       }
     }
   }

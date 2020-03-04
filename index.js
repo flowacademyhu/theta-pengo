@@ -18,7 +18,7 @@ const turnPlayer = (player, direction) => {
 
 
 const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'iceblock' ){
+  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'iceblock') {
 
     player.xCoord--;
     matrix[player.xCoord][player.yCoord] = player;
@@ -65,7 +65,7 @@ const keyProcessor = () => {
       movePlayer(player, 'right', matrix);
     }
     if (key === 'k') {
-      //  pushIce(player.direction, matrix);
+      pushIce(player.direction, matrix);
     }
     if (key === 'l') {
       destroyIce(player, matrix);
@@ -76,6 +76,25 @@ const keyProcessor = () => {
   }
   );
 };
+const pushIce = (player, matrix) => {
+  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
+
+    matrix[player.xCoord - 2][player.yCoord] = objects.floor;
+
+  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === objects.ice) {
+
+    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+
+  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === objects.ice) {
+
+    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+
+  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === objects.ice) {
+
+    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+
+  }
+};
 const destroyIce = (player, matrix) => {
   if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
 
@@ -84,7 +103,7 @@ const destroyIce = (player, matrix) => {
   } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === objects.ice) {
 
     matrix[player.xCoord + 1][player.yCoord] = objects.floor;
-    
+
   } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === objects.ice) {
 
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
@@ -92,12 +111,12 @@ const destroyIce = (player, matrix) => {
   } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === objects.ice) {
 
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
-    
+
   }
 };
 
 
-const matrix = matrixF.generateMatrix(15, 13);
+const matrix = matrixF.generateMatrix(17, 15);
 
 const init = () => {
   matrixF.fillMatrixFromFile(matrix, dataFromFile);
