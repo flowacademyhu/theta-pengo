@@ -18,30 +18,36 @@ const turnPlayer = (player, direction) => {
 
 
 const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'iceblock') {
+  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'ice' &&
+    matrix[player.xCoord - 1][player.yCoord].type !== 'wall') {
 
     player.xCoord--;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord + 1][player.yCoord] = objects.floor;
 
-  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'iceblock') {
+  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'ice' &&
+    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
 
     player.xCoord++;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord - 1][player.yCoord] = objects.floor;
 
-  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'iceblock') {
+  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'ice' &&
+    matrix[player.xCoord][player.yCoord - 1].type !== 'wall') {
 
     player.yCoord--;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
 
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'iceblock') {
+  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' &&
+    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
+    {
 
-    player.yCoord++;
-    matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+      player.yCoord++;
+      matrix[player.xCoord][player.yCoord] = player;
+      matrix[player.xCoord][player.yCoord - 1] = objects.floor;
 
+    }
   }
 };
 
@@ -77,38 +83,38 @@ const keyProcessor = () => {
   );
 };
 const pushIce = (player, matrix) => {
-  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
+  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
 
     matrix[player.xCoord - 2][player.yCoord] = objects.floor;
 
-  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === objects.ice) {
+  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
 
     matrix[player.xCoord + 1][player.yCoord] = objects.floor;
 
-  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === objects.ice) {
+  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
 
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
 
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === objects.ice) {
+  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
 
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
 
   }
 };
 const destroyIce = (player, matrix) => {
-  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
+  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
 
     matrix[player.xCoord - 1][player.yCoord] = objects.floor;
 
-  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === objects.ice) {
+  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
 
     matrix[player.xCoord + 1][player.yCoord] = objects.floor;
 
-  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === objects.ice) {
+  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
 
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
 
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === objects.ice) {
+  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
 
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
 
@@ -119,7 +125,7 @@ const destroyIce = (player, matrix) => {
 const matrix = matrixF.generateMatrix(17, 15);
 
 const init = () => {
-  matrixF.fillMatrixFromFile(matrix, dataFromFile);
+  matrixF.fillMatrixFromFile(matrix, dataFromFile, objects.player);
   matrixF.printMatrix(matrix);
 };
 

@@ -21,7 +21,7 @@ const printMatrix = (matrix) => {
   }
 };
 
-const fillMatrixFromFile = (matrix, data) => {
+const fillMatrixFromFile = (matrix, data, player) => {
   const modifiedData = data.replace(/,/g, '').replace(/\n/g, '');
   let dataIndex = 0;
   for (let i = 0; i < matrix.length; i++) {
@@ -29,33 +29,21 @@ const fillMatrixFromFile = (matrix, data) => {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
       if (matrix[i][j] === '0') {
-        matrix[i][j] = objects.floor;
+        matrix[i][j] = { type: 'floor', symbol: objects.floor.symbol };
       }
       if (matrix[i][j] === '1') {
-        matrix[i][j] = objects.ice;
+        matrix[i][j] = { type: 'ice', symbol: objects.ice.symbol };
       }
-      if (matrix[i][j] === 'A') {
-        matrix[i][j] = objects.enemy1;
-        objects.enemy1.xCoord = i;
-        objects.enemy1.yCoord = j;
-      }
-      if (matrix[i][j] === 'B') {
-        matrix[i][j] = objects.enemy2;
-        objects.enemy2.xCoord = i;
-        objects.enemy2.yCoord = j;
-      }
-      if (matrix[i][j] === 'C') {
-        matrix[i][j] = objects.enemy3;
-        objects.enemy3.xCoord = i;
-        objects.enemy3.yCoord = j;
+      if (matrix[i][j] === 'E') {
+        matrix[i][j] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol };
       }
       if (matrix[i][j] === 'P') {
-        matrix[i][j] = objects.player;
-        objects.player.xCoord = i;
-        objects.player.yCoord = j;
+        matrix[i][j] = player;
+        player.xCoord = i;
+        player.yCoord = j;
       }
       if (matrix[i][j] === 'X') {
-        matrix[i][j] = objects.wall;
+        matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
       }
     }
   }
