@@ -77,22 +77,21 @@ const keyProcessor = () => {
   );
 };
 const destroyIce = (player, matrix) => {
-  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === '1') {
+  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
 
-    matrix[player.xCoord - 1][player.yCoord] = '0';
+    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
 
-  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === '1') {
+  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === objects.ice) {
 
-    console.log(player.direction);
-    matrix[player.xCoord - 1][player.yCoord] = '0';
+    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
     
-  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === '1') {
+  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === objects.ice) {
 
-    matrix[player.xCoord][player.yCoord + 1] = '0';
+    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
 
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === '1') {
+  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === objects.ice) {
 
-    matrix[player.xCoord][player.yCoord - 1] = '0';
+    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
     
   }
 };

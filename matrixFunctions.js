@@ -13,7 +13,7 @@ const printMatrix = (matrix) => {
   let line = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-    process.stdout.write(matrix[i][j].symbol);
+    process.stdout.write(matrix[i][j].symbol + ' ');
     }
     console.log();
   }
@@ -27,13 +27,13 @@ const fillMatrixFromFile = (matrix, data) => {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
       if (matrix[i][j] === '0') {
-          matrix[i][j] = {type:'floor', symbol:' '};
+          matrix[i][j] = objects.floor
       }
       if ( matrix[i][j] === '1') {
-        matrix[i][j] = {type:'iceblock', symbol: 'J'}
+        matrix[i][j] = objects.ice
       }
       if (matrix[i][j] === '2') {
-        matrix[i][j] = {type:'enemy', symbol: '@'}
+        matrix[i][j] = objects.enemy;
       }
       if (matrix[i][j] === '3') {
         matrix[i][j] = objects.player;
