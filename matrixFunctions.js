@@ -9,11 +9,9 @@ const generateMatrix = (x, y) => {
 };
 
 const printMatrix = (matrix) => {
-  let output = '';
-  let line = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-    process.stdout.write(matrix[i][j].symbol + ' ');
+      process.stdout.write(matrix[i][j].symbol + ' ');
     }
     console.log();
   }
@@ -27,22 +25,33 @@ const fillMatrixFromFile = (matrix, data) => {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
       if (matrix[i][j] === '0') {
-          matrix[i][j] = objects.floor
+        matrix[i][j] = objects.floor;
       }
-      if ( matrix[i][j] === '1') {
-        matrix[i][j] = objects.ice
+      if (matrix[i][j] === '1') {
+        matrix[i][j] = objects.ice;
       }
-      if (matrix[i][j] === '2') {
-        matrix[i][j] = objects.enemy;
+      if (matrix[i][j] === 'A') {
+        matrix[i][j] = objects.enemy1;
+        objects.enemy1.xCoord = i;
+        objects.enemy1.yCoord = j;
       }
-      if (matrix[i][j] === '3') {
+      if (matrix[i][j] === 'B') {
+        matrix[i][j] = objects.enemy2;
+        objects.enemy2.xCoord = i;
+        objects.enemy2.yCoord = j;
+      }
+      if (matrix[i][j] === 'C') {
+        matrix[i][j] = objects.enemy3;
+        objects.enemy3.xCoord = i;
+        objects.enemy3.yCoord = j;
+      }
+      if (matrix[i][j] === 'P') {
         matrix[i][j] = objects.player;
         objects.player.xCoord = i;
         objects.player.yCoord = j;
-
       }
     }
   }
-};      
+};
 
 module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };
