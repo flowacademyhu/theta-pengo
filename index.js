@@ -4,32 +4,48 @@ stdin.resume();
 stdin.setEncoding('utf8');
 
 const matrixF = require('./matrixFunctions');
-const obj = require('./objects');
+const objects = require('./objects');
 const fs = require('fs');
 const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
 
-const player = obj.player;
+const player = objects.player;
 const turnPlayer = (player, direction) => {
   player.direction = direction;
 };
+
+
 const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] !== '1') {
+  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'iceblock' ){
+
     player.xCoord--;
-    matrix[player.xCoord + 1][player.yCoord] = ' ';
-  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] !== '1') {
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+
+  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'iceblock') {
+
     player.xCoord++;
-    matrix[player.xCoord - 1][player.yCoord] = ' ';
-  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] !== '1') {
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
+
+  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'iceblock') {
+
     player.yCoord--;
-    matrix[player.xCoord][player.yCoord + 1] = ' ';
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] !== '1') {
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+
+  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'iceblock') {
+
     player.yCoord++;
-    matrix[player.xCoord][player.yCoord - 1] = ' ';
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+
   }
 };
+
+
 const keyProcessor = () => {
   stdin.on('data', (key) => {
     if (key === 'w') {
@@ -62,14 +78,22 @@ const keyProcessor = () => {
 };
 const destroyIce = (player, matrix) => {
   if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === '1') {
+
     matrix[player.xCoord - 1][player.yCoord] = '0';
+
   } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord] === '1') {
+
     console.log(player.direction);
     matrix[player.xCoord - 1][player.yCoord] = '0';
+    
   } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1] === '1') {
+
     matrix[player.xCoord][player.yCoord + 1] = '0';
+
   } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1] === '1') {
+
     matrix[player.xCoord][player.yCoord - 1] = '0';
+    
   }
 };
 
@@ -83,7 +107,6 @@ const init = () => {
 
 const loop = () => {
   setInterval(() => {
-    console.log(matrix);
     console.clear();
     matrixF.printMatrix(matrix);
   }, 1000);

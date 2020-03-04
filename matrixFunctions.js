@@ -13,25 +13,10 @@ const printMatrix = (matrix) => {
   let line = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-
-      if (matrix[i][j] === '0') {
-        output = matrix[i][j].symbol;
-      } 
-      else if (matrix[i][j] === '1') {
-        output = {symbol:'J'}
-      } 
-      else if (matrix[i][j] === '2'){
-        output = {symbol:'@'}
-      }
-      else if (matrix[i][j] === '3') {
-        output = {symbol: 'P'}
-      }
-      line += (output + ' ');
+    process.stdout.write(matrix[i][j].symbol);
     }
-    console.log(line);
-    line = '';
+    console.log();
   }
-  return output;
 };
 
 const fillMatrixFromFile = (matrix, data) => {
@@ -51,10 +36,13 @@ const fillMatrixFromFile = (matrix, data) => {
         matrix[i][j] = {type:'enemy', symbol: '@'}
       }
       if (matrix[i][j] === '3') {
-        matrix[i][j] = {type:'player', symbol: 'P'}
+        matrix[i][j] = objects.player;
+        objects.player.xCoord = i;
+        objects.player.yCoord = j;
+
       }
     }
   }
 };      
 
-module.exports = { generateMatrix, printMatrix, fillMatrixFromFile }
+module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };
