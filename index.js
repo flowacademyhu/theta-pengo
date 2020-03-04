@@ -16,6 +16,7 @@ const player = obj.player;
 const turnPlayer = (player, direction) => {
   player.direction = direction;
 };
+
 const movePlayer = (player, direction, matrix) => {
   if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] !== '1') {
     player.xCoord--;
@@ -31,6 +32,27 @@ const movePlayer = (player, direction, matrix) => {
     matrix[player.xCoord][player.yCoord - 1] = ' ';
   }
 };
+
+const enemy = obj.enemy;
+const turnEnemy = (enemy, direction) => {
+  enemy.direction = direction;
+};
+const moveEnemy = (enemy, direction, matrix) => {
+  if (direction === 'up' && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') {
+    enemy.xCoord--;
+    matrix[enemy.xCoord + 1][enemy.yCoord] = ' ';
+  } else if (direction === 'down' && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') {
+    enemy.xCoord++;
+    matrix[enemy.xCoord - 1][enemy.yCoord] = ' ';
+  } else if (direction === 'left' && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') {
+    enemy.yCoord--;
+    matrix[enemy.xCoord][enemy.yCoord + 1] = ' ';
+  } else if (direction === 'right' && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') {
+    enemy.yCoord++;
+    matrix[enemy.xCoord][enemy.yCoord - 1] = ' ';
+  }
+};
+
 const keyProcessor = () => {
   stdin.on('data', (key) => {
     if (key === 'w') {
@@ -76,10 +98,14 @@ const destroyIce = (player, matrix) => {
 const placePlayer = (matrix, player) => {
   matrix[player.xCoord][player.yCoord] = 'P';
 };
+const placeEnemy = (matrix, enemy) => {
+  matrix[enemy.xCoord][enemy.yCoord] = '@';
+};
 
 const init = () => {
   matrixF.fillMatrixFromFile(matrix, dataFromFile);
   placePlayer(matrix, player);
+  placeEnemy(matrix, enemy);
   matrixF.printMatrix(matrix);
 };
 
