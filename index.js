@@ -3,7 +3,7 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-const matrixF = require('./matrixFunctions');
+const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
 const fs = require('fs');
 const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) => {
@@ -102,6 +102,8 @@ const keyProcessor = () => {
   }
   );
 };
+
+
 const slide = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor') {
 
@@ -166,18 +168,33 @@ const destroyIce = (player, matrix) => {
   }
 };
 
+const matrix = matrixFunctions.generateMatrix(17, 15);
+
+
+//STEP FUNCTION : 
+
+/* const step = (matrix) => {
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+    if ( matrix[i][j].type === player) {
+      
+    }
+    }
+  }
+} */
+
+
 const collision = (obj1, obj2) => {
   if (obj1.type === 'slidingBlock' && obj2.type === 'enemy') {
     obj2 = { type: 'blood', symbol: objects.blood.symbol };
   }
 }
 
-const matrix = matrixF.generateMatrix(17, 15);
 
 const init = () => {
   console.clear();
-  matrixF.fillMatrixFromFile(matrix, dataFromFile, objects.player);
-  matrixF.printMatrix(matrix);
+  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
+  matrixFunctions.printMatrix(matrix);
 };
 
 const loop = () => {
@@ -199,10 +216,10 @@ const loop = () => {
         }
       }
     }
-    matrixF.printMatrix(matrix);
+    matrixFunctions.printMatrix(matrix);
   }, 500);
 };
 
 init();
 loop();
-keyProcessor();
+keyProcessor()
