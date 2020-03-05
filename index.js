@@ -3,7 +3,7 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-const matrixF = require('./matrixFunctions');
+const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
 const fs = require('fs');
 const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) => {
@@ -76,6 +76,8 @@ const keyProcessor = () => {
   }
   );
 };
+
+
 const destroyIce = (player, matrix) => {
   if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord] === objects.ice) {
 
@@ -96,18 +98,31 @@ const destroyIce = (player, matrix) => {
   }
 };
 
+const matrix = matrixFunctions.generateMatrix(15, 13);
 
-const matrix = matrixF.generateMatrix(15, 13);
+
+//STEP FUNCTION : 
+
+const step = (matrix) => {
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j].type === )
+    }
+  }
+}
+
+
+
 
 const init = () => {
-  matrixF.fillMatrixFromFile(matrix, dataFromFile);
-  matrixF.printMatrix(matrix);
+  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile);
+  matrixFunctions.printMatrix(matrix);
 };
 
 const loop = () => {
   setInterval(() => {
     console.clear();
-    matrixF.printMatrix(matrix);
+    matrixFunctions.printMatrix(matrix);
   }, 1000);
 };
 
