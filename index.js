@@ -49,19 +49,26 @@ const randomMove = () => {
   return Math.floor(Math.random() * 4);
 };
 
-const moveEnemy = (enemy, direction, matrix) => {
-  if (randomMove() === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') { // up
+const moveEnemy = (x, y, matrix) => {
+  let isValid = false;
+  while(!isValid){
+    const dir = moveEnemy()
+    // if fel jég vagy false,
+      // akkor randomMove
+      
+  }
+  if (randomMove() === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== 'ice') { // up
     enemy.xCoord--;
-    matrix[enemy.xCoord + 1][enemy.yCoord] = ' ';
-  } else if (randomMove() === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') { // down
+    matrix[enemy.xCoord + 1][enemy.yCoord] = 'floor';
+  } else if (randomMove() === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== 'ice') { // down
     enemy.xCoord++;
-    matrix[enemy.xCoord - 1][enemy.yCoord] = ' ';
-  } else if (randomMove() === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') { // left
+    matrix[enemy.xCoord - 1][enemy.yCoord] = 'floor';
+  } else if (randomMove() === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== 'ice') { // left
     enemy.yCoord--;
-    matrix[enemy.xCoord][enemy.yCoord + 1] = ' ';
-  } else if (randomMove() === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') { // right
+    matrix[enemy.xCoord][enemy.yCoord + 1] = 'floor';
+  } else if (randomMove() === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== 'ice') { // right
     enemy.yCoord++;
-    matrix[enemy.xCoord][enemy.yCoord - 1] = ' ';
+    matrix[enemy.xCoord][enemy.yCoord - 1] = 'floor';
   }
 };
 
