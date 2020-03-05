@@ -16,31 +16,52 @@ const turnPlayer = (player, direction) => {
   player.direction = direction;
 };
 
-const movePlayer = (player, matrix) => {
-  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'floor') {
-
+const movePlayer = (player, direction, matrix) => {
+  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'ice' &&
+    matrix[player.xCoord - 1][player.yCoord].type !== 'wall') {
     player.xCoord--;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord + 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
-
-  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'floor') {
-
+    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'ice' &&
+    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
     player.xCoord++;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord - 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
-
-  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'floor') {
-
+    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
+  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'ice' &&
+    matrix[player.xCoord][player.yCoord - 1].type !== 'wall') {
     player.yCoord--;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
-
-  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'floor') {
-
+    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' &&
+    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
     player.yCoord++;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord - 1] = { type: 'floor', symbol: objects.floor.symbol };
+    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+  }
+};
 
+const enemy = objects.enemy;
+const turnEnemy = (enemy, direction) => {
+  enemy.direction = direction;
+};
+
+const randomMove = () => {
+  return Math.floor(Math.random() * 4);
+};
+
+const moveEnemy = (enemy, direction, matrix) => {
+  if (randomMove() === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') { // up
+    enemy.xCoord--;
+    matrix[enemy.xCoord + 1][enemy.yCoord] = ' ';
+  } else if (randomMove() === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') { // down
+    enemy.xCoord++;
+    matrix[enemy.xCoord - 1][enemy.yCoord] = ' ';
+  } else if (randomMove() === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') { // left
+    enemy.yCoord--;
+    matrix[enemy.xCoord][enemy.yCoord + 1] = ' ';
+  } else if (randomMove() === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') { // right
+    enemy.yCoord++;
+    matrix[enemy.xCoord][enemy.yCoord - 1] = ' ';
   }
 };
 
