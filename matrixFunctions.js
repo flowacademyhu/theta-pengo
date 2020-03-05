@@ -1,3 +1,5 @@
+const objects = require('./objects');
+const ctx = require('./axel/index.js');
 
 const generateMatrix = (x, y) => {
   const matrix = new Array(x);
@@ -8,29 +10,42 @@ const generateMatrix = (x, y) => {
 };
 
 const printMatrix = (matrix) => {
-  let output = '';
-  let line = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] === '0') {
-        output = ' ';
-      } else if (matrix[i][j] === '1') {
-        output = 'J';
-      } else output = matrix[i][j];
-      line += (output + ' ');
+      if (matrix[i][j].type === 'wall') {
+        process.stdout.write(matrix[i][j].symbol);
+      } else {
+        process.stdout.write(matrix[i][j].symbol + ' ');
+      }
     }
-    console.log(line);
-    line = '';
+    console.log();
   }
 };
 
-const fillMatrixFromFile = (matrix, data) => {
+const fillMatrixFromFile = (matrix, data, player) => {
   const modifiedData = data.replace(/,/g, '').replace(/\n/g, '');
   let dataIndex = 0;
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
+      if (matrix[i][j] === '0') {
+        matrix[i][j] = { type: 'floor', symbol: objects.floor.symbol };
+      }
+      if (matrix[i][j] === '1') {
+        matrix[i][j] = { type: 'ice', symbol: objects.ice.symbol };
+      }
+      if (matrix[i][j] === 'E') {
+        matrix[i][j] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol };
+      }
+      if (matrix[i][j] === 'P') {
+        matrix[i][j] = player;
+        player.xCoord = i;
+        player.yCoord = j;
+      }
+      if (matrix[i][j] === 'X') {
+        matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
+      }
     }
   }
 };
