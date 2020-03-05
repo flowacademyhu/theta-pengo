@@ -82,9 +82,10 @@ const slide = (matrix, x, y) => {
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') { // bug: azonnal ütközésig ugrik a jég
+  } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') {
 
     matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
+
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
 
   } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor') {
@@ -163,8 +164,9 @@ const collision = (obj1, obj2) => {
 
 
 const init = () => {
-  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
-  matrixFunctions.printMatrix(matrix);
+  console.clear();
+  matrixF.fillMatrixFromFile(matrix, dataFromFile, objects.player);
+  matrixF.printMatrix(matrix);
 };
 
 const loop = () => {
@@ -172,9 +174,17 @@ const loop = () => {
     console.clear();
     for (let i = 0; i < matrix.length; i++) { // ezt a részt majd a step fv-be rakjuk át
       for (let j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].type === 'slidingBlock') {
+        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction === 'down' && matrix[i][j].didItSlide === false) {
           slide(matrix, i, j);
-          break;
+          matrix[i][j].didItSlide = true;
+        }
+        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction === 'right' && matrix[i][j].didItSlide === false) {
+          slide(matrix, i, j);
+          matrix[i][j].didItSlide = true;
+        }
+        matrix[i][j].didItSlide = false;
+        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction !== 'down' && matrix[i][j].direction !== 'right') {
+          slide(matrix, i, j);
         }
       }
     }
