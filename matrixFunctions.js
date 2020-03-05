@@ -1,4 +1,4 @@
-let objects = require('./objects');
+const objects = require('./objects');
 
 const generateMatrix = (x, y) => {
   const matrix = new Array(x);
@@ -7,19 +7,26 @@ const generateMatrix = (x, y) => {
   }
   return matrix;
 };
-
 const printMatrix = (matrix) => {
-  let output = '';
-  let line = '';
+  let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-    process.stdout.write(matrix[i][j].symbol + ' ');
+      if (matrix[i][j].type === 'wall') {
+        string += matrix[i][j].symbol;
+        // process.stdout.write(matrix[i][j].symbol);
+      } else {
+        string += matrix[i][j].symbol + ' ';
+        // process.stdout.write(matrix[i][j].symbol + ' ');
+      }
     }
-    console.log(); // azért kell mert az mindíg új sort kezd
+    string += '\n';
+    // console.log();
+
   }
+  console.log(string);
 };
 
-const fillMatrixFromFile = (matrix, data) => {
+const fillMatrixFromFile = (matrix, data, player) => {
   const modifiedData = data.replace(/,/g, '').replace(/\n/g, '');
   let dataIndex = 0;
   for (let i = 0; i < matrix.length; i++) {
@@ -27,22 +34,24 @@ const fillMatrixFromFile = (matrix, data) => {
       matrix[i][j] = modifiedData[dataIndex];
       dataIndex++;
       if (matrix[i][j] === '0') {
-          matrix[i][j] = objects.floor
+        matrix[i][j] = { type: 'floor', symbol: objects.floor.symbol };
       }
-      if ( matrix[i][j] === '1') {
-        matrix[i][j] = objects.ice
+      if (matrix[i][j] === '1') {
+        matrix[i][j] = { type: 'ice', symbol: objects.ice.symbol };
       }
-      if (matrix[i][j] === '2') {
-        matrix[i][j] = objects.enemy;
+      if (matrix[i][j] === 'E') {
+        matrix[i][j] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol };
       }
-      if (matrix[i][j] === '3') {
-        matrix[i][j] = objects.player;
-        objects.player.xCoord = i;
-        objects.player.yCoord = j;
-
+      if (matrix[i][j] === 'P') {
+        matrix[i][j] = player;
+        player.xCoord = i;
+        player.yCoord = j;
+      }
+      if (matrix[i][j] === 'X') {
+        matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
       }
     }
   }
-};      
+};
 
 module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };

@@ -1,1 +1,1 @@
-A simplified version of the game Pengu.
+A simplified version of the game Pengo.
