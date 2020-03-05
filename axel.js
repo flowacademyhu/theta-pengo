@@ -67,7 +67,6 @@ ctx.bg(255, 255, 0);
 ctx.fg(0, 0, 0);
 ctx.text(10, 2, ' BLACK ON YELLOW! ');
 
-
 // Position the cursor at the end of the console
 // so as not to draw over the bottom of the circle
 ctx.cursor.restore();

@@ -1,5 +1,5 @@
 const objects = require('./objects');
-const ctx = require('./axel/index.js');
+const ctx = require('axel'); // Axel, graphics
 
 const generateMatrix = (x, y) => {
   const matrix = new Array(x);

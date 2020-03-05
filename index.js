@@ -34,11 +34,9 @@ const movePlayer = (player, direction, matrix) => {
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
   } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' &&
     matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
-    {
-      player.yCoord++;
-      matrix[player.xCoord][player.yCoord] = player;
-      matrix[player.xCoord][player.yCoord - 1] = objects.floor;
-    }
+    player.yCoord++;
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
   }
 };
 
@@ -47,17 +45,21 @@ const turnEnemy = (enemy, direction) => {
   enemy.direction = direction;
 };
 
+const randomMove = () => {
+  return Math.floor(Math.random() * 4);
+};
+
 const moveEnemy = (enemy, direction, matrix) => {
-  if (direction === 'up' && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') {
+  if (randomMove === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') { // up
     enemy.xCoord--;
     matrix[enemy.xCoord + 1][enemy.yCoord] = ' ';
-  } else if (direction === 'down' && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') {
+  } else if (randomMove === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') { // down
     enemy.xCoord++;
     matrix[enemy.xCoord - 1][enemy.yCoord] = ' ';
-  } else if (direction === 'left' && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') {
+  } else if (randomMove === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') { // left
     enemy.yCoord--;
     matrix[enemy.xCoord][enemy.yCoord + 1] = ' ';
-  } else if (direction === 'right' && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') {
+  } else if (randomMove === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') { // right
     enemy.yCoord++;
     matrix[enemy.xCoord][enemy.yCoord - 1] = ' ';
   }
