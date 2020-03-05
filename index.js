@@ -50,16 +50,16 @@ const randomMove = () => {
 };
 
 const moveEnemy = (enemy, direction, matrix) => {
-  if (randomMove === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') { // up
+  if (randomMove() === 0 && enemy.xCoord > 0 && matrix[enemy.xCoord - 1][enemy.yCoord] !== '1') { // up
     enemy.xCoord--;
     matrix[enemy.xCoord + 1][enemy.yCoord] = ' ';
-  } else if (randomMove === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') { // down
+  } else if (randomMove() === 1 && enemy.xCoord < matrix.length - 1 && matrix[enemy.xCoord + 1][enemy.yCoord] !== '1') { // down
     enemy.xCoord++;
     matrix[enemy.xCoord - 1][enemy.yCoord] = ' ';
-  } else if (randomMove === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') { // left
+  } else if (randomMove() === 2 && enemy.yCoord > 0 && matrix[enemy.xCoord][enemy.yCoord - 1] !== '1') { // left
     enemy.yCoord--;
     matrix[enemy.xCoord][enemy.yCoord + 1] = ' ';
-  } else if (randomMove === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') { // right
+  } else if (randomMove() === 3 && enemy.yCoord < matrix[0].length - 1 && matrix[enemy.xCoord][enemy.yCoord + 1] !== '1') { // right
     enemy.yCoord++;
     matrix[enemy.xCoord][enemy.yCoord - 1] = ' ';
   }
