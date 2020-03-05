@@ -1,0 +1,25 @@
+{
+  "name": "theta-pengo",
+  "version": "1.0.0",
+  "description": "Pengo game",
+  "main": "index.js",
+  "dependencies": {
+    "axel": "0.0.3",
+    "eslint-config-standard": "^14.1.0",
+    "semistandard": "^14.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowacademyhu/theta-pengo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flowacademyhu/theta-pengo/issues"
+  },
+  "homepage": "https://github.com/flowacademyhu/theta-pengo#readme"
+}
