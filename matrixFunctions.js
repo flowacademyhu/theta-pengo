@@ -15,7 +15,7 @@ const printMatrix = (matrix) => {
     for (let j = 0; j < matrix[i].length; j++) {
     process.stdout.write(matrix[i][j].symbol + ' ');
     }
-    console.log();
+    console.log(); // azért kell mert az mindíg új sort kezd
   }
 };
 
