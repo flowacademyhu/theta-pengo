@@ -1,4 +1,4 @@
-let objects = require('./objects');
+const objects = require('./objects');
 
 const generateMatrix = (x, y) => {
   const matrix = new Array(x);
@@ -7,18 +7,23 @@ const generateMatrix = (x, y) => {
   }
   return matrix;
 };
-
 const printMatrix = (matrix) => {
+  let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       if (matrix[i][j].type === 'wall') {
-        process.stdout.write(matrix[i][j].symbol);
+        string += matrix[i][j].symbol;
+        // process.stdout.write(matrix[i][j].symbol);
       } else {
-        process.stdout.write(matrix[i][j].symbol + ' ');
+        string += matrix[i][j].symbol + ' ';
+        // process.stdout.write(matrix[i][j].symbol + ' ');
       }
     }
-    console.log();
+    string += '\n';
+    // console.log();
+
   }
+  console.log(string);
 };
 
 const fillMatrixFromFile = (matrix, data, player) => {

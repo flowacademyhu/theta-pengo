@@ -16,62 +16,54 @@ const turnPlayer = (player, direction) => {
   player.direction = direction;
 };
 
-
-const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'ice' &&
-    matrix[player.xCoord - 1][player.yCoord].type !== 'wall') {
+const movePlayer = (player, matrix) => {
+  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'floor') {
 
     player.xCoord--;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+    matrix[player.xCoord + 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'ice' &&
-    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
+  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'floor') {
 
     player.xCoord++;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
+    matrix[player.xCoord - 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'ice' &&
-    matrix[player.xCoord][player.yCoord - 1].type !== 'wall') {
+  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'floor') {
 
     player.yCoord--;
     matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+    matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' &&
-    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
-    {
+  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'floor') {
 
-      player.yCoord++;
-      matrix[player.xCoord][player.yCoord] = player;
-      matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+    player.yCoord++;
+    matrix[player.xCoord][player.yCoord] = player;
+    matrix[player.xCoord][player.yCoord - 1] = { type: 'floor', symbol: objects.floor.symbol };
 
-    }
   }
 };
-
 
 const keyProcessor = () => {
   stdin.on('data', (key) => {
     if (key === 'w') {
       turnPlayer(player, 'up');
-      movePlayer(player, 'up', matrix);
+      movePlayer(player, matrix);
     }
     if (key === 's') {
       turnPlayer(player, 'down');
-      movePlayer(player, 'down', matrix);
+      movePlayer(player, matrix);
     }
     if (key === 'a') {
       turnPlayer(player, 'left');
-      movePlayer(player, 'left', matrix);
+      movePlayer(player, matrix);
     }
     if (key === 'd') {
       turnPlayer(player, 'right');
-      movePlayer(player, 'right', matrix);
+      movePlayer(player, matrix);
     }
     if (key === 'k') {
-      pushIce(player.direction, matrix);
+      pushIce(player, matrix);
     }
     if (key === 'l') {
       destroyIce(player, matrix);
@@ -82,45 +74,74 @@ const keyProcessor = () => {
   }
   );
 };
+const slide = (matrix, x, y) => {
+  if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor') {
+
+    matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+
+  } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') { // bug: azonnal ütközésig ugrik a jég
+
+    matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+
+  } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor') {
+
+    matrix[x][y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+
+  } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor') {
+    matrix[x][y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+
+  } else {
+    matrix[x][y] = { type: 'ice', symbol: objects.ice.symbol };
+  }
+};
 const pushIce = (player, matrix) => {
-  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
+  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
 
-    matrix[player.xCoord - 2][player.yCoord] = objects.floor;
+    matrix[player.xCoord - 1][player.yCoord] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
 
-  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
+  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
 
-    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+    matrix[player.xCoord + 1][player.yCoord] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
 
-  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
+  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
 
-    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+    matrix[player.xCoord][player.yCoord - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
 
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
+  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
 
-    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+    matrix[player.xCoord][player.yCoord + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
 
   }
 };
 const destroyIce = (player, matrix) => {
-  if (player.direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
+  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
 
-    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
+    matrix[player.xCoord - 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (player.direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
+  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
 
-    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
+    matrix[player.xCoord + 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (player.direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
+  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
 
-    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+    matrix[player.xCoord][player.yCoord - 1] = { type: 'floor', symbol: objects.floor.symbol };
 
-  } else if (player.direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
+  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
 
-    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
+    matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
 
   }
 };
 
+const collision = (obj1, obj2) => {
+  if (obj1.type === 'slidingBlock' && obj2.type === 'enemy') {
+    obj2 = { type: 'blood', symbol: objects.blood.symbol };
+  }
+}
 
 const matrix = matrixF.generateMatrix(17, 15);
 
@@ -132,8 +153,16 @@ const init = () => {
 const loop = () => {
   setInterval(() => {
     console.clear();
+    for (let i = 0; i < matrix.length; i++) { // ezt a részt majd a step fv-be rakjuk át
+      for (let j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j].type === 'slidingBlock') {
+          slide(matrix, i, j);
+          break;
+        }
+      }
+    }
     matrixF.printMatrix(matrix);
-  }, 1000);
+  }, 500);
 };
 
 init();
