@@ -137,6 +137,12 @@ const destroyIce = (player, matrix) => {
   }
 };
 
+const collision = (obj1, obj2) => {
+  if (obj1.type === 'slidingBlock' && obj2.type === 'enemy') {
+    obj2 = { type: 'blood', symbol: objects.blood.symbol };
+  }
+}
+
 const matrix = matrixF.generateMatrix(17, 15);
 
 const init = () => {
@@ -147,7 +153,7 @@ const init = () => {
 const loop = () => {
   setInterval(() => {
     console.clear();
-    for (let i = 0; i < matrix.length; i++) { //ezt a részt majd a step fv-be rakjuk át
+    for (let i = 0; i < matrix.length; i++) { // ezt a részt majd a step fv-be rakjuk át
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock') {
           slide(matrix, i, j);
@@ -156,7 +162,7 @@ const loop = () => {
       }
     }
     matrixF.printMatrix(matrix);
-  }, 1000);
+  }, 500);
 };
 
 init();
