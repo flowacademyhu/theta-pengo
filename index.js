@@ -165,8 +165,8 @@ const collision = (obj1, obj2) => {
 
 const init = () => {
   console.clear();
-  matrixF.fillMatrixFromFile(matrix, dataFromFile, objects.player);
-  matrixF.printMatrix(matrix);
+  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
+  matrixFunctions.printMatrix(matrix);
 };
 
 const loop = () => {
