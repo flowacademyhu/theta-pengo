@@ -9,7 +9,7 @@ const objects = require('./objects');
 const fs = require('fs');
 
 const enemy = objects.enemy;
-const turnEnemy = (enemy, direction) => {
+const turnEnemy = (enemy, direction) => { 
   enemy.direction = direction;
 };
 

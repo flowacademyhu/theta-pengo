@@ -18,31 +18,35 @@ const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) =
 });
 
 
-// KeyPress Action:
+// Matrix Dimension: (wall included): 
 
+const matrix = matrixFunctions.generateMatrix(17, 15);
+
+// KeyPress Action:
+// turnPlayer megváltoztatva turnplayer(player, direstion ) ===> (direstion) -re
 const keyProcessor = () => {
   stdin.on('data', (key) => {
     if (key === 'w') {
-      turnPlayer(player, 'up');
-      movePlayer(player, matrix);
+      playerMovement.turnPlayer('up');
+      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
     }
     if (key === 's') {
-      turnPlayer(player, 'down');
-      movePlayer(player, matrix);
+      playerMovement.turnPlayer('down');
+      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
     }
     if (key === 'a') {
-      turnPlayer(player, 'left');
-      movePlayer(player, matrix);
+      playerMovement.turnPlayer('left');
+      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
     }
     if (key === 'd') {
-      turnPlayer(player, 'right');
-      movePlayer(player, matrix);
+      playerMovement.turnPlayer('right');
+      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
     }
     if (key === 'k') {
-      pushIce(player, matrix);
+      iceAlteration.pushIce(player, matrix);
     }
     if (key === 'l') {
-      destroyIce(player, matrix);
+      iceAlteration.destroyIce(player, matrix);
     }
     if (key === 'q') {
       process.exit(0);
@@ -51,10 +55,6 @@ const keyProcessor = () => {
   );
 };
 
-
-// Matrix Dimension: (wall included): 
-
-const matrix = matrixFunctions.generateMatrix(17, 15);
 
 
 // Initialiseing matrix and its functions from matrixFunction.js : 
@@ -71,23 +71,17 @@ const init = () => {
 const loop = () => {
   setInterval(() => {
     console.clear();
-    for (let i = 0; i < matrix.length; i++) { // ezt a részt majd a step fv-be rakjuk át
-      for (let j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction === 'down' && matrix[i][j].didItSlide === false) {
-          (matrix, i, j);
-          matrix[i][j].didItSlide = true;
-        }
-        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction === 'right' && matrix[i][j].didItSlide === false) {
-          slide(matrix, i, j);
-          matrix[i][j].didItSlide = true;
-        }
-        matrix[i][j].didItSlide = false;
-        if (matrix[i][j].type === 'slidingBlock' && matrix[i][j].direction !== 'down' && matrix[i][j].direction !== 'right') {
-          slide(matrix, i, j);
+    let storingArr = [];
+    for (let i = 0; i < matrix.length; i++) {
+      for ( let j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j].type = 'slidingBlock' && !storingArr.includes(i,j)) {
+          iceAlteration.slide(matrix, i, j)
+          let storingVariable = `${i} , ${j}`; 
+          storingArr.push(storingVariable);
         }
       }
     }
-    matrixFunctions.printMatrix(matrix);
+   matrixFunctions.printMatrix(matrix);
   }, 500);
 };
 

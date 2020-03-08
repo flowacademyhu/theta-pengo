@@ -7,7 +7,7 @@ const objects = require('./objects');
 const fs = require('fs');
 
 const player = objects.player;
-const turnPlayer = (player, direction) => {
+const turnPlayer = (direction) => { // ( player, direction helyett csak direstion mivel ugyis csak azt adod meg a végén elvileg akkor az objectet is érteni fogja így)
   player.direction = direction;
 };
 
@@ -34,3 +34,5 @@ const movePlayer = (player, direction, matrix) => {
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
   }
 };
+
+module.exports = { turnPlayer, movePlayer };

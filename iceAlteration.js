@@ -8,25 +8,31 @@ const fs = require('fs');
 
 
 const slide = (matrix, x, y) => {
-  if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor') {
 
+  if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor' ) { 
+    let variableStoring = '' ;
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+    variableStoring = `${x - 1}, ${y}`;
+    return variableStoring;
 
-  } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') {
-
-    matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
-
+  } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') {  
+    matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' }; 
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+    variableStoring = `${x + 1}, ${y}`;
+    return variableStoring
 
-  } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor') {
-
+  } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor' ) { 
     matrix[x][y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
-    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }  
+    variableStoring = `${x}, ${y - 1}`;
+    return variableStoring;
 
-  } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor') {
+  } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor' ) {
     matrix[x][y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
-    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }  
+    variableStoring = `${x}, ${y + 1}`;
+    return variableStoring;
 
   } else {
     matrix[x][y] = { type: 'ice', symbol: objects.ice.symbol };
@@ -73,4 +79,7 @@ const destroyIce = (player, matrix) => {
     matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
 
   }
-};
+}
+
+
+module.exports = {slide, pushIce, destroyIce};
