@@ -61,7 +61,7 @@ const keyProcessor = () => {
 
 const init = () => {
   // 
-  console.clear();
+  // console.clear();
   matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
   matrixFunctions.printMatrix(matrix);
 };
@@ -83,7 +83,7 @@ const loop = () => {
           console.log(storingArr);
         }
         if (matrix[i][j].type === 'enemy') {
-          enemyMovement.moveEnemy(objects.enemy, /* direction, */ matrix);
+          enemyMovement.moveEnemy(i, j, matrix);
         }
       }
     }
@@ -93,4 +93,4 @@ const loop = () => {
 
 init();
 loop();
-keyProcessor()
+keyProcessor();
