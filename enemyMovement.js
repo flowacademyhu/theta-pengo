@@ -27,29 +27,29 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
       matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
       matrix[xCoord + 1][yCoord] = objects.floor;
       // console.log('up');
-      isValid = true;
-      return `${xCoord - 1}, ${yCoord}`;
+      // isValid = true;
+      return `${xCoord}${yCoord}`;
     } else if (dir === 1 && xCoord < matrix.length - 1 && matrix[xCoord + 1][yCoord].type !== 'ice' && matrix[xCoord + 1][yCoord].type !== 'wall') { // down
       xCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
       matrix[xCoord - 1][yCoord] = objects.floor;
       // console.log('down');
-      isValid = true;
-      return `${xCoord + 1}, ${yCoord}`;
+      // isValid = true;
+      return `${xCoord}${yCoord}`;
     } else if (dir === 2 && yCoord > 0 && matrix[xCoord][yCoord - 1].type !== 'ice' && matrix[xCoord][yCoord - 1].type !== 'wall') { // left
       yCoord--;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord + 1];
       matrix[xCoord][yCoord + 1] = objects.floor;
       // console.log('left');
-      isValid = true;
-      return `${xCoord}, ${yCoord - 1}`;
+      // isValid = true;
+      return `${xCoord}${yCoord}`;
     } else if (dir === 3 && yCoord < matrix[0].length - 1 && matrix[xCoord][yCoord + 1].type !== 'ice' && matrix[xCoord][yCoord + 1].type !== 'wall') { // right
       yCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
       matrix[xCoord][yCoord - 1] = objects.floor;
       // console.log('right');
-      isValid = true;
-      return `${xCoord}, ${yCoord + 1}`;
+      // isValid = true;
+      return `${xCoord}${yCoord}`;
     }
   }
 };
