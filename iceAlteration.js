@@ -71,7 +71,7 @@ const pushMonsterUp = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'enemy') {
     if (!isBetweenBlocksUp(matrix, x - 1, y)) {
       console.log('enemy csúszni kell');
-      matrix[x - 2][y] = { type: 'enemy', symbol: objects.enemy.symbol };
+      matrix[x - 2][y] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
@@ -81,7 +81,7 @@ const pushMonsterDown = (matrix, x, y) => {
   if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
     if (!isBetweenBlocksDown(matrix, x + 1, y)) {
       console.log('enemy csúszni kell');
-      matrix[x + 2][y] = { type: 'enemy', symbol: objects.enemy.symbol };
+      matrix[x + 2][y] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
@@ -92,7 +92,7 @@ const pushMonsterLeft = (matrix, x, y) => {
   if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'enemy') {
     if (!isBetweenBlocksLeft(matrix, x, y - 1)) {
       console.log('enemy csúszni kell');
-      matrix[x][y - 2] = { type: 'enemy', symbol: objects.enemy.symbol };
+      matrix[x][y - 2] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     matrix[x][y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
@@ -103,7 +103,7 @@ const pushMonsterRight = (matrix, x, y) => {
   if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
     if (!isBetweenBlocksRight(matrix, x, y + 1)) {
       console.log('enemy csúszni kell');
-      matrix[x][y + 2] = { type: 'enemy', symbol: objects.enemy.symbol };
+      matrix[x][y + 2] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     matrix[x][y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
