@@ -6,11 +6,13 @@ stdin.setEncoding('utf8');
 const objects = require('./objects');
 const fs = require('fs');
 
+let player = objects.player;
 
 const slide = (matrix, x, y) => {
-
+  let variableStoring = '' ;
+  
+  
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor' ) { 
-    let variableStoring = '' ;
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     variableStoring = `${x - 1}, ${y}`;
@@ -34,8 +36,8 @@ const slide = (matrix, x, y) => {
     variableStoring = `${x}, ${y + 1}`;
     return variableStoring;
 
-  } else {
-    matrix[x][y] = { type: 'ice', symbol: objects.ice.symbol };
+  // } else {
+  //   matrix[x][y] = { type: 'ice', symbol: objects.ice.symbol };
   }
 };
 
@@ -82,4 +84,4 @@ const destroyIce = (player, matrix) => {
 }
 
 
-module.exports = {slide, pushIce, destroyIce};
+module.exports = {slide, pushIce, destroyIce, player};

@@ -43,10 +43,10 @@ const keyProcessor = () => {
       playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
     }
     if (key === 'k') {
-      iceAlteration.pushIce(player, matrix);
+      iceAlteration.pushIce(objects.player, matrix);
     }
     if (key === 'l') {
-      iceAlteration.destroyIce(player, matrix);
+      iceAlteration.destroyIce(objects.player, matrix);
     }
     if (key === 'q') {
       process.exit(0);
@@ -60,6 +60,7 @@ const keyProcessor = () => {
 // Initialiseing matrix and its functions from matrixFunction.js : 
 
 const init = () => {
+  // 
   console.clear();
   matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
   matrixFunctions.printMatrix(matrix);
@@ -70,15 +71,16 @@ const init = () => {
 
 const loop = () => {
   setInterval(() => {
-    console.clear();
-   let storingArr = [];
+    // console.clear();
+    let storingArr = [];
+    console.log(storingArr);
     for (let i = 0; i < matrix.length; i++) {
       for ( let j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].type = 'slidingBlock' && !storingArr.includes(i,j)) {
+        if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(i,j)) {
           iceAlteration.slide(matrix, i, j)
           let storingVariable = `${i} , ${j}`; 
           storingArr.push(storingVariable);
-          console.log(matrix[i][j].type);
+          console.log(storingArr);
         }
       }
     }
