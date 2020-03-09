@@ -18,7 +18,7 @@ const keyPressProcessor = () => {
       movePlayer(player, 'right', matrix);
     }
     if (key === 'k') {
-      //  pushIce(player.direction, matrix);
+      pushIce(player.direction, matrix);
     }
     if (key === 'l') {
       destroyIce(player, matrix);
