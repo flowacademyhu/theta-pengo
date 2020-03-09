@@ -51,7 +51,7 @@ const fillMatrixFromFile = (matrix, data, player) => {
         matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
       }
     }
-  }
+  }  
 };
 
 module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };
