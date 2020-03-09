@@ -3,10 +3,12 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-.typeconst iceMovement = requi.typere('./iceAlteration')
+const iceMovement = require('./iceAlteration')
 const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
 const fs = require('fs');
+
+const matrix = matrixFunctions.generateMatrix(17, 15);
 
 const enemy = objects.enemy;
 const turnEnemy = (enemy, direction) => {
@@ -14,11 +16,11 @@ const turnEnemy = (enemy, direction) => {
 };
 
 const randomMove = () => {
-matrix[enemy.xCoord][enemy.yCoord] = enemy;
+  matrix[enemy.xCoord][enemy.yCoord] = enemy;
   return Math.floor(Math.random() * 4);
 };
 
-const moveEnemy = (enemy, direction, matrix) => {
+const moveEnemy = (enemy, /* direction, */ matrix)  => {
   // let isValid = false;
   // while(!isValid){
   //   const dir = moveEnemy()
