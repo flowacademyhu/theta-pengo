@@ -82,6 +82,7 @@ const loop = () => {
           storingArr.push(storingVariable);
           console.log(storingArr);
         }
+        if (matrix[i][j].type === 'enemy')
       }
     }
     matrixFunctions.printMatrix(matrix);
