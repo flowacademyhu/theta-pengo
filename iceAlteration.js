@@ -15,6 +15,7 @@ const slide = (matrix, x, y) => {
     return `${x - 1}${y}`;
 
   } else if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'enemy') {
+    matrix[x - 1][y].isSliding = 'true';
     pushMonsterUp(matrix, x, y);
     return `${x - 1}${y}`;
 
@@ -23,6 +24,7 @@ const slide = (matrix, x, y) => {
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     return `${x + 1}${y}`;
   } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
+    matrix[x + 1][y].isSliding = 'true';
     pushMonsterDown(matrix, x, y);
     return `${x + 1}${y}`;
 
@@ -31,10 +33,14 @@ const slide = (matrix, x, y) => {
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }
     return `${x}${y - 1}`;
   } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'enemy') {
+    matrix[x][y - 1].isSliding = 'true';
+    
     pushMonsterLeft(matrix, x, y);
     return `${x}${y - 1}`;
 
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
+    matrix[x][y + 1].isSliding = 'true';
+
     pushMonsterRight(matrix, x, y);
     return `${x}${y + 1}`;
 
