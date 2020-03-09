@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 package-lock.json
+=======
+>>>>>>> 849ce8be5abfc11af8185df890e080cb30ce815e
 # Logs
 logs
 *.log
@@ -106,3 +109,8 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+<<<<<<< HEAD
+=======
+
+package-lock.json
+>>>>>>> 849ce8be5abfc11af8185df890e080cb30ce815e

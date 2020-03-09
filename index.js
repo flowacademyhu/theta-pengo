@@ -66,7 +66,7 @@ const init = () => {
 };
 
 
-//STEP FUNCTION : 
+// STEP FUNCTION : 
 
 const loop = () => {
   setInterval(() => {
@@ -77,12 +77,15 @@ const loop = () => {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
         }
+        if (matrix[i][j].type === 'enemy') {
+          enemyMovement.moveEnemy(i, j, matrix);
+        }
       }
-    }  
-  matrixFunctions.printMatrix(matrix);
+    }
+    matrixFunctions.printMatrix(matrix);
   }, 500);
 };
 
 init();
 loop();
-keyProcessor()
+keyProcessor();
