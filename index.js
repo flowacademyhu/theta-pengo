@@ -74,14 +74,11 @@ const loop = () => {
     let storingArr = [];
     for (let i = 0; i < matrix.length; i++) {
       for ( let j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes([i, j]) && matrix[i][j].didItSlide === false) {
-          iceAlteration.slide(matrix, i, j)
-          storingArr.push(storingVariable);
-          matrix[i][j] === true
+        if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
+          storingArr.push(iceAlteration.slide(matrix, i, j));
         }
       }
-    }
-  storingArr = [];
+    }  
   matrixFunctions.printMatrix(matrix);
   }, 500);
 };
