@@ -60,27 +60,22 @@ const keyProcessor = () => {
 // Initialiseing matrix and its functions from matrixFunction.js : 
 
 const init = () => {
-  // 
-  // console.clear();
+  console.clear();
   matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
   matrixFunctions.printMatrix(matrix);
 };
 
 
-//STEP FUNCTION : 
+// STEP FUNCTION : 
 
 const loop = () => {
   setInterval(() => {
-    // console.clear();
+    console.clear();
     let storingArr = [];
-    console.log(storingArr);
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(i, j)) {
-          iceAlteration.slide(matrix, i, j)
-          let storingVariable = `${i} , ${j}`;
-          storingArr.push(storingVariable);
-          console.log(storingArr);
+        if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
+          storingArr.push(iceAlteration.slide(matrix, i, j));
         }
         if (matrix[i][j].type === 'enemy') {
           enemyMovement.moveEnemy(i, j, matrix);
