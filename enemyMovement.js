@@ -28,6 +28,7 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
       matrix[xCoord + 1][yCoord] = objects.floor;
       // console.log('up');
       // isValid = true;
+      matrix[xCoord][yCoord].direction = 'up';
       return `${xCoord}${yCoord}`;
     } else if (dir === 1 && xCoord < matrix.length - 1 && matrix[xCoord + 1][yCoord].type !== 'ice' && matrix[xCoord + 1][yCoord].type !== 'wall') { // down
       xCoord++;
@@ -35,6 +36,7 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
       matrix[xCoord - 1][yCoord] = objects.floor;
       // console.log('down');
       // isValid = true;
+      matrix[xCoord][yCoord].direction = 'down';
       return `${xCoord}${yCoord}`;
     } else if (dir === 2 && yCoord > 0 && matrix[xCoord][yCoord - 1].type !== 'ice' && matrix[xCoord][yCoord - 1].type !== 'wall') { // left
       yCoord--;
@@ -42,6 +44,7 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
       matrix[xCoord][yCoord + 1] = objects.floor;
       // console.log('left');
       // isValid = true;
+      matrix[xCoord][yCoord].direction = 'left';
       return `${xCoord}${yCoord}`;
     } else if (dir === 3 && yCoord < matrix[0].length - 1 && matrix[xCoord][yCoord + 1].type !== 'ice' && matrix[xCoord][yCoord + 1].type !== 'wall') { // right
       yCoord++;
@@ -49,34 +52,11 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
       matrix[xCoord][yCoord - 1] = objects.floor;
       // console.log('right');
       // isValid = true;
+      matrix[xCoord][yCoord].direction = 'right';
       return `${xCoord}${yCoord}`;
     }
   }
 };
-
-// if fel jég vagy false,
-//   akkor enemyMove
-
-
-/*  if (randomMove() === 0 && xCoord > 0 && matrix[xCoord - 1][yCoord].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall') { // up
-   xCoord--;
-   matrix[xCoord][yCoord] = enemy;
-   matrix[xCoord + 1][yCoord].type = 'floor';
- } else if (randomMove() === 1 && xCoord < matrix.length - 1 && matrix[xCoord + 1][yCoord].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall') { // down
-   xCoord++;
-   matrix[xCoord][yCoord] = enemy;
-   matrix[xCoord - 1][yCoord].type = 'floor';
- } else if (randomMove() === 2 && yCoord > 0 && matrix[xCoord][yCoord - 1].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall') { // left
-   yCoord--;
-   matrix[xCoord][yCoord] = enemy;
-   matrix[xCoord][yCoord + 1].type = 'floor';
- } else if (randomMove() === 3 && yCoord < matrix[0].length - 1 && matrix[xCoord][yCoord + 1].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall') { // right
-   yCoord++;
-   matrix[xCoord][yCoord] = enemy;
-   matrix[xCoord][yCoord - 1].type = 'floor';
- } */
-
-
 
 //collision (implement in moveEnemy pls.):
 
