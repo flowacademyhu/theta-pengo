@@ -9,31 +9,31 @@ const fs = require('fs');
 let player = objects.player;
 
 const slide = (matrix, x, y) => {
-  let variableStoring = '' ;
+  let variableStoring = [];
   
   
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor' ) { 
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
-    variableStoring = `${x - 1}, ${y}`;
+    variableStoring.push(matrix[x][y]);
     return variableStoring;
 
   } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') {  
     matrix[x + 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' }; 
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
-    variableStoring = `${x + 1}, ${y}`;
+    variableStoring.push(matrix[x][y]);
     return variableStoring
 
   } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor' ) { 
     matrix[x][y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }  
-    variableStoring = `${x}, ${y - 1}`;
+    variableStoring.push(matrix[x][y]);
     return variableStoring;
 
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor' ) {
     matrix[x][y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }  
-    variableStoring = `${x}, ${y + 1}`;
+    variableStoring.push(matrix[x][y]);
     return variableStoring;
 
   // } else {
