@@ -12,27 +12,24 @@ const turnPlayer = (direction) => { // ( player, direction helyett csak direstio
 };
 
 const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'ice' &&
-    matrix[player.xCoord - 1][player.yCoord].type !== 'wall') {
+
+  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type !== 'ice' && matrix[player.xCoord - 1][player.yCoord].type !== 'wall') {
     player.xCoord--;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord + 1][player.yCoord] = objects.floor;
-  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'ice' &&
-    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
+  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type !== 'ice' && matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
     player.xCoord++;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord - 1][player.yCoord] = objects.floor;
-  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'ice' &&
-    matrix[player.xCoord][player.yCoord - 1].type !== 'wall') {
+  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type !== 'ice' && matrix[player.xCoord][player.yCoord - 1].type !== 'wall') {
     player.yCoord--;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' &&
-    matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
+  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' && matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
     player.yCoord++;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
   }
 };
 
-module.exports = { turnPlayer, movePlayer };
+module.exports = { turnPlayer, movePlayer, player };
