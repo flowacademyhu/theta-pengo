@@ -4,9 +4,8 @@ stdin.resume();
 stdin.setEncoding('utf8');
 
 const objects = require('./objects');
-const fs = require('fs');
 
-let player = objects.player;
+const player = objects.player;
 
 const slide = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor') {
@@ -16,7 +15,7 @@ const slide = (matrix, x, y) => {
 
   } else if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'enemy') {
     matrix[x - 1][y].isSliding = 'true';
-    pushMonsterUp(matrix, x, y);
+    pushEnemyUp(matrix, x, y);
     return `${x - 1}${y}`;
 
   } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'floor') {
@@ -25,28 +24,28 @@ const slide = (matrix, x, y) => {
     return `${x + 1}${y}`;
   } else if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
     matrix[x + 1][y].isSliding = 'true';
-    pushMonsterDown(matrix, x, y);
+    pushEnemyDown(matrix, x, y);
     return `${x + 1}${y}`;
 
   } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'floor') {
     matrix[x][y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
-    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     return `${x}${y - 1}`;
   } else if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'enemy') {
     matrix[x][y - 1].isSliding = 'true';
     
-    pushMonsterLeft(matrix, x, y);
+    pushEnemyLeft(matrix, x, y);
     return `${x}${y - 1}`;
 
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
     matrix[x][y + 1].isSliding = 'true';
 
-    pushMonsterRight(matrix, x, y);
+    pushEnemyRight(matrix, x, y);
     return `${x}${y + 1}`;
 
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor') {
     matrix[x][y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
-    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol }
+    matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
     return `${x}${y + 1}`;
     // =========================================================================================================================================== megállási feltételek:
   } else if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'wall' || matrix[x - 1][y].type === 'ice') {
@@ -67,7 +66,7 @@ const slide = (matrix, x, y) => {
   }
 };
 
-const pushMonsterUp = (matrix, x, y) => {
+const pushEnemyUp = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'enemy') {
     if (!isBetweenBlocksUp(matrix, x - 1, y)) {
       console.log('enemy csúszni kell');
@@ -77,7 +76,7 @@ const pushMonsterUp = (matrix, x, y) => {
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
   }
 };
-const pushMonsterDown = (matrix, x, y) => {
+const pushEnemyDown = (matrix, x, y) => {
   if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
     if (!isBetweenBlocksDown(matrix, x + 1, y)) {
       console.log('enemy csúszni kell');
@@ -88,7 +87,7 @@ const pushMonsterDown = (matrix, x, y) => {
   }
 };
 
-const pushMonsterLeft = (matrix, x, y) => {
+const pushEnemyLeft = (matrix, x, y) => {
   if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'enemy') {
     if (!isBetweenBlocksLeft(matrix, x, y - 1)) {
       console.log('enemy csúszni kell');
@@ -99,7 +98,7 @@ const pushMonsterLeft = (matrix, x, y) => {
   }
 };
 
-const pushMonsterRight = (matrix, x, y) => {
+const pushEnemyRight = (matrix, x, y) => {
   if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
     if (!isBetweenBlocksRight(matrix, x, y + 1)) {
       console.log('enemy csúszni kell');
