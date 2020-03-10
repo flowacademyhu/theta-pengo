@@ -40,7 +40,7 @@ const fillMatrixFromFile = (matrix, data, player) => {
         matrix[i][j] = { type: 'ice', symbol: objects.ice.symbol };
       }
       if (matrix[i][j] === 'E') {
-        matrix[i][j] = { type: 'enemy', /* direction: 'up', */ symbol: objects.enemy.symbol };
+        matrix[i][j] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
       }
       if (matrix[i][j] === 'P') {
         matrix[i][j] = player;
