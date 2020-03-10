@@ -36,8 +36,8 @@ const placeEnemies = (map) => {
 const createMap = () => {
   const x = 20;
   const y = 20;
-  let maxTunnels = 90;
-  const maxLength = 55;
+  let maxTunnels = 80;
+  const maxLength = 15;
 
   const map = createArray(x, y, 1);
 
