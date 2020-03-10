@@ -3,10 +3,10 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-const iceMovement = require('./iceAlteration')
+const iceMovement = require('./iceAlteration');
 const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
-const fs = require('fs');
+// const fs = require('fs');
 
 const matrix = matrixFunctions.generateMatrix(17, 15);
 
@@ -60,7 +60,6 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 // if fel jég vagy false,
 //   akkor enemyMove
 
-
 /*  if (randomMove() === 0 && xCoord > 0 && matrix[xCoord - 1][yCoord].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall') { // up
    xCoord--;
    matrix[xCoord][yCoord] = enemy;
@@ -79,10 +78,7 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
    matrix[xCoord][yCoord - 1].type = 'floor';
  } */
 
-
-
-//collision (implement in moveEnemy pls.):
-
+// collision (implement in moveEnemy pls.):
 
 const collision = (obj1, obj2) => {
   if (obj1.type === 'slidingBlock' && obj2.type === 'enemy') {

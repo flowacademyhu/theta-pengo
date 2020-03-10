@@ -21,12 +21,12 @@ const createMap = () => {
   const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
   let randomDirection;
   let lastDirection = [];
-  while (maxTunnels && x && y && maxLength) {
+  while (maxTunnels) {
     do {
       randomDirection = directions[Math.floor(Math.random() * directions.length)];
     } while ((randomDirection[0] === lastDirection[0] && randomDirection[1] === lastDirection[1]) ||
       (randomDirection[0] === -lastDirection && randomDirection[1] === -lastDirection[1]));
-    let randomLength = Math.ceil(Math.random() * maxLength);
+    const randomLength = Math.ceil(Math.random() * maxLength);
     let tunnelLength = 0;
 
     while (tunnelLength < randomLength) {
@@ -86,9 +86,8 @@ const printMatrix = (matrix) => {
     }
     string += '\n';
     // console.log();
-
   }
   console.log(string);
 };
-//console.log(addWallsToMap(copyMapIntoBiggerMap(createMap())));
+// console.log(addWallsToMap(copyMapIntoBiggerMap(createMap())));
 printMatrix(addWallsToMap(copyMapIntoBiggerMap(createMap())));

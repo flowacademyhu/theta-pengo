@@ -3,7 +3,6 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-
 // Requirements :
 
 const matrixFunctions = require('./matrixFunctions');
@@ -17,8 +16,7 @@ const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) =
   return data;
 });
 
-
-// Matrix Dimension: (wall included): 
+// Matrix Dimension: (wall included):
 
 const matrix = matrixFunctions.generateMatrix(17, 15);
 
@@ -55,9 +53,7 @@ const keyProcessor = () => {
   );
 };
 
-
-
-// Initialiseing matrix and its functions from matrixFunction.js : 
+// Initialiseing matrix and its functions from matrixFunction.js :
 
 const init = () => {
   console.clear();
@@ -65,11 +61,10 @@ const init = () => {
   matrixFunctions.printMatrix(matrix);
 };
 
-
-// STEP FUNCTION : 
+// STEP FUNCTION :
 
 const loop = () => {
-  let t = setInterval(() => {
+  const t = setInterval(() => {
     // console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
