@@ -69,17 +69,17 @@ const init = () => {
 // STEP FUNCTION : 
 
 const loop = () => {
-  setInterval(() => {
+  let t = setInterval(() => {
     // console.clear();
-    let storingArr = [];
-    let storingEnemyCoord = [];
+    const storingArr = [];
+    const storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
         }
         if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding) {
-          console.log(storingEnemyCoord)
+          // console.log(storingEnemyCoord);
           console.log(matrix[i][j].isSliding);
 
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
@@ -87,6 +87,12 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
+    if (playerMovement.isPlayerDead(matrix)) {
+      console.clear();
+      console.log('REKT');
+
+      clearInterval(t);
+    }
   }, 500);
 };
 
