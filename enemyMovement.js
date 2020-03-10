@@ -19,7 +19,12 @@ const randomMove = () => {
 };
 
 const moveEnemy = (xCoord, yCoord, matrix) => {
-
+  if ( enemy.direction === 'up' && matrix[xCoord - 1][yCoord].type === 'floor') {
+    xCoord--;
+    matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
+    matrix[xCoord + 1][yCoord] = objects.floor;
+    return `${xCoord}${yCoord}`;
+  }
   let isValid = false;
   while (!isValid) {
     const dir = randomMove();
