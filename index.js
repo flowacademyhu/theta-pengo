@@ -78,8 +78,10 @@ const loop = () => {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
         }
-        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`)) {
+        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding) {
           console.log(storingEnemyCoord)
+          console.log(matrix[i][j].isSliding);
+
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
         }
       }
