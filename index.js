@@ -85,8 +85,8 @@ const loop = () => {
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
         }
       }
-    }
-    matrixFunctions.printMatrix(matrix);
+    }  
+  matrixFunctions.printMatrix(matrix);
   }, 100);
 };
 
