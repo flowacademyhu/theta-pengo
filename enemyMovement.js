@@ -23,7 +23,7 @@ const oppositeDirs = {
   right: 'left'
 };
 
-const stepTo = {
+const stepTo = { // OK
   up: (xCoord, yCoord, matrix) => {
     xCoord--;
     matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
@@ -46,7 +46,7 @@ const stepTo = {
   }
 };
 
-const getAvailableDirections = (xCoord, yCoord, matrix) => {  // getAvailableDirections (x, y, arr)
+const getAvailableDirections = (xCoord, yCoord, matrix) => { // getAvailableDirections (x, y, arr) OK
   const availableDirections = [];
   if (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player') {
     availableDirections.push('up');
@@ -63,30 +63,32 @@ const getAvailableDirections = (xCoord, yCoord, matrix) => {  // getAvailableDir
   return availableDirections;
 };
 
-const filterAvailableDirections = (xCoord, yCoord, matrix) => {
+const filterAvailableDirections = (xCoord, yCoord, matrix) => { // el kell különíteni, hogy merre mehet, és mi merre akarjuk, hogy menjen
   const availableDirections = getAvailableDirections(xCoord, yCoord, matrix);
   const currentDirection = matrix[xCoord][yCoord].direction;
   console.log(xCoord, yCoord);
-  console.log('availableDirections:', availableDirections);
+  console.log('availableDirections1:', availableDirections);
   console.log('currentDirection:', currentDirection);
 
   // const arr = [up down left]; függvény az irányok kiszámítására
-  for (let i = 0; i < availableDirections.length; i++) {
-    if (availableDirections.includes(currentDirection)) {
-      availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
-      console.log(availableDirections);
-    }
-    console.log('oppositedir:', oppositeDirs[currentDirection]);
-    if (availableDirections.includes(oppositeDirs[currentDirection])) {
-      availableDirections.splice(availableDirections.indexOf(oppositeDirs[currentDirection], 1));
-      console.log(availableDirections);
-    }
-  } return availableDirections;
+  // for (let i = 0; i < availableDirections.length; i++) {
+  if (availableDirections.includes(currentDirection)) {
+    availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
+    console.log(availableDirections);
+  }
+  console.log('oppositedir:', oppositeDirs[currentDirection]);
+  if (availableDirections.includes(oppositeDirs[currentDirection])) {
+    availableDirections.splice(availableDirections.indexOf(oppositeDirs[currentDirection], 1));
+    console.log(availableDirections);
+  }
+  console.log('availableDirections2:', availableDirections);
+  // }
+  return availableDirections;
 };
 
 const moveEnemy = (xCoord, yCoord, matrix) => {
   const availableDirections = filterAvailableDirections(xCoord, yCoord, matrix);
-  if (availableDirections.length === 0) { // 1 lépést előre
+  if (availableDirections.length === 0) { // 1 lépést előre --- így átmegy mindenen ki a pályáról
     console.log('hello2');
     const currentDirection = matrix[xCoord][yCoord].currentDirection;
     stepTo.up(xCoord, yCoord, matrix); // kell vizsgálni, hogy szabad-e lépni abba az irányba
