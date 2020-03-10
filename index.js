@@ -85,7 +85,7 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-  }, 500);
+  }, 100);
 };
 
 init();
