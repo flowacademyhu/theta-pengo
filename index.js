@@ -71,8 +71,8 @@ const init = () => {
 const loop = () => {
   setInterval(() => {
     // console.clear();
-    let storingArr = [];
-    let storingEnemyCoord = [];
+    const storingArr = [];
+    const storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
@@ -82,7 +82,7 @@ const loop = () => {
         } */
         if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding) {
           console.log(storingEnemyCoord);
-          console.log(matrix[i][j].isSliding);
+          // console.log(matrix[i][j].isSliding);
 
           // storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
           enemyMovement.moveEnemy(i, j, matrix);
@@ -92,7 +92,7 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-  }, 500);
+  }, 2000);
 };
 
 init();

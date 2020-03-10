@@ -3,10 +3,10 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-const matrixFunctions = require('./matrixFunctions');
+// const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
 
-const matrix = matrixFunctions.generateMatrix(17, 15);
+// const matrix = matrixFunctions.generateMatrix(17, 15);
 
 // const turnEnemy = (enemy, direction) => {
 //   direction = direction;
@@ -15,7 +15,6 @@ const matrix = matrixFunctions.generateMatrix(17, 15);
 const randomMove = () => {
   return Math.floor(Math.random() * 4);
 };
-
 
 const oppositeDirs = {
   up: 'down',
@@ -47,64 +46,69 @@ const stepTo = {
   }
 };
 
-const directions = [];
-const getDirections = (xCoord, yCoord, matrix) => {  // getDirections (x, y, arr)
+const getAvailableDirections = (xCoord, yCoord, matrix) => {  // getAvailableDirections (x, y, arr)
+  const availableDirections = [];
   if (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player') {
-    directions.push('up');
+    availableDirections.push('up');
   }
   if (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player') {
-    directions.push('down');
+    availableDirections.push('down');
   }
   if (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player') {
-    directions.push('left');
+    availableDirections.push('left');
   }
   if (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player') {
-    directions.push('right');
+    availableDirections.push('right');
   }
-  return directions;
+  return availableDirections;
 };
 
-const vmi = (xCoord, yCoord, matrix) => {
-  const directions = getDirections(xCoord, yCoord, matrix);
-  const dir = matrix[xCoord][yCoord].direction;
-  console.log('directions:', directions);
-  console.log('dir:', dir);
+const filterAvailableDirections = (xCoord, yCoord, matrix) => {
+  const availableDirections = getAvailableDirections(xCoord, yCoord, matrix);
+  const currentDirection = matrix[xCoord][yCoord].direction;
+  console.log(xCoord, yCoord);
+  console.log('availableDirections:', availableDirections);
+  console.log('currentDirection:', currentDirection);
 
   // const arr = [up down left]; függvény az irányok kiszámítására
-  for (let i = 0; i < directions.length; i++) {
-    if (directions.includes(dir)) {
-      directions.splice(directions.indexOf(dir), 1);
-      console.log(directions);
+  for (let i = 0; i < availableDirections.length; i++) {
+    if (availableDirections.includes(currentDirection)) {
+      availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
+      console.log(availableDirections);
     }
-    console.log('oppositedir:', oppositeDirs[dir]);
-    if (directions.includes(oppositeDirs[dir])) {
-      directions.splice(directions.indexOf(oppositeDirs[dir], 1));
-      console.log(directions);
+    console.log('oppositedir:', oppositeDirs[currentDirection]);
+    if (availableDirections.includes(oppositeDirs[currentDirection])) {
+      availableDirections.splice(availableDirections.indexOf(oppositeDirs[currentDirection], 1));
+      console.log(availableDirections);
     }
-  }
+  } return availableDirections;
 };
 
 const moveEnemy = (xCoord, yCoord, matrix) => {
-  if (directions.length === 0) { // 1 lépést előre
+  const availableDirections = filterAvailableDirections(xCoord, yCoord, matrix);
+  if (availableDirections.length === 0) { // 1 lépést előre
     console.log('hello2');
-    stepTo.up(xCoord, yCoord, matrix);
+    const currentDirection = matrix[xCoord][yCoord].currentDirection;
+    stepTo.up(xCoord, yCoord, matrix); // kell vizsgálni, hogy szabad-e lépni abba az irányba
   } else {
     console.log('Hello');
-    const randomIndex = Math.floor(Math.random() * directions.length); // lehet kell neki +1?
-    const newDir = directions[randomIndex];
-    stepTo.newDir(xCoord, yCoord, matrix);
-    // Random irány 
-    // const randomIndex = Math.random()*directions.length;
-    // const newDir = arr[randomIndex]
-    // stepTo(newDir)
+    console.log(availableDirections);
+    const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1?
+    const newDirection = availableDirections[randomIndex];
+    stepTo[newDirection](xCoord, yCoord, matrix);
+    console.log('random irányba lépett');
+    // Random irány
+    // const randomIndex = Math.random()*availableDirections.length;
+    // const newDirection = arr[randomIndex]
+    // stepTo(newDirection)
   }
   return `${xCoord}${yCoord}`;
 };
-// console.log(oppositeDirs[dir]);
+// console.log(oppositeDirs[currentDirection]);
 
 
 
-/* if (matrix[xCoord][yCoord].direction === ) */  // ha az utolsó direction irányába tud még lépni, akkora arra lépjen még egyet
+/* if (matrix[xCoord][yCoord].direction === ) */ // ha az utolsó direction irányába tud még lépni, akkora arra lépjen még egyet
 
 // v1
 const moveEnemy2 = (xCoord, yCoord, matrix) => {
@@ -132,29 +136,29 @@ const moveEnemy2 = (xCoord, yCoord, matrix) => {
 
   let isValid = false;
   while (!isValid) {
-    const dir = randomMove();
-    if (dir === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
+    const currentDirection = randomMove();
+    if (currentDirection === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
       xCoord--;
       matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
       matrix[xCoord + 1][yCoord] = objects.floor;
       isValid = true;
       matrix[xCoord][yCoord].direction = 'up';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
+    } else if (currentDirection === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
       xCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
       matrix[xCoord - 1][yCoord] = objects.floor;
       isValid = true;
       matrix[xCoord][yCoord].direction = 'down';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
+    } else if (currentDirection === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
       yCoord--;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord + 1];
       matrix[xCoord][yCoord + 1] = objects.floor;
       isValid = true;
       matrix[xCoord][yCoord].direction = 'left';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
+    } else if (currentDirection === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
       yCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
       matrix[xCoord][yCoord - 1] = objects.floor;
@@ -207,23 +211,23 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 
   let isValid = false;
   while (!isValid) {
-    const dir = randomMove();
-    if (dir === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
+    const currentDirection = randomMove();
+    if (currentDirection === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
       stepEnemyUp(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'up';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
+    } else if (currentDirection === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
       stepEnemyDown(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'down';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
+    } else if (currentDirection === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
       stepEnemyLeft(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'left';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
+    } else if (currentDirection === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
       stepEnemyRight(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'right';
@@ -277,23 +281,23 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 
   let isValid = false;
   while (!isValid) {
-    const dir = randomMove();
-    if (dir === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
+    const currentDirection = randomMove();
+    if (currentDirection === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
       stepEnemy.up(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'up';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
+    } else if (currentDirection === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
       stepEnemy.down(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'down';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
+    } else if (currentDirection === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
       stepEnemy.left(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'left';
       return `${xCoord}${yCoord}`;
-    } else if (dir === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
+    } else if (currentDirection === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
       stepEnemy.right(xCoord, yCoord, matrix);
       isValid = true;
       matrix[xCoord][yCoord].direction = 'right';
@@ -305,12 +309,4 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 };
 */
 
-// collision (implement in moveEnemy pls.):
-
-const collision = (obj1, obj2) => {
-  if (obj1.type === 'slidingBlock' && obj2.type === 'enemy') {
-    obj2 = { type: 'blood', symbol: objects.blood.symbol };
-  }
-};
-
-module.exports = { moveEnemy, vmi };
+module.exports = { moveEnemy, filterAvailableDirections };
