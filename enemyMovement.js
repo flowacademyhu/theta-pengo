@@ -23,32 +23,28 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
   let isValid = false;
   while (!isValid) {
     const dir = randomMove();
-    if (dir === 0 && xCoord > 0 && matrix[xCoord - 1][yCoord].type !== 'ice' && matrix[xCoord - 1][yCoord].type !== 'wall'
-      && matrix[xCoord - 1][yCoord].type !== 'slidingBlock' && matrix[xCoord - 1][yCoord].type !== 'enemy') { // up
+    if (dir === 0 && xCoord > 0 && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) { // up
       xCoord--;
       matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
       matrix[xCoord + 1][yCoord] = objects.floor;
       // console.log('up');
       isValid = true;
       return `${xCoord}${yCoord}`;
-    } else if (dir === 1 && xCoord < matrix.length - 1 && matrix[xCoord + 1][yCoord].type !== 'ice' && matrix[xCoord + 1][yCoord].type !== 'wall'
-      && matrix[xCoord + 1][yCoord].type !== 'enemy' && matrix[xCoord + 1][yCoord].type !== 'slidingBlock') { // down
+    } else if (dir === 1 && xCoord < matrix.length - 1 && (matrix[xCoord + 1][yCoord].type === 'floor' || matrix[xCoord + 1][yCoord].type === 'player')) { // down
       xCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
       matrix[xCoord - 1][yCoord] = objects.floor;
       // console.log('down');
       isValid = true;
       return `${xCoord}${yCoord}`;
-    } else if (dir === 2 && yCoord > 0 && matrix[xCoord][yCoord - 1].type !== 'ice' && matrix[xCoord][yCoord - 1].type !== 'wall'
-      && matrix[xCoord][yCoord - 1].type !== 'enemy' && matrix[xCoord][yCoord - 1].type !== 'slidingBlock') { // left
+    } else if (dir === 2 && yCoord > 0 && (matrix[xCoord][yCoord - 1].type === 'floor' || matrix[xCoord][yCoord - 1].type === 'player')) { // left
       yCoord--;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord + 1];
       matrix[xCoord][yCoord + 1] = objects.floor;
       // console.log('left');
       isValid = true;
       return `${xCoord}${yCoord}`;
-    } else if (dir === 3 && yCoord < matrix[0].length - 1 && matrix[xCoord][yCoord + 1].type !== 'ice' && matrix[xCoord][yCoord + 1].type !== 'wall'
-      && matrix[xCoord][yCoord + 1].type !== 'enemy' && matrix[xCoord][yCoord + 1].type !== 'slidingBlock') { // right
+    } else if (dir === 3 && yCoord < matrix[0].length - 1 && (matrix[xCoord][yCoord + 1].type === 'floor' || matrix[xCoord][yCoord + 1].type === 'player')) { // right
       yCoord++;
       matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
       matrix[xCoord][yCoord - 1] = objects.floor;
