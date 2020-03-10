@@ -8,10 +8,33 @@ const createArray = (x, y, num) => {
   }
   return array;
 };
+
+const placePlayer = (map) => {
+  let x = Math.floor(Math.random() * map.length);
+  let y = Math.floor(Math.random() * map[0].length);
+  if (map[x][y] === 0) {
+    map[x][y] = 'P';
+  } else {
+    placePlayer(map);
+  }
+};
+
+const placeEnemies = (map) => {
+  for (let i = 0; i < 3; i++) {
+    let x = Math.floor(Math.random() * map.length);
+    let y = Math.floor(Math.random() * map[0].length);
+    if (map[x][y] === 1) {
+      map[x][y] = 'E';
+    } else {
+      i--;
+    }
+  }
+};
+
 const createMap = () => {
   const x = 20;
   const y = 20;
-  let maxTunnels = 80;
+  let maxTunnels = 60;
   const maxLength = 55;
 
   const map = createArray(x, y, 1);
@@ -90,4 +113,7 @@ const printMatrix = (matrix) => {
   console.log(string);
 };
 // console.log(addWallsToMap(copyMapIntoBiggerMap(createMap())));
-printMatrix(addWallsToMap(copyMapIntoBiggerMap(createMap())));
+const map = addWallsToMap(copyMapIntoBiggerMap(createMap()));
+placePlayer(map);
+placeEnemies(map);
+console.log(map);
