@@ -25,7 +25,7 @@ const movePlayer = (player, direction, matrix) => {
     player.yCoord--;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord][player.yCoord + 1] = objects.floor;
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' && matrix[player.xCoord + 1][player.yCoord].type !== 'wall') {
+  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type !== 'ice' && matrix[player.xCoord][player.yCoord].type !== 'wall') {
     player.yCoord++;
     matrix[player.xCoord][player.yCoord] = player;
     matrix[player.xCoord][player.yCoord - 1] = objects.floor;
