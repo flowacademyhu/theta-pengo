@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const createArray = (x, y, num) => {
   const array = [];
   for (let i = 0; i < x; i++) {
@@ -10,8 +12,8 @@ const createArray = (x, y, num) => {
 };
 
 const placePlayer = (map) => {
-  let x = Math.floor(Math.random() * map.length);
-  let y = Math.floor(Math.random() * map[0].length);
+  const x = Math.floor(Math.random() * map.length);
+  const y = Math.floor(Math.random() * map[0].length);
   if (map[x][y] === 0) {
     map[x][y] = 'P';
   } else {
@@ -21,8 +23,8 @@ const placePlayer = (map) => {
 
 const placeEnemies = (map) => {
   for (let i = 0; i < 3; i++) {
-    let x = Math.floor(Math.random() * map.length);
-    let y = Math.floor(Math.random() * map[0].length);
+    const x = Math.floor(Math.random() * map.length);
+    const y = Math.floor(Math.random() * map[0].length);
     if (map[x][y] === 1) {
       map[x][y] = 'E';
     } else {
@@ -34,7 +36,7 @@ const placeEnemies = (map) => {
 const createMap = () => {
   const x = 20;
   const y = 20;
-  let maxTunnels = 60;
+  let maxTunnels = 90;
   const maxLength = 55;
 
   const map = createArray(x, y, 1);
@@ -95,25 +97,23 @@ const addWallsToMap = (map) => {
   return map;
 };
 
-const printMatrix = (matrix) => {
+const formatMatrix = (matrix) => {
   let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j].type === 'wall') {
-        string += matrix[i][j];
-        // process.stdout.write(matrix[i][j].symbol);
-      } else {
-        string += matrix[i][j] + ' ';
-        // process.stdout.write(matrix[i][j].symbol + ' ');
-      }
+      string += matrix[i][j] + ' ';
     }
     string += '\n';
-    // console.log();
   }
-  console.log(string);
+  return string;
 };
-// console.log(addWallsToMap(copyMapIntoBiggerMap(createMap())));
 const map = addWallsToMap(copyMapIntoBiggerMap(createMap()));
+const writeMapToFile = (map, fileName) => {
+  fs.writeFile(fileName, map, function (err) {
+    if (err) throw err;
+  }
+  );
+};
 placePlayer(map);
 placeEnemies(map);
-console.log(map);
+writeMapToFile(formatMatrix(map), 'random_map.txt');
