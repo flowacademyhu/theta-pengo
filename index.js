@@ -71,7 +71,7 @@ const init = () => {
 
 // STEP FUNCTION :
 let countingVar = 0;
-const countingMax = 3;
+const countingMax = 2;
 
 const loop = () => {
   const t = setInterval(() => {
@@ -104,7 +104,7 @@ const loop = () => {
       console.log('GG');
       clearInterval(t);
     }
-  }, 100);
+  }, 75);
 };
 
 init();
