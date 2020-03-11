@@ -67,10 +67,12 @@ const init = () => {
 
 
 // STEP FUNCTION : 
+let countingVar = 0;
+const countingMax = 3;
 
 const loop = () => {
   setInterval(() => {
-    // console.clear();
+    console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
@@ -80,8 +82,8 @@ const loop = () => {
         } /* else {
           console.log('buzievagy');
         } */
-        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding) {
-          console.log(storingEnemyCoord);
+        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax) {
+          // console.log(storingEnemyCoord);
           // console.log(matrix[i][j].isSliding);
 
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
@@ -92,6 +94,10 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
+    countingVar += 1;
+    if (countingVar === countingMax + 1) {
+      countingVar = 0;
+    }
   }, 500);
 };
 
