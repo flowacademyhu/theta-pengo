@@ -88,11 +88,11 @@ const loop = () => {
           enemyMovement.moveEnemy(i, j, matrix);
         } /* else {
           console.log('eznemjöttössze');
-        } */
+       } */
       }
     }
     matrixFunctions.printMatrix(matrix);
-  }, 2000);
+  }, 500);
 };
 
 init();
