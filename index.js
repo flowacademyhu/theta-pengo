@@ -3,7 +3,6 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-
 // Requirements :
 
 const matrixFunctions = require('./matrixFunctions');
@@ -17,8 +16,7 @@ const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) =
   return data;
 });
 
-
-// Matrix Dimension: (wall included): 
+// Matrix Dimension: (wall included):
 
 const matrix = matrixFunctions.generateMatrix(17, 15);
 
@@ -55,9 +53,7 @@ const keyProcessor = () => {
   );
 };
 
-
-
-// Initialiseing matrix and its functions from matrixFunction.js : 
+// Initialiseing matrix and its functions from matrixFunction.js :
 
 const init = () => {
   console.clear();
@@ -65,39 +61,49 @@ const init = () => {
   matrixFunctions.printMatrix(matrix);
 };
 
-
-// STEP FUNCTION : 
+// STEP FUNCTION :
 let countingVar = 0;
-let countingMax = 3;
+const countingMax = 3;
 
 const loop = () => {
-  setInterval(() => {
+  const t = setInterval(() => {
     console.clear();
-    let storingArr = [];
-    let storingEnemyCoord = [];
+    const storingArr = [];
+    const storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
-        }
-        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax ) {
-          // console.log(storingEnemyCoord)
+        } /* else {
+          console.log('buzievagy');
+        } */
+        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax) {
+          // console.log(storingEnemyCoord);
           // console.log(matrix[i][j].isSliding);
 
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
-        }
+          // enemyMovement.moveEnemy(i, j, matrix);
+        } /* else {
+          console.log('eznemjöttössze');
+       } */
       }
-    }  
-  matrixFunctions.printMatrix(matrix);
-  countingVar += 1;
-  if (countingVar === countingMax + 1) {
-    countingVar = 0;
-  }
-  }, 50);
+    }
+    matrixFunctions.printMatrix(matrix);
+    countingVar += 1;
+    if (countingVar === countingMax + 1) {
+      countingVar = 0;
+    }
+    if (playerMovement.isPlayerDead(matrix)) {
+      console.clear();
+      console.log('REKT');
+
+      clearInterval(t);
+    }
+  }, 500);
 };
 
 init();
 loop();
 keyProcessor();
 
-module.exports = { init, loop, keyProcessor}
+module.exports = { init, loop, keyProcessor };
