@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const enemyMovement = require('enemyMovement');
 const createArray = (x, y, num) => {
   const array = [];
   for (let i = 0; i < x; i++) {
@@ -11,7 +11,7 @@ const createArray = (x, y, num) => {
   return array;
 };
 
-const placePlayer = (map) => {
+const placePlayer = (map) => { // át lehetne írni az enemyMovement.hatch mintájára
   const x = Math.floor(Math.random() * map.length);
   const y = Math.floor(Math.random() * map[0].length);
   if (map[x][y] === 0) {
@@ -25,7 +25,7 @@ const placeEnemies = (map) => {
   for (let i = 0; i < 3; i++) {
     const x = Math.floor(Math.random() * map.length);
     const y = Math.floor(Math.random() * map[0].length);
-    if (map[x][y] === 1) {
+    if (map[x][y] === 1 || map[x][y] === 0) {
       map[x][y] = 'E';
     } else {
       i--;
