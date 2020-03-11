@@ -7,14 +7,8 @@ let play = [
 ['██║     ███████╗██║  ██║   ██║   '],
 ['╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ']
 
-]
+];
 
-const printPlay = (arr) => {
-  for ( let i = 0; i < arr.length; i++) {
-    process.stdout.write(arr[i][0]);
-    console.log();
-  }
-};
 
 let exit = [
 
@@ -25,14 +19,7 @@ let exit = [
 ['███████╗██╔╝ ██╗██║   ██║   '],
 ['╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝   ']
 
-]
-
-const printExit = (arr) => {
-  for ( let i = 0; i < arr.length; i++) {
-    process.stdout.write(arr[i][0]);
-    console.log();
-  }
-};
+];
 
 let scores = [
 
@@ -45,13 +32,6 @@ let scores = [
 
 ];
 
-const printScores = (arr) => {
-  for ( let i = 0; i < arr.length; i++) {
-    process.stdout.write(arr[i][0]);
-    console.log();
-  }
-};
-
 let maps = [
 
 ['███╗   ███╗ █████╗ ██████╗ ███████╗'],
@@ -62,18 +42,5 @@ let maps = [
 ['╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚══════╝']
 
 ];
-
-const printMaps = (arr) => {
-  for ( let i = 0; i < arr.length; i++) {
-    process.stdout.write(arr[i][0]);
-    console.log();
-  }
-};
-
-
-printPlay(play);
-printExit(exit);
-printScores(scores);
-printMaps(maps);
 
 module.exports = { play, exit, scores, maps}
