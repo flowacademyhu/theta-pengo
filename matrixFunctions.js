@@ -7,12 +7,13 @@ const generateMatrix = (x, y) => {
   }
   return matrix;
 };
+
 const printMatrix = (matrix) => {
   let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       if (matrix[i][j].type === 'wall') {
-        string += matrix[i][j].symbol;
+        string += matrix[i][j].symbol + ' ';
         // process.stdout.write(matrix[i][j].symbol);
       } else {
         string += matrix[i][j].symbol + ' ';

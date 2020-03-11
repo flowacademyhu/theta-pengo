@@ -67,10 +67,12 @@ const init = () => {
 
 
 // STEP FUNCTION : 
+let countingVar = 0;
+let countingMax = 3;
 
 const loop = () => {
   setInterval(() => {
-    // console.clear();
+    console.clear();
     let storingArr = [];
     let storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
@@ -78,18 +80,24 @@ const loop = () => {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
         }
-        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding) {
-          console.log(storingEnemyCoord)
-          console.log(matrix[i][j].isSliding);
+        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax ) {
+          // console.log(storingEnemyCoord)
+          // console.log(matrix[i][j].isSliding);
 
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
         }
       }
     }  
   matrixFunctions.printMatrix(matrix);
-  }, 100);
+  countingVar += 1;
+  if (countingVar === countingMax + 1) {
+    countingVar = 0;
+  }
+  }, 50);
 };
 
 init();
 loop();
 keyProcessor();
+
+module.exports = { init, loop, keyProcessor}

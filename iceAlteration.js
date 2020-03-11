@@ -69,7 +69,6 @@ const slide = (matrix, x, y) => {
 const pushEnemyUp = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'enemy') {
     if (!isBetweenBlocksUp(matrix, x - 1, y)) {
-      console.log('enemy csúszni kell');
       matrix[x - 2][y] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
@@ -79,7 +78,6 @@ const pushEnemyUp = (matrix, x, y) => {
 const pushEnemyDown = (matrix, x, y) => {
   if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
     if (!isBetweenBlocksDown(matrix, x + 1, y)) {
-      console.log('enemy csúszni kell');
       matrix[x + 2][y] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
@@ -90,7 +88,6 @@ const pushEnemyDown = (matrix, x, y) => {
 const pushEnemyLeft = (matrix, x, y) => {
   if (matrix[x][y].direction === 'left' && matrix[x][y - 1].type === 'enemy') {
     if (!isBetweenBlocksLeft(matrix, x, y - 1)) {
-      console.log('enemy csúszni kell');
       matrix[x][y - 2] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
@@ -101,7 +98,6 @@ const pushEnemyLeft = (matrix, x, y) => {
 const pushEnemyRight = (matrix, x, y) => {
   if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
     if (!isBetweenBlocksRight(matrix, x, y + 1)) {
-      console.log('enemy csúszni kell');
       matrix[x][y + 2] = { type: 'enemy', symbol: objects.enemy.symbol, isSliding: true };
     }
     matrix[x][y] = { type: 'floor', symbol: objects.floor.symbol };
@@ -111,27 +107,23 @@ const pushEnemyRight = (matrix, x, y) => {
 
 const isBetweenBlocksUp = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x - 1][y].type === 'wall') || matrix[x - 1][y].type === 'ice')) {
-    console.log('meghal az enemy');
     return true;
   } else return false;
 };
 
 const isBetweenBlocksDown = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x + 1][y].type === 'wall') || matrix[x + 1][y].type === 'ice')) {
-    console.log('meghal az enemy');
     return true;
   } else return false;
 };
 
 const isBetweenBlocksLeft = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y - 1].type === 'wall') || matrix[x][y - 1].type === 'ice')) {
-    console.log('meghal az enemy');
     return true;
   } else return false;
 };
 const isBetweenBlocksRight = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y + 1].type === 'wall') || matrix[x][y + 1].type === 'ice')) {
-    console.log('meghal az enemy');
     return true;
   } else return false;
 };
