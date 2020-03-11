@@ -61,22 +61,21 @@ const init = () => {
   matrixFunctions.printMatrix(matrix);
 };
 
-
-// STEP FUNCTION : 
+// STEP FUNCTION :
 let countingVar = 0;
-let countingMax = 3;
+const countingMax = 3;
 
 const loop = () => {
- const t = setInterval(() => {
+  const t = setInterval(() => {
     console.clear();
-    let storingArr = [];
-    let storingEnemyCoord = [];
+    const storingArr = [];
+    const storingEnemyCoord = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
         }
-        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax ) {
+        if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax) {
           // console.log(storingEnemyCoord)
           // console.log(matrix[i][j].isSliding);
 
@@ -103,4 +102,4 @@ init();
 loop();
 keyProcessor();
 
-module.exports = { init, loop, keyProcessor }
+module.exports = { init, loop, keyProcessor };
