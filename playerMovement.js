@@ -4,7 +4,6 @@ stdin.resume();
 stdin.setEncoding('utf8');
 
 const objects = require('./objects');
-// const fs = require('fs');
 
 const player = objects.player;
 const turnPlayer = (direction) => { // ( player, direction helyett csak direstion mivel ugyis csak azt adod meg a végén elvileg akkor az objectet is érteni fogja így)
