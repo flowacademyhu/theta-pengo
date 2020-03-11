@@ -22,13 +22,13 @@ let headline = [
 
 ]                
 
- const headlinePrinter = (arr) => {
-   for (let i = 0; i < arr.length; i++) {
-      console.log(String.raw`${arr[i]}`)
+ const headlinePrinter = () => {
+   for (let i = 0; i < headline.length; i++) {
+      console.log(String.raw`${headline[i]}`)
      
    }
  };
 
- headlinePrinter(headline);
+//  headlinePrinter(headline);
 
- module.exports = { headline };
+ module.exports = { headline, headlinePrinter };

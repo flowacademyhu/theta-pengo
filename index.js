@@ -63,7 +63,7 @@ const init = () => {
 
 // STEP FUNCTION :
 let countingVar = 0;
-const countingMax = 3;
+const countingMax = 1;
 
 const loop = () => {
   const t = setInterval(() => {
@@ -99,7 +99,7 @@ const loop = () => {
 
       clearInterval(t);
     }
-  }, 500);
+  }, 100);
 };
 
 init();
