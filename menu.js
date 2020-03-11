@@ -2,10 +2,8 @@
 
 const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
-const stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf8');
+
+
 
 const generateSliderMatrix = (x, y) => {
   const matrix = new Array(x);
@@ -15,27 +13,32 @@ const generateSliderMatrix = (x, y) => {
   return matrix;
 };
 
+// 	U+0020, \u0020	Space
+// '\u001b[C' left , '\u001b[D'
 
 
+// const menu = () => {
+//   while (true) {
+//     //menu kirajzolás, 
+//     //readline sync caracter beolvasás : tehát ha arrow keyt nyomok mi történjen 
+// //     key = readlineSync.keyIn('',
+// //     {hideEchoBack: true, mask: '', limit: 'zx '});
+// //   if (key === 'z') { if (value > MIN) { value--; } }
+// //   else if (key === 'x') { if (value < MAX) { value++; } }
+// //   else { break; }
+// // }
+//   }
+// }
 
-const keyInputAction = () => {
-  stdin.on((key) => {
-    if ( key === )
-    
-  }
-  )
-};
+let base = generateSliderMatrix(6, 50);
 
-
-let slider = generateSliderMatrix(6, 50);
-
-const printMatrix = (slider) => {
-  for (let i = 0; i < slider.length; i++) {
-    for (let j = 0; j < slider[i].length; j++) {
-      process.stdout.write(slider[i][j] = 'a');
+const leftSlide = (base, slide) => {
+  for (let i = 0, k = 0; i < base.length, k < slide.length; i++, k++) {
+    for (let j = 0, l = 0; j < base[i].length, l < slide[i].length; j++, l ++) {
+      process.stdout.write(base[i][j] = ' ');
     }
     console.log();
   }
 };
 
-printMatrix(slider);
+leftSlide(base, button.play);
