@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const createArray = (x, y, num) => {
   const array = [];
   for (let i = 0; i < x; i++) {
@@ -8,11 +10,34 @@ const createArray = (x, y, num) => {
   }
   return array;
 };
+
+const placePlayer = (map) => {
+  const x = Math.floor(Math.random() * map.length);
+  const y = Math.floor(Math.random() * map[0].length);
+  if (map[x][y] === 0) {
+    map[x][y] = 'P';
+  } else {
+    placePlayer(map);
+  }
+};
+
+const placeEnemies = (map) => {
+  for (let i = 0; i < 3; i++) {
+    const x = Math.floor(Math.random() * map.length);
+    const y = Math.floor(Math.random() * map[0].length);
+    if (map[x][y] === 1) {
+      map[x][y] = 'E';
+    } else {
+      i--;
+    }
+  }
+};
+
 const createMap = () => {
   const x = 20;
   const y = 20;
   let maxTunnels = 80;
-  const maxLength = 55;
+  const maxLength = 15;
 
   const map = createArray(x, y, 1);
 
@@ -21,12 +46,12 @@ const createMap = () => {
   const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
   let randomDirection;
   let lastDirection = [];
-  while (maxTunnels && x && y && maxLength) {
+  while (maxTunnels) {
     do {
       randomDirection = directions[Math.floor(Math.random() * directions.length)];
     } while ((randomDirection[0] === lastDirection[0] && randomDirection[1] === lastDirection[1]) ||
       (randomDirection[0] === -lastDirection && randomDirection[1] === -lastDirection[1]));
-    let randomLength = Math.ceil(Math.random() * maxLength);
+    const randomLength = Math.ceil(Math.random() * maxLength);
     let tunnelLength = 0;
 
     while (tunnelLength < randomLength) {
@@ -72,23 +97,23 @@ const addWallsToMap = (map) => {
   return map;
 };
 
-const printMatrix = (matrix) => {
+const formatMatrix = (matrix) => {
   let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j].type === 'wall') {
-        string += matrix[i][j];
-        // process.stdout.write(matrix[i][j].symbol);
-      } else {
-        string += matrix[i][j] + ' ';
-        // process.stdout.write(matrix[i][j].symbol + ' ');
-      }
+      string += matrix[i][j] + ' ';
     }
     string += '\n';
-    // console.log();
-
   }
-  console.log(string);
+  return string;
 };
-//console.log(addWallsToMap(copyMapIntoBiggerMap(createMap())));
-printMatrix(addWallsToMap(copyMapIntoBiggerMap(createMap())));
+const map = addWallsToMap(copyMapIntoBiggerMap(createMap()));
+const writeMapToFile = (map, fileName) => {
+  fs.writeFile(fileName, map, function (err) {
+    if (err) throw err;
+  }
+  );
+};
+placePlayer(map);
+placeEnemies(map);
+writeMapToFile(formatMatrix(map), 'random_map.txt');

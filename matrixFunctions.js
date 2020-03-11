@@ -7,12 +7,13 @@ const generateMatrix = (x, y) => {
   }
   return matrix;
 };
+
 const printMatrix = (matrix) => {
   let string = '';
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       if (matrix[i][j].type === 'wall') {
-        string += matrix[i][j].symbol;
+        string += matrix[i][j].symbol + ' ';
         // process.stdout.write(matrix[i][j].symbol);
       } else {
         string += matrix[i][j].symbol + ' ';
@@ -21,13 +22,12 @@ const printMatrix = (matrix) => {
     }
     string += '\n';
     // console.log();
-
   }
   console.log(string);
 };
 
 const fillMatrixFromFile = (matrix, data, player) => {
-  const modifiedData = data.replace(/,/g, '').replace(/\n/g, '');
+  const modifiedData = data.replace(/,/g, '').replace(/\n/g, '').replace(/ /g, '');
   let dataIndex = 0;
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
@@ -51,7 +51,7 @@ const fillMatrixFromFile = (matrix, data, player) => {
         matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
       }
     }
-  }  
+  }
 };
 
 module.exports = { generateMatrix, printMatrix, fillMatrixFromFile };

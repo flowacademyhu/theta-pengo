@@ -3,7 +3,6 @@ stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
 
-
 // Requirements :
 
 const matrixFunctions = require('./matrixFunctions');
@@ -17,8 +16,7 @@ const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) =
   return data;
 });
 
-
-// Matrix Dimension: (wall included): 
+// Matrix Dimension: (wall included):
 
 const matrix = matrixFunctions.generateMatrix(17, 15);
 
@@ -55,9 +53,7 @@ const keyProcessor = () => {
   );
 };
 
-
-
-// Initialiseing matrix and its functions from matrixFunction.js : 
+// Initialiseing matrix and its functions from matrixFunction.js :
 
 const init = () => {
   console.clear();
@@ -65,13 +61,12 @@ const init = () => {
   matrixFunctions.printMatrix(matrix);
 };
 
-
-// STEP FUNCTION : 
+// STEP FUNCTION :
 let countingVar = 0;
 const countingMax = 3;
 
 const loop = () => {
-  setInterval(() => {
+  const t = setInterval(() => {
     console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
@@ -98,9 +93,17 @@ const loop = () => {
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
+    if (playerMovement.isPlayerDead(matrix)) {
+      console.clear();
+      console.log('REKT');
+
+      clearInterval(t);
+    }
   }, 500);
 };
 
 init();
 loop();
 keyProcessor();
+
+module.exports = { init, loop, keyProcessor };
