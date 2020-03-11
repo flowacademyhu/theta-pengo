@@ -22,7 +22,7 @@ const oppositeDirs = {
   left: 'right',
   right: 'left'
 };
-const stepTo = (matrix, xCoord, yCoord, direction) => {
+const stepTo = (matrix, xCoord, yCoord, direction) => { // OK
   if (direction === 'up') {
     xCoord--;
     matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
@@ -41,30 +41,6 @@ const stepTo = (matrix, xCoord, yCoord, direction) => {
     matrix[xCoord][yCoord - 1] = objects.floor;
   }
 };
-
-/* const stepTo = (callBackFunction, xCoord, yCoord, matrix) => {
-  callBackFunction(xCoord, yCoord, matrix);
-}; // OK
-const up = (xCoord, yCoord, matrix) => {
-  xCoord--;
-  matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
-  matrix[xCoord + 1][yCoord] = objects.floor;
-};
-const down = (xCoord, yCoord, matrix) => {
-  xCoord++;
-  matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
-  matrix[xCoord - 1][yCoord] = objects.floor;
-};
-const left = (xCoord, yCoord, matrix) => {
-  yCoord--;
-  matrix[xCoord][yCoord] = matrix[xCoord][yCoord + 1];
-  matrix[xCoord][yCoord + 1] = objects.floor;
-};
-const right = (xCoord, yCoord, matrix) => {
-  yCoord++;
-  matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
-  matrix[xCoord][yCoord - 1] = objects.floor;
-}; */
 
 const getAvailableDirections = (xCoord, yCoord, matrix) => { // getAvailableDirections (x, y, arr) OK
   const availableDirections = [];
@@ -110,14 +86,14 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
   console.log('currentDirection:', matrix[xCoord][yCoord].direction);
   if (availableDirections.length === 0 && canGoFurther) { // 1 lépést előre --- így átmegy mindenen ki a pályáról
     console.log('ÜRES A tömb, megy tovább');
-    const currentDirection = matrix[xCoord][yCoord].currentDirection;
+    const currentDirection = matrix[xCoord][yCoord].direction;
     stepTo(matrix, xCoord, yCoord, currentDirection); // kell vizsgálni, hogy szabad-e lépni abba az irányba
   } else {
     console.log('random irány');
     console.log(availableDirections);
     const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1?
     const newDirection = availableDirections[randomIndex];
-    // matrix[xCoord][yCoord].direction = newDirection;
+    matrix[xCoord][yCoord].direction = newDirection;
     stepTo(matrix, xCoord, yCoord, newDirection);
     // Random irány
     // const randomIndex = Math.random()*availableDirections.length;
@@ -130,6 +106,29 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 
 /* if (matrix[xCoord][yCoord].direction === ) */ // ha az utolsó direction irányába tud még lépni, akkora arra lépjen még egyet
 
+/* const stepTo = (callBackFunction, xCoord, yCoord, matrix) => {
+  callBackFunction(xCoord, yCoord, matrix);
+}; // OK
+const up = (xCoord, yCoord, matrix) => {
+  xCoord--;
+  matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
+  matrix[xCoord + 1][yCoord] = objects.floor;
+};
+const down = (xCoord, yCoord, matrix) => {
+  xCoord++;
+  matrix[xCoord][yCoord] = matrix[xCoord - 1][yCoord];
+  matrix[xCoord - 1][yCoord] = objects.floor;
+};
+const left = (xCoord, yCoord, matrix) => {
+  yCoord--;
+  matrix[xCoord][yCoord] = matrix[xCoord][yCoord + 1];
+  matrix[xCoord][yCoord + 1] = objects.floor;
+};
+const right = (xCoord, yCoord, matrix) => {
+  yCoord++;
+  matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
+  matrix[xCoord][yCoord - 1] = objects.floor;
+}; */
 // v1
 const moveEnemy2 = (xCoord, yCoord, matrix) => {
   if (matrix[xCoord][yCoord].direction === 'up' && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) {
