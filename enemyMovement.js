@@ -40,6 +40,7 @@ const stepTo = (matrix, xCoord, yCoord, direction) => { // OK
     matrix[xCoord][yCoord] = matrix[xCoord][yCoord - 1];
     matrix[xCoord][yCoord - 1] = objects.floor;
   }
+  return [xCoord, yCoord];
 };
 
 const getAvailableDirections = (xCoord, yCoord, matrix) => { // getAvailableDirections (x, y, arr) OK
@@ -69,7 +70,7 @@ const filterAvailableDirections = (xCoord, yCoord, matrix) => { // el kell kül�
   // for (let i = 0; i < availableDirections.length; i++) {
   if (availableDirections.includes(currentDirection)) {
     availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
-    console.log('spliced', availableDirections);
+    console.log('after splice:', availableDirections);
   }
   // console.log('oppositedir:', oppositeDirs[currentDirection]);
   if (availableDirections.includes(oppositeDirs[currentDirection])) {
@@ -84,23 +85,26 @@ const filterAvailableDirections = (xCoord, yCoord, matrix) => { // el kell kül�
 const moveEnemy = (xCoord, yCoord, matrix) => {
   const { availableDirections, canGoFurther } = filterAvailableDirections(xCoord, yCoord, matrix);
   console.log('currentDirection:', matrix[xCoord][yCoord].direction);
+  let newCoord = [];
   if (availableDirections.length === 0 && canGoFurther) { // 1 lépést előre --- így átmegy mindenen ki a pályáról
     console.log('ÜRES A tömb, megy tovább');
     const currentDirection = matrix[xCoord][yCoord].direction;
-    stepTo(matrix, xCoord, yCoord, currentDirection); // kell vizsgálni, hogy szabad-e lépni abba az irányba
+    newCoord = stepTo(matrix, xCoord, yCoord, currentDirection); // kell vizsgálni, hogy szabad-e lépni abba az irányba
+
   } else {
-    console.log('random irány');
     console.log(availableDirections);
     const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1?
     const newDirection = availableDirections[randomIndex];
+    console.log('random irány:', newDirection);
     matrix[xCoord][yCoord].direction = newDirection;
-    stepTo(matrix, xCoord, yCoord, newDirection);
+    newCoord = stepTo(matrix, xCoord, yCoord, newDirection);
+
     // Random irány
     // const randomIndex = Math.random()*availableDirections.length;
     // const newDirection = arr[randomIndex]
     // stepTo(newDirection)
   }
-  return `${xCoord}${yCoord}`;
+  return `${newCoord[0]}${newCoord[1]}`;
 };
 // console.log(oppositeDirs[currentDirection]);
 

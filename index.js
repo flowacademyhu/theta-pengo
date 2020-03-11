@@ -85,14 +85,14 @@ const loop = () => {
           // console.log(matrix[i][j].isSliding);
 
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
-          enemyMovement.moveEnemy(i, j, matrix);
+          // enemyMovement.moveEnemy(i, j, matrix);
         } /* else {
           console.log('eznemjöttössze');
        } */
       }
     }
     matrixFunctions.printMatrix(matrix);
-  }, 2000);
+  }, 500);
 };
 
 init();
