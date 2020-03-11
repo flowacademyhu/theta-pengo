@@ -107,13 +107,17 @@ const formatMatrix = (matrix) => {
   }
   return string;
 };
-const map = addWallsToMap(copyMapIntoBiggerMap(createMap()));
 const writeMapToFile = (map, fileName) => {
   fs.writeFile(fileName, map, function (err) {
     if (err) throw err;
   }
   );
 };
-placePlayer(map);
-placeEnemies(map);
-writeMapToFile(formatMatrix(map), 'random_map.txt');
+const init = () => {
+  const map = addWallsToMap(copyMapIntoBiggerMap(createMap()));
+  placePlayer(map);
+  placeEnemies(map);
+  writeMapToFile(formatMatrix(map), 'random_map.txt');
+  return map;
+};
+module.exports = { init };

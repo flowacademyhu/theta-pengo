@@ -4,21 +4,28 @@ stdin.resume();
 stdin.setEncoding('utf8');
 
 // Requirements :
-
+const mapGen = require('./mapGen.js');
 const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
 const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
-const dataFromFile = fs.readFileSync('map_prototype.txt', 'utf-8', (err, data) => {
+let fileName = 'map_prototype.txt';
+let xSize = 17;
+let ySize = 15;
+if (process.argv[2] === 'random') {
+  fileName = 'random_map.txt';
+  xSize = 22;
+  ySize = 22;
+}
+const matrix = matrixFunctions.generateMatrix(xSize, ySize);
+const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
 
 // Matrix Dimension: (wall included):
-
-const matrix = matrixFunctions.generateMatrix(17, 15);
 
 // KeyPress Action:
 // turnPlayer megváltoztatva turnplayer(player, direstion ) ===> (direstion) -re
@@ -57,7 +64,8 @@ const keyProcessor = () => {
 
 const init = () => {
   console.clear();
-  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile, objects.player);
+  let map = mapGen.init();
+  matrixFunctions.fillMatrixFromFile(matrix, dataFromFile);
   matrixFunctions.printMatrix(matrix);
 };
 
@@ -74,20 +82,13 @@ const loop = () => {
       for (let j = 0; j < matrix[i].length; j++) {
         if (matrix[i][j].type === 'slidingBlock' && !storingArr.includes(`${i}${j}`)) {
           storingArr.push(iceAlteration.slide(matrix, i, j));
-        } /* else {
-          console.log('buzievagy');
-        } */
+        }
         if (matrix[i][j].type === 'enemy' && !storingEnemyCoord.includes(`${i}${j}`) && !matrix[i][j].isSliding && countingVar === countingMax) {
-          // console.log(storingEnemyCoord);
-          // console.log(matrix[i][j].isSliding);
-
           storingEnemyCoord.push(enemyMovement.moveEnemy(i, j, matrix));
-          // enemyMovement.moveEnemy(i, j, matrix);
-        } /* else {
-          console.log('eznemjöttössze');
-       } */
+        }
       }
     }
+    enemyMovement.countEnemies(matrix);
     matrixFunctions.printMatrix(matrix);
     countingVar++;
     if (countingVar === countingMax + 1) {
@@ -96,7 +97,11 @@ const loop = () => {
     if (playerMovement.isPlayerDead(matrix)) {
       console.clear();
       console.log('REKT');
-
+      clearInterval(t);
+    }
+    if (enemyMovement.enemyCount === 0) {
+      console.clear();
+      console.log('GG');
       clearInterval(t);
     }
   }, 100);
