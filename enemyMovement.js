@@ -1,7 +1,7 @@
-const stdin = process.stdin;
+/* const stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
-stdin.setEncoding('utf8');
+stdin.setEncoding('utf8'); */
 
 // const matrixFunctions = require('./matrixFunctions');
 const objects = require('./objects');
@@ -12,9 +12,9 @@ const objects = require('./objects');
 //   direction = direction;
 // };
 
-const randomMove = () => {
+/* const randomMove = () => {
   return Math.floor(Math.random() * 4);
-};
+}; */
 
 const oppositeDirs = {
   up: 'down',
@@ -63,39 +63,38 @@ const getAvailableDirections = (xCoord, yCoord, matrix) => { // getAvailableDire
 const filterAvailableDirections = (xCoord, yCoord, matrix) => { // el kell különíteni, hogy merre mehet, és mi merre akarjuk, hogy menjen
   const availableDirections = getAvailableDirections(xCoord, yCoord, matrix);
   const currentDirection = matrix[xCoord][yCoord].direction;
-  console.log(xCoord, yCoord);
-  console.log('availableDirections1:', availableDirections);
+  // console.log(xCoord, yCoord);
+  // console.log('availableDirections1:', availableDirections);
   const canGoFurther = availableDirections.includes(currentDirection);
   // const arr = [up down left]; függvény az irányok kiszámítására
   // for (let i = 0; i < availableDirections.length; i++) {
   if (availableDirections.includes(currentDirection)) {
     availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
-    console.log('after splice:', availableDirections);
+    // console.log('after splice:', availableDirections);
   }
   // console.log('oppositedir:', oppositeDirs[currentDirection]);
   if (availableDirections.includes(oppositeDirs[currentDirection])) {
     availableDirections.splice(availableDirections.indexOf(oppositeDirs[currentDirection]), 1);
-    console.log('splice után ez marad: ', availableDirections);
+    // console.log('splice után ez marad: ', availableDirections);
   }
-  console.log('availableDirections2:', availableDirections);
+  // console.log('availableDirections2:', availableDirections);
   // }
   return { availableDirections, canGoFurther };
 };
 
 const moveEnemy = (xCoord, yCoord, matrix) => {
   const { availableDirections, canGoFurther } = filterAvailableDirections(xCoord, yCoord, matrix);
-  console.log('currentDirection:', matrix[xCoord][yCoord].direction);
+  // console.log('currentDirection:', matrix[xCoord][yCoord].direction);
   let newCoord = [];
   if (availableDirections.length === 0 && canGoFurther) { // 1 lépést előre --- így átmegy mindenen ki a pályáról
-    console.log('ÜRES A tömb, megy tovább');
+    // console.log('ÜRES A tömb, megy tovább');
     const currentDirection = matrix[xCoord][yCoord].direction;
     newCoord = stepTo(matrix, xCoord, yCoord, currentDirection); // kell vizsgálni, hogy szabad-e lépni abba az irányba
-
   } else {
-    console.log(availableDirections);
-    const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1?
+    // console.log(availableDirections);
+    const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1? Nem
     const newDirection = availableDirections[randomIndex];
-    console.log('random irány:', newDirection);
+    // console.log('random irány:', newDirection);
     matrix[xCoord][yCoord].direction = newDirection;
     newCoord = stepTo(matrix, xCoord, yCoord, newDirection);
 
@@ -134,7 +133,7 @@ const right = (xCoord, yCoord, matrix) => {
   matrix[xCoord][yCoord - 1] = objects.floor;
 }; */
 // v1
-const moveEnemy2 = (xCoord, yCoord, matrix) => {
+/* const moveEnemy2 = (xCoord, yCoord, matrix) => {
   if (matrix[xCoord][yCoord].direction === 'up' && (matrix[xCoord - 1][yCoord].type === 'floor' || matrix[xCoord - 1][yCoord].type === 'player')) {
     xCoord--;
     matrix[xCoord][yCoord] = matrix[xCoord + 1][yCoord];
@@ -192,7 +191,7 @@ const moveEnemy2 = (xCoord, yCoord, matrix) => {
       isValid = true;
     }
   }
-};
+}; */
 
 // v2
 /*
