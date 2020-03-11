@@ -60,11 +60,11 @@ const keyProcessor = () => {
   );
 };
 
-// Initialiseing matrix and its functions from matrixFunction.js :
+// Initialising matrix and its functions from matrixFunction.js :
 
 const init = () => {
   console.clear();
-  let map = mapGen.init();
+  mapGen.init();
   matrixFunctions.fillMatrixFromFile(matrix, dataFromFile);
   matrixFunctions.printMatrix(matrix);
 };

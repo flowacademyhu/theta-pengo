@@ -36,7 +36,7 @@ const placeEnemies = (map) => {
 const createMap = () => {
   const x = 20;
   const y = 20;
-  let maxTunnels = 80;
+  let maxTunnels = 60;
   const maxLength = 15;
 
   const map = createArray(x, y, 1);
@@ -118,6 +118,5 @@ const init = () => {
   placePlayer(map);
   placeEnemies(map);
   writeMapToFile(formatMatrix(map), 'random_map.txt');
-  return map;
 };
 module.exports = { init };

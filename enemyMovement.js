@@ -88,17 +88,27 @@ const countEnemies = (matrix) => {
   }
   return enemyCount;
 };
-const hatch = (matrix) => {
-  let xCoord = Math.floor(Math.random() * matrix.length);
-  let yCoord = Math.floor(Math.random() * matrix[0].length);
-  if (matrix[xCoord][yCoord].type === 'ice') {
-    console.log('HATCH');
-    matrix[xCoord][yCoord] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
-    eggsRemaining--;
-  } else {
-    hatch(matrix);
+const collectIceBlocks = (matrix) => {
+  const iceBlocks = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (matrix[i][j].type === 'ice') {
+        iceBlocks.push([i, j]);
+      }
+    }
   }
-}
+  return iceBlocks;
+};
+const hatch = (matrix) => {
+  const iceBlocks = collectIceBlocks(matrix);
+  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
+  const randomIceBlock = iceBlocks[randomIndex];
+  const xCoord = randomIceBlock[0];
+  const yCoord = randomIceBlock[1];
+  matrix[xCoord][yCoord] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
+  eggsRemaining--;
+};
+
 const moveEnemy = (xCoord, yCoord, matrix) => {
   const { availableDirections, canGoFurther } = filterAvailableDirections(xCoord, yCoord, matrix);
   // console.log('currentDirection:', matrix[xCoord][yCoord].direction);
