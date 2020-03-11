@@ -89,7 +89,7 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    countingVar += 1;
+    countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
@@ -99,7 +99,7 @@ const loop = () => {
 
       clearInterval(t);
     }
-  }, 500);
+  }, 100);
 };
 
 init();

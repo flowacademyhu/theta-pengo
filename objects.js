@@ -1,5 +1,6 @@
+const chalk = require('chalk');
 const floor = { type: 'floor', code: 0, symbol: ' ' };
-const ice = { type: 'ice', code: 1, symbol: ('◪') };
+const ice = { type: 'ice', code: 1, symbol: chalk.blue('◪') };
 const enemy = { type: 'enemy', code: 'A', symbol: '◯', xCoord: 0, yCoord: 0, isSliding: false, direction: 'up' };
 const player = { type: 'player', code: 'P', symbol: '◈', direction: 'up', xCoord: 0, yCoord: 0 };
 const wall = { type: 'wall', code: 'X', symbol: '▩' };
