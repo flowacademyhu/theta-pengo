@@ -107,3 +107,4 @@ dist
 .vscode-test
 
 package-lock.json
+random_map.txt

@@ -1,13 +1,5 @@
 const objects = require('./objects');
 
-// const turnEnemy = (enemy, direction) => {
-//   direction = direction;
-// };
-
-/* const randomMove = () => {
-  return Math.floor(Math.random() * 4);
-}; */
-
 const oppositeDirs = {
   up: 'down',
   down: 'up',
@@ -58,22 +50,17 @@ const filterAvailableDirections = (x, y, matrix) => { // el kell különíteni, 
   // console.log(x, y);
   // console.log('availableDirections1:', availableDirections);
   const canGoFurther = availableDirections.includes(currentDirection);
-  // const arr = [up down left]; függvény az irányok kiszámítására
-  // for (let i = 0; i < availableDirections.length; i++) {
   if (availableDirections.includes(currentDirection)) {
     availableDirections.splice(availableDirections.indexOf(currentDirection), 1);
-    // console.log('after splice:', availableDirections);
   }
-  // console.log('oppositedir:', oppositeDirs[currentDirection]);
   if (availableDirections.includes(oppositeDirs[currentDirection])) {
     availableDirections.splice(availableDirections.indexOf(oppositeDirs[currentDirection]), 1);
-    // console.log('splice után ez marad: ', availableDirections);
   }
-  // console.log('availableDirections2:', availableDirections);
-  // }
   return { availableDirections, canGoFurther };
 };
+
 let eggsRemaining = 3;
+
 const countEnemies = (matrix) => {
   let enemyCount = 0;
   for (let i = 0; i < matrix.length; i++) {
@@ -91,7 +78,7 @@ const countEnemies = (matrix) => {
 
 const breakIce = (matrix, x, y) => {
   if (isAround(matrix, x, y, 'ice')) {
-    
+
   }
 };
 
@@ -114,6 +101,7 @@ const collectIceBlocksAtTheEdge = (matrix) => {
   }
   return iceBlocks;
 };
+
 const hatch = (matrix) => {
   const iceBlocks = collectIceBlocksAtTheEdge(matrix);
   const randomIndex = Math.floor(Math.random() * iceBlocks.length);
@@ -125,15 +113,19 @@ const hatch = (matrix) => {
 };
 
 const moveEnemy = (x, y, matrix) => {
-  const { availableDirections, canGoFurther } = filterAvailableDirections(x, y, matrix);
-  // console.log('currentDirection:', matrix[x][y].direction);
   let newCoord = [];
+  const eatYouAlive = iWillEatYou(x, y, matrix);
+  if (eatYouAlive) {
+    newCoord = stepTo(matrix, x, y, eatYouAlive);
+    return `${newCoord[0]}${newCoord[1]}`;
+  }
+
+  const { availableDirections, canGoFurther } = filterAvailableDirections(x, y, matrix);
   if (availableDirections.length === 0 && canGoFurther) { // 1 lépést előre --- így átmegy mindenen ki a pályáról
     // console.log('ÜRES A tömb, megy tovább');
     const currentDirection = matrix[x][y].direction;
     newCoord = stepTo(matrix, x, y, currentDirection); // kell vizsgálni, hogy szabad-e lépni abba az irányba
   } else {
-    // console.log(availableDirections);
     const randomIndex = Math.floor(Math.random() * availableDirections.length); // lehet kell neki +1? Nem
     const newDirection = availableDirections[randomIndex];
     // console.log('random irány:', newDirection);
@@ -143,4 +135,47 @@ const moveEnemy = (x, y, matrix) => {
   return `${newCoord[0]}${newCoord[1]}`;
 };
 
-module.exports = { moveEnemy, filterAvailableDirections, countEnemies, isAround };
+// enemy kövesse a playert, ha látja a folyosón
+// max 4 for-ral fgv, ami megkapja a szörny valid irányait és az alapján for up keresés, ha fal -> break, ha játékos, akkor arra megy. getAvailableDirections adja a for-ok alapirányait, és végül irányt adunk vissza
+// ha irány UP, for x/y tengelyen
+
+const iWillEatYou = (xCoord, yCoord, matrix) => {
+  const availableDirs = getAvailableDirections(xCoord, yCoord, matrix);
+  if (availableDirs.includes('up')) {
+    for (let x = xCoord; x >= 0; x--) {
+      if (matrix[x][yCoord].type === 'player') {
+        return 'up';
+      } else if (matrix[x][yCoord].type === 'iceblock') {
+        break;
+      }
+    }
+  }
+  if (availableDirs.includes('down')) {
+    for (let x = xCoord; x < matrix.length; x++) {
+      if (matrix[x][yCoord].type === 'player') {
+        return 'down';
+      } else if (matrix[x][yCoord].type === 'iceblock') {
+        break;
+      }
+    }
+  }
+  if (availableDirs.includes('left')) {
+    for (let y = yCoord; y >= 0; y--) {
+      if (matrix[xCoord][y].type === 'player') {
+        return 'left';
+      } else if (matrix[xCoord][y].type === 'iceblock') {
+        break;
+      }
+    }
+  } if (availableDirs.includes('right')) {
+    for (let y = yCoord; y < matrix[0].length; y++) {
+      if (matrix[xCoord][y].type === 'player') {
+        return 'right';
+      } else if (matrix[xCoord][y].type === 'iceblock') {
+        break;
+      }
+    }
+  }
+};
+
+module.exports = { moveEnemy, filterAvailableDirections, iWillEatYou, countEnemies, isAround };

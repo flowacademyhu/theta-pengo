@@ -1,4 +1,5 @@
 const fs = require('fs');
+const enemyMovement = require('./enemyMovement');
 const createArray = (x, y, num) => {
   const array = [];
   for (let i = 0; i < x; i++) {

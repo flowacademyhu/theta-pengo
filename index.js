@@ -89,9 +89,9 @@ const loop = () => {
         }
       }
     }
-    enemyMovement.countEnemies(matrix);
     matrixFunctions.printMatrix(matrix);
     console.log('lives: ', playerLives);
+    console.log('enemies:', enemyMovement.countEnemies(matrix));
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
@@ -105,12 +105,12 @@ const loop = () => {
       playerMovement.randomPlacePlayer(matrix);
       playerLives--;
     }
-    if (enemyMovement.countEnemies === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0) {
       console.clear();
       console.log('GG');
       clearInterval(t);
     }
-  }, 100);
+  }, 175);
 };
 init();
 loop();
