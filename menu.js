@@ -144,4 +144,15 @@ const downSlide = (base, slide) => {
   }, 75);  
 };
 
-downSlide(base, button.play);
+const menu = () => {
+  upSlide(base, button.play)
+  let key = readlineSync.keyIn('',
+    {hideEchoBack: true, mask: '', limit: '\u001b[A \u001b[B \uE007' });
+  while(true) {
+    if (key === '\u001b[A') {
+      downSlide(base, button.maps)
+    }
+  }
+  
+}
+
