@@ -12,11 +12,11 @@ const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
 const mpg = require('mpg123');
-
 const sfx = new mpg.MpgPlayer();
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
+let playerLives = 3;
 if (process.argv[2] === 'random') {
   fileName = 'random_map.txt';
   xSize = 22;
@@ -91,19 +91,25 @@ const loop = () => {
         }
       }
     }
-    enemyMovement.countEnemies(matrix);
     matrixFunctions.printMatrix(matrix);
+    console.log('lives: ', playerLives);
+    console.log('enemies:', enemyMovement.countEnemies(matrix));
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix)) {
+    if (playerMovement.isPlayerDead(matrix) && playerLives === 0) {
       sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       clearInterval(t);
     }
-    if (enemyMovement.enemyCount === 0) {
+    if (playerMovement.isPlayerDead(matrix)) {
+      playerMovement.randomPlacePlayer(matrix);
+      playerLives--;
+    }
+    if (enemyMovement.countEnemies(matrix) === 0) {
+      sfx.play('./sfx/winner.mp3');
       console.clear();
       console.log('GG');
       clearInterval(t);
