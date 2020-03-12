@@ -71,7 +71,7 @@ const init = () => {
 
 // STEP FUNCTION :
 let countingVar = 0;
-const countingMax = 2;
+const countingMax = 3;
 
 const loop = () => {
   const t = setInterval(() => {
@@ -88,7 +88,7 @@ const loop = () => {
         }
       }
     }
-    enemyMovement.countEnemies(matrix);
+    // enemyMovement.countEnemies(matrix);
     matrixFunctions.printMatrix(matrix);
     countingVar++;
     if (countingVar === countingMax + 1) {
@@ -104,7 +104,7 @@ const loop = () => {
       console.log('GG');
       clearInterval(t);
     }
-  }, 75);
+  }, 175);
 };
 
 init();

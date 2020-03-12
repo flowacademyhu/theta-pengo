@@ -143,7 +143,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     }
   }
   if (availableDirs.includes('down')) {
-    for (let x = xCoord; x < 15; x++) {
+    for (let x = xCoord; x < matrix.length; x++) {
       if (matrix[x][yCoord].type === 'player') {
         return 'down';
       } else if (matrix[x][yCoord].type === 'iceblock') {
@@ -160,7 +160,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
       }
     }
   } if (availableDirs.includes('right')) {
-    for (let y = yCoord; y < 15; y++) {
+    for (let y = yCoord; y < matrix[0].length; y++) {
       if (matrix[xCoord][y].type === 'player') {
         return 'right';
       } else if (matrix[xCoord][y].type === 'iceblock') {
