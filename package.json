@@ -8,6 +8,8 @@
     "chalk": "^3.0.0",
     "eslint-config-standard": "^14.1.0",
     "menu-string": "^1.3.0",
+    "read": "^1.0.7",
+    "readline-sync": "^1.4.10",
     "semistandard": "^14.2.0"
   },
   "devDependencies": {},

@@ -1,5 +1,6 @@
 //A menu: meghívja a headlinePengót amit egyból printel és alá printeli az üres mátrixot, majd a megfelelő keyStrokera belepusholja a megfelelő szót.
 
+const readlineSync = require('readline-sync')
 const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
 const stdin = process.stdin;
@@ -87,72 +88,80 @@ const upSlide = (base, slide) => {
   
 const downSlide = (base, slide) => {
 
-  let counter = 6;
+  let counter = 1;
   
   setInterval(() => {
     
     console.clear();
     
     for ( let i = base.length - 1, k = 0; i >= 0, k < slide.length; i--, k++) {
-      if ( counter === 6) {
+      if ( counter === 1) {
         base[base.length - 1]= slide[0];
       } 
-      if ( base[base.length - 1] === slide[0] && counter === 5) {
-        base[base.length - 1] = slide[1];
+      if ( base[base.length - 1] === slide[0] && counter === 2) {
         base[base.length - 2] = slide[0];
+        base[base.length - 1] = slide[1];
       }
 
-      if ( base[base.length - 1] === slide[1] && counter === 4) {
-        base[base.length - 1] = slide[2];
-        base[base.length - 2] = slide[1];
+      if ( base[base.length - 1] === slide[1] && counter === 3) {
         base[base.length - 3] = slide[0];
+        base[base.length - 2] = slide[1];
+        base[base.length - 1] = slide[2];
       }
 
-      if ( base[base.length - 1] === slide[2] && counter === 3) {
-        base[base.length - 1] = slide[3];
-        base[base.length - 2] = slide[2];
-        base[base.length - 3] = slide[1];
+      if ( base[base.length - 1] === slide[2] && counter === 4) {
         base[base.length - 4] = slide[0];
+        base[base.length - 3] = slide[1];
+        base[base.length - 2] = slide[2];
+        base[base.length - 1] = slide[3];
       }
 
-      if ( base[base.length - 1] === slide[3] && counter === 2) {
-        base[base.length - 1] = slide[4];
-        base[base.length - 2] = slide[3];
-        base[base.length - 3] = slide[2];
-        base[base.length - 4] = slide[1];
+      if ( base[base.length - 1] === slide[3] && counter === 5) {
         base[base.length - 5] = slide[0];
+        base[base.length - 4] = slide[1];
+        base[base.length - 3] = slide[2];
+        base[base.length - 2] = slide[3];
+        base[base.length - 1] = slide[4];
       }
 
-      if ( base[base.length - 1] === slide[4] && counter === 1) {
-        base[base.length - 1] = slide[5];
-        base[base.length - 2] = slide[4];
-        base[base.length - 3] = slide[3];
-        base[base.length - 4] = slide[2];
-        base[base.length - 5] = slide[1];
+      if ( base[base.length - 1] === slide[4] && counter === 6) {
         base[base.length - 6] = slide[0];
+        base[base.length - 5] = slide[1];
+        base[base.length - 4] = slide[2];
+        base[base.length - 3] = slide[3];
+        base[base.length - 2] = slide[4];
+        base[base.length - 1] = slide[5];
       }
     };
-    counter --;
+    counter ++;
     headLine.headlinePrinter();
     for (let i = 0; i < base.length; i++) {
-      for (let j = 0; j < base[i].length; j++) {
+      for (let j = base[i].length; j > 0; j--) {
         if ( base[i][j] !== ' ' ) {
-          console.log(String.raw`${base[i]}`)
+        console.log(String.raw`${base[i]}`)
+          
         }
       }
     }
-  }, 75);  
-};
-
-const menu = () => {
-  upSlide(base, button.play)
-  let key = readlineSync.keyIn('',
-    {hideEchoBack: true, mask: '', limit: '\u001b[A \u001b[B \uE007' });
-  while(true) {
-    if (key === '\u001b[A') {
-      downSlide(base, button.maps)
-    }
-  }
-  
+  }, 100);  
 }
 
+upSlide(base, button.play);
+downSlide(base, button.play);
+// const menu = () => {
+//   upSlide(base, button.play)
+//   while(true) {
+//     let key = readlineSync.keyIn('',
+//     {'ws\u0020'});
+//     if (key === 's') {
+//       downSlide(base, button.maps)
+//     } else if(key === 's'){
+//       break;
+//     }
+//     if(key === 'D') console.log('futyi');
+//     process.stdout.write(key);
+//   }
+  
+// }
+
+// menu();
