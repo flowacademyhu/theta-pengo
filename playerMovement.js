@@ -21,22 +21,22 @@ const isPlayerDead = (matrix) => {
 };
 
 const movePlayer = (player, direction, matrix) => {
-  if (direction === 'up' && player.xCoord > 0 && matrix[player.xCoord - 1][player.yCoord].type === 'floor') {
-    player.xCoord--;
-    matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord + 1][player.yCoord] = objects.floor;
-  } else if (direction === 'down' && player.xCoord < matrix.length - 1 && matrix[player.xCoord + 1][player.yCoord].type === 'floor') {
-    player.xCoord++;
-    matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord - 1][player.yCoord] = objects.floor;
-  } else if (direction === 'left' && player.yCoord > 0 && matrix[player.xCoord][player.yCoord - 1].type === 'floor') {
-    player.yCoord--;
-    matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord + 1] = objects.floor;
-  } else if (direction === 'right' && player.yCoord < matrix[0].length - 1 && matrix[player.xCoord][player.yCoord + 1].type === 'floor') {
-    player.yCoord++;
-    matrix[player.xCoord][player.yCoord] = player;
-    matrix[player.xCoord][player.yCoord - 1] = objects.floor;
+  if (direction === 'up' && player.x > 0 && matrix[player.x - 1][player.y].type === 'floor') {
+    player.x--;
+    matrix[player.x][player.y] = player;
+    matrix[player.x + 1][player.y] = objects.floor;
+  } else if (direction === 'down' && player.x < matrix.length - 1 && matrix[player.x + 1][player.y].type === 'floor') {
+    player.x++;
+    matrix[player.x][player.y] = player;
+    matrix[player.x - 1][player.y] = objects.floor;
+  } else if (direction === 'left' && player.y > 0 && matrix[player.x][player.y - 1].type === 'floor') {
+    player.y--;
+    matrix[player.x][player.y] = player;
+    matrix[player.x][player.y + 1] = objects.floor;
+  } else if (direction === 'right' && player.y < matrix[0].length - 1 && matrix[player.x][player.y + 1].type === 'floor') {
+    player.y++;
+    matrix[player.x][player.y] = player;
+    matrix[player.x][player.y - 1] = objects.floor;
   }
 };
 
