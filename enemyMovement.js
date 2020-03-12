@@ -134,12 +134,13 @@ const moveEnemy = (xCoord, yCoord, matrix) => {
 // ha irány UP, for x/y tengelyen
 
 const iWillEatYou = (xCoord, yCoord, matrix) => {
+
   const availableDirs = getAvailableDirections(xCoord, yCoord, matrix);
   if (availableDirs.includes('up')) {
     for (let x = xCoord; x >= 0; x--) {
       if (matrix[x][yCoord].type === 'player') {
         return 'up';
-      } else if (matrix[x][yCoord].type === 'iceblock') {
+      } else if (matrix[x][yCoord].type === 'ice') {
         break;
       }
     }
@@ -148,7 +149,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let x = xCoord; x < matrix.length; x++) {
       if (matrix[x][yCoord].type === 'player') {
         return 'down';
-      } else if (matrix[x][yCoord].type === 'iceblock') {
+      } else if (matrix[x][yCoord].type === 'ice') {
         break;
       }
     }
@@ -157,7 +158,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let y = yCoord; y >= 0; y--) {
       if (matrix[xCoord][y].type === 'player') {
         return 'left';
-      } else if (matrix[xCoord][y].type === 'iceblock') {
+      } else if (matrix[xCoord][y].type === 'ice') {
         break;
       }
     }
@@ -165,11 +166,11 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let y = yCoord; y < matrix[0].length; y++) {
       if (matrix[xCoord][y].type === 'player') {
         return 'right';
-      } else if (matrix[xCoord][y].type === 'iceblock') {
+      } else if (matrix[xCoord][y].type === 'ice') {
         break;
       }
     }
   }
 };
 
-module.exports = { moveEnemy, filterAvailableDirections, iWillEatYou };
+module.exports = { moveEnemy, filterAvailableDirections, iWillEatYou, countEnemies };

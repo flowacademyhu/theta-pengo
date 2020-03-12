@@ -11,6 +11,9 @@ const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
+const mpg = require('mpg123');
+
+const sfx = new mpg.MpgPlayer();
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
@@ -95,6 +98,7 @@ const loop = () => {
       countingVar = 0;
     }
     if (playerMovement.isPlayerDead(matrix)) {
+      sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       clearInterval(t);
