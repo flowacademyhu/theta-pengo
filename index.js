@@ -29,29 +29,29 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
 // turnPlayer megváltoztatva turnplayer(player, direstion ) ===> (direstion) -re
 
 const keyPress = (key) => {
-  if (key === 'w') {
+  if (key === 'w' || key === 'W') {
     playerMovement.turnPlayer('up');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 's') {
+  if (key === 's'|| key === 'S') {
     playerMovement.turnPlayer('down');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 'a') {
+  if (key === 'a' || key === 'A') {
     playerMovement.turnPlayer('left');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 'd') {
+  if (key === 'd' || key === 'D') {
     playerMovement.turnPlayer('right');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 'k') {
+  if (key === 'k' || key === 'K'|| key === '\u0020') {
     iceAlteration.pushIce(objects.player, matrix);
   }
-  if (key === 'l') {
+  if (key === 'l'|| key === 'L') {
     iceAlteration.destroyIce(objects.player, matrix);
   }
-  if (key === 'q') {
+  if (key === 'q'|| key === 'Q') {
     stdin.removeAllListeners('data');
     clearInterval(t)
     const menuLoader = require('./menu').menu();
@@ -104,14 +104,13 @@ const loop = () => {
       console.clear();
       console.log('REKT');
       clearInterval(t);
-      keyPress('q');
+      keyPress('q' || 'Q');
     }
     if (enemyMovement.enemyCount === 0) {
       console.clear();
       console.log('GG');
       clearInterval(t);
-      // menuLoader = require('./menu').menu();
-
+      keyPress('q' || 'Q');
     }
   }, 75);
 };

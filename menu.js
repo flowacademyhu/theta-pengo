@@ -1,11 +1,11 @@
 //A menu: meghívja a headlinePengót amit egyból printel és alá printeli az üres mátrixot, majd a megfelelő keyStrokera belepusholja a megfelelő szót.
-
+const chalk = require('chalk');
 const readlineSync = require('readline-sync')
 const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
 const game = require('./index');
 
-const menuOptions = [ 'maps', 'play', 'scores', 'exit'];
+const menuOptions = [ 'play', 'maps', 'scores', 'exit'];
 let currentSelected = 0;
 
 const timeout = (time) => {
@@ -100,7 +100,7 @@ const upSlide = async (base, slide) => {
       
     }
   };
-  basePrint(base);
+  chalk.blue(basePrint(base));
   counter -= 1
   // for (let i = 0; i < base.length; i++) {
   //   for (let j = 0; j < base[i].length; j++) {
@@ -170,17 +170,20 @@ const downSlide = async (base, slide) => {
 };
 
 
+
 const menu = async () => {
 
   let index = '';
   
   while(true) {
     
-    let key = readlineSync.keyIn('PRESS W/S/E for UP/DOWN/ENTER', 'wseWSE ');  
+    let key = readlineSync.keyIn(chalk.blue('  PRESS W/S/E for UP/DOWN/ENTER'), 'wseWSE ');  
 
-    if (key === 's' || key === 'S' && currentSelected < 3) {
+    await downSlide(base, button[menuOptions[currentSelected]]);
+
+    if ((key === 's' || key === 'S') && currentSelected < 3) {
       isRunningFlag = true;
-      await downSlide(base, button[menuOptions[currentSelected+1]]);
+      await downSlide(base, button[menuOptions[currentSelected + 1]]);
       currentSelected++;
       counter2 = 1;
     }
@@ -196,9 +199,9 @@ const menu = async () => {
           break;
       }
 
-    else if(key === 'w' || key === 'W' && currentSelected > 0){
+    else if((key === 'w' || key === 'W') && currentSelected > 0 ){
       isRunningFlag = true;
-      await upSlide(base, button[menuOptions[currentSelected-1]]);
+      await upSlide(base, button[menuOptions[currentSelected - 1]]);
       currentSelected--;
       counter = 6;
     }
