@@ -25,10 +25,9 @@ let headline = [
  const headlinePrinter = () => {
    for (let i = 0; i < headline.length; i++) {
       console.log(String.raw`${headline[i]}`)
-     
    }
  };
 
-//  headlinePrinter(headline);
+headlinePrinter();
 
- module.exports = { headline, headlinePrinter };
+ module.exports = { headlinePrinter };

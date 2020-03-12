@@ -26,7 +26,7 @@ const printMatrix = (matrix) => {
   console.log(string);
 };
 
-const fillMatrixFromFile = (matrix, data, player) => {
+const fillMatrixFromFile = (matrix, data) => {
   const modifiedData = data.replace(/,/g, '').replace(/\n/g, '').replace(/ /g, '');
   let dataIndex = 0;
   for (let i = 0; i < matrix.length; i++) {
@@ -43,9 +43,9 @@ const fillMatrixFromFile = (matrix, data, player) => {
         matrix[i][j] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
       }
       if (matrix[i][j] === 'P') {
-        matrix[i][j] = player;
-        player.xCoord = i;
-        player.yCoord = j;
+        matrix[i][j] = objects.player;
+        objects.player.xCoord = i;
+        objects.player.yCoord = j;
       }
       if (matrix[i][j] === 'X') {
         matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };
