@@ -22,11 +22,12 @@ const isPlayerDead = (matrix) => {
   return true;
 };
 
-const lifeCounter = () => {
-  console.log('Lives:');
+const lifeCounterAndScoreCounter = () => {
+  console.log('Lives: \t \t Score:');
   for (let i = 0; i < objects.player.lives; i++) {
-    process.stdout.write(objects.player.symbol + ' ');
+    process.stdout.write(objects.player.symbol);
   }
+  process.stdout.write(' \t \t ' + objects.player.score);
   console.log();
 };
 
@@ -73,4 +74,4 @@ const movePlayer = (player, direction, matrix) => {
   }
 };
 
-module.exports = { turnPlayer, movePlayer, isPlayerDead, randomPlacePlayer, lifeCounter };
+module.exports = { turnPlayer, movePlayer, isPlayerDead, randomPlacePlayer, lifeCounterAndScoreCounter };

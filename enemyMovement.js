@@ -76,6 +76,16 @@ const countEnemies = (matrix) => {
   return enemyCount;
 };
 
+const hatch = (matrix) => {
+  const iceBlocks = collectIceBlocksAtTheEdge(matrix);
+  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
+  const randomice = iceBlocks[randomIndex];
+  const x = randomice[0];
+  const y = randomice[1];
+  matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
+  eggsRemaining--;
+};
+
 const breakIce = (matrix, x, y) => {
   const iceBlocks = [];
   if (matrix[x + 1][y].type === 'ice') {
@@ -115,15 +125,6 @@ const collectIceBlocksAtTheEdge = (matrix) => {
   return iceBlocks;
 };
 
-const hatch = (matrix) => {
-  const iceBlocks = collectIceBlocksAtTheEdge(matrix);
-  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
-  const randomice = iceBlocks[randomIndex];
-  const x = randomice[0];
-  const y = randomice[1];
-  matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
-  eggsRemaining--;
-};
 
 const moveEnemy = (x, y, matrix) => {
   let newCoord = [];

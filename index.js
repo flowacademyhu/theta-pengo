@@ -11,6 +11,7 @@ const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
+const scores = require('./scores');
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
@@ -24,7 +25,7 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
-
+const scoreBoard = 'scores.txt';
 // Matrix Dimension: (wall included):
 
 // KeyPress Action:
@@ -89,7 +90,7 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    playerMovement.lifeCounter();
+    playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
@@ -97,15 +98,20 @@ const loop = () => {
     if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
       console.clear();
       console.log('REKT');
+      objects.player.score -= 50;
+      scores.init(objects.player.score);
       clearInterval(t);
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
+      objects.player.score -= 50;
       objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0) {
       console.clear();
       console.log('GG');
+      scores.init();
+
       clearInterval(t);
     }
   }, 175);
