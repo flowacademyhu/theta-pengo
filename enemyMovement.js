@@ -119,7 +119,7 @@ const hatch = (matrix) => {
   const xCoord = randomIceBlock[0];
   const yCoord = randomIceBlock[1];
   matrix[xCoord][yCoord] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
-  eodggsRemaining--;
+  eggsRemaining--;
 };
 
 const moveEnemy = (xCoord, yCoord, matrix) => {
