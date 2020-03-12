@@ -14,7 +14,6 @@ const fs = require('fs');
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
-let playerLives = 3;
 if (process.argv[2] === 'random') {
   fileName = 'random_map.txt';
   xSize = 22;
@@ -90,20 +89,19 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    console.log('lives: ', playerLives);
-    console.log('enemies:', enemyMovement.countEnemies(matrix));
+    playerMovement.lifeCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix) && playerLives === 0) {
+    if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
       console.clear();
       console.log('REKT');
       clearInterval(t);
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
-      playerLives--;
+      objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0) {
       console.clear();

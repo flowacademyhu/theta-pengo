@@ -91,23 +91,23 @@ const isAround = (matrix, x, y, thing) => {
 };
 
 const collectIceBlocksAtTheEdge = (matrix) => {
-  const iceBlocks = [];
+  const ices = [];
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       if (matrix[i][j].type === 'ice' && isAround(matrix, i, j, 'floor') && !isAround(matrix, i, j, 'player')) {
-        iceBlocks.push([i, j]);
+        ices.push([i, j]);
       }
     }
   }
-  return iceBlocks;
+  return ices;
 };
 
 const hatch = (matrix) => {
-  const iceBlocks = collectIceBlocksAtTheEdge(matrix);
-  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
-  const randomIceBlock = iceBlocks[randomIndex];
-  const x = randomIceBlock[0];
-  const y = randomIceBlock[1];
+  const ices = collectIceBlocksAtTheEdge(matrix);
+  const randomIndex = Math.floor(Math.random() * ices.length);
+  const randomice = ices[randomIndex];
+  const x = randomice[0];
+  const y = randomice[1];
   matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
   eggsRemaining--;
 };
@@ -145,7 +145,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let x = xCoord; x >= 0; x--) {
       if (matrix[x][yCoord].type === 'player') {
         return 'up';
-      } else if (matrix[x][yCoord].type === 'iceblock') {
+      } else if (matrix[x][yCoord].type === 'ice') {
         break;
       }
     }
@@ -154,7 +154,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let x = xCoord; x < matrix.length; x++) {
       if (matrix[x][yCoord].type === 'player') {
         return 'down';
-      } else if (matrix[x][yCoord].type === 'iceblock') {
+      } else if (matrix[x][yCoord].type === 'ice') {
         break;
       }
     }
@@ -163,7 +163,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let y = yCoord; y >= 0; y--) {
       if (matrix[xCoord][y].type === 'player') {
         return 'left';
-      } else if (matrix[xCoord][y].type === 'iceblock') {
+      } else if (matrix[xCoord][y].type === 'ice') {
         break;
       }
     }
@@ -171,7 +171,7 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
     for (let y = yCoord; y < matrix[0].length; y++) {
       if (matrix[xCoord][y].type === 'player') {
         return 'right';
-      } else if (matrix[xCoord][y].type === 'iceblock') {
+      } else if (matrix[xCoord][y].type === 'ice') {
         break;
       }
     }

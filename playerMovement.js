@@ -2,7 +2,6 @@ const stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf8');
-const chalk = require('chalk');
 
 const objects = require('./objects');
 const enemyMovement = require('./enemyMovement');
@@ -20,6 +19,13 @@ const isPlayerDead = (matrix) => {
   }
   return true;
 };
+const lifeCounter = () => {
+  for (let i = 0; i < objects.player.lives; i++) {
+    process.stdout.write(objects.player.symbol + ' ');
+  }
+  console.log();
+};
+
 const findSafePlaceForPlayer = (matrix) => {
   const floors = [];
   for (let i = 0; i < matrix.length; i++) {
@@ -61,4 +67,4 @@ const movePlayer = (player, direction, matrix) => {
   }
 };
 
-module.exports = { turnPlayer, movePlayer, player, isPlayerDead, randomPlacePlayer };
+module.exports = { turnPlayer, movePlayer, isPlayerDead, randomPlacePlayer, lifeCounter };
