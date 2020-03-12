@@ -6,6 +6,7 @@ const oppositeDirs = {
   left: 'right',
   right: 'left'
 };
+
 const stepTo = (matrix, xCoord, yCoord, direction) => { // OK
   if (direction === 'up') {
     xCoord--;
@@ -96,6 +97,7 @@ const collectIceBlocksAtTheEdge = (matrix) => {
   }
   return iceBlocks;
 };
+
 const hatch = (matrix) => {
   const iceBlocks = collectIceBlocksAtTheEdge(matrix);
   const randomIndex = Math.floor(Math.random() * iceBlocks.length);

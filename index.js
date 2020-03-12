@@ -88,7 +88,7 @@ const loop = () => {
         }
       }
     }
-    // enemyMovement.countEnemies(matrix);
+    enemyMovement.countEnemies(matrix);
     matrixFunctions.printMatrix(matrix);
     countingVar++;
     if (countingVar === countingMax + 1) {
