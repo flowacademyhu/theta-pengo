@@ -97,23 +97,27 @@ const pushEnemyRight = (matrix, x, y) => {
 
 const isBetweenBlocksUp = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x - 1][y].type === 'wall') || matrix[x - 1][y].type === 'ice')) {
+    console.log('nyekk');
     return true;
   } else return false;
 };
 
 const isBetweenBlocksDown = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x + 1][y].type === 'wall') || matrix[x + 1][y].type === 'ice')) {
+    console.log('nyekk');
     return true;
   } else return false;
 };
 
 const isBetweenBlocksLeft = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y - 1].type === 'wall') || matrix[x][y - 1].type === 'ice')) {
+    console.log('nyekk');
     return true;
   } else return false;
 };
 const isBetweenBlocksRight = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y + 1].type === 'wall') || matrix[x][y + 1].type === 'ice')) {
+    console.log('nyekk');
     return true;
   } else return false;
 };

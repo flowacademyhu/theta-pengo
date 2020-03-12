@@ -57,6 +57,55 @@ const filterAvailableDirections = (xCoord, yCoord, matrix) => { // el kell kÃ¼lÃ
   return { availableDirections, canGoFurther };
 };
 
+let eggsRemaining = 3;
+const countEnemies = (matrix) => {
+  let enemyCount = 0;
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (matrix[i][j].type === 'enemy') {
+        enemyCount++;
+      }
+    }
+  }
+  if (enemyCount < 3 && eggsRemaining > 0) {
+    hatch(matrix);
+  }
+  return enemyCount;
+};
+
+const breakIce = (matrix, x, y) => {
+
+};
+
+const isAround = (matrix, xCoord, yCoord, thing) => {
+  if (matrix[xCoord + 1][yCoord].type === thing || matrix[xCoord - 1][yCoord].type === thing ||
+    matrix[xCoord][yCoord + 1].type === thing || matrix[xCoord][yCoord - 1].type === thing) {
+    return true;
+  }
+  return false;
+};
+
+const collectIceBlocksAtTheEdge = (matrix) => {
+  const iceBlocks = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (matrix[i][j].type === 'ice' && isAround(matrix, i, j, 'floor') && !isAround(matrix, i, j, 'player')) {
+        iceBlocks.push([i, j]);
+      }
+    }
+  }
+  return iceBlocks;
+};
+const hatch = (matrix) => {
+  const iceBlocks = collectIceBlocksAtTheEdge(matrix);
+  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
+  const randomIceBlock = iceBlocks[randomIndex];
+  const xCoord = randomIceBlock[0];
+  const yCoord = randomIceBlock[1];
+  matrix[xCoord][yCoord] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
+  eggsRemaining--;
+};
+
 const moveEnemy = (xCoord, yCoord, matrix) => {
   let newCoord = [];
   const eatYouAlive = iWillEatYou(xCoord, yCoord, matrix);
