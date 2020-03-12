@@ -177,7 +177,7 @@ const menu = async () => {
   
   while(true) {
     
-    let key = readlineSync.keyIn(chalk.blue('  PRESS W/S/E for UP/DOWN/ENTER'), 'wseWSE ');  
+    let key = readlineSync.keyIn(chalk.blue('  PRESS W/S/SPACE for UP/DOWN/ENTER'), 'wsWS ');  
 
     await downSlide(base, button[menuOptions[currentSelected]]);
 
@@ -187,13 +187,13 @@ const menu = async () => {
       currentSelected++;
       counter2 = 1;
     }
-      if(menuOptions[currentSelected] === 'exit' && (key === 'e' || key === 'E')) {
+      if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
         
         process.exit(0);
 
       };
 
-      if (menuOptions[currentSelected] === 'play' &&  (key === 'e'|| key === 'E')) {
+      if (menuOptions[currentSelected] === 'play' &&  (key === '\u0020')) {
 
           game.main();
           break;
@@ -205,13 +205,13 @@ const menu = async () => {
       currentSelected--;
       counter = 6;
     }
-      if(menuOptions[currentSelected] === 'exit' && (key === 'e'|| key === 'E')) {
+      if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
 
         process.exit(0);
 
       };
 
-      if (menuOptions[currentSelected] === 'play' && (key === 'e'|| key === 'E')) {
+      if (menuOptions[currentSelected] === 'play' && (key === '\u0020')) {
 
          game.main();
           break;
