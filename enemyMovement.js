@@ -77,9 +77,22 @@ const countEnemies = (matrix) => {
 };
 
 const breakIce = (matrix, x, y) => {
-  if (isAround(matrix, x, y, 'ice')) {
-
+  const iceBlocks = [];
+  if (matrix[x + 1][y].type === 'ice') {
+    iceBlocks.push([x + 1, y]);
   }
+  if (matrix[x - 1][y].type === 'ice') {
+    iceBlocks.push([x - 1, y]);
+  }
+  if (matrix[x][y + 1].type === 'ice') {
+    iceBlocks.push([x, y + 1]);
+  }
+  if (matrix[x][y - 1].type === 'ice') {
+    iceBlocks.push([x, y - 1]);
+  }
+  const chance = Math.floor(Math.random() * iceBlocks.length);
+  const iceToBreakCoords = iceBlocks[chance];
+  matrix[iceToBreakCoords[0]][iceToBreakCoords[1]] = objects.floor;
 };
 
 const isAround = (matrix, x, y, thing) => {
@@ -91,21 +104,21 @@ const isAround = (matrix, x, y, thing) => {
 };
 
 const collectIceBlocksAtTheEdge = (matrix) => {
-  const ices = [];
+  const iceBlocks = [];
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       if (matrix[i][j].type === 'ice' && isAround(matrix, i, j, 'floor') && !isAround(matrix, i, j, 'player')) {
-        ices.push([i, j]);
+        iceBlocks.push([i, j]);
       }
     }
   }
-  return ices;
+  return iceBlocks;
 };
 
 const hatch = (matrix) => {
-  const ices = collectIceBlocksAtTheEdge(matrix);
-  const randomIndex = Math.floor(Math.random() * ices.length);
-  const randomice = ices[randomIndex];
+  const iceBlocks = collectIceBlocksAtTheEdge(matrix);
+  const randomIndex = Math.floor(Math.random() * iceBlocks.length);
+  const randomice = iceBlocks[randomIndex];
   const x = randomice[0];
   const y = randomice[1];
   matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
@@ -118,6 +131,14 @@ const moveEnemy = (x, y, matrix) => {
   if (eatYouAlive) {
     newCoord = stepTo(matrix, x, y, eatYouAlive);
     return `${newCoord[0]}${newCoord[1]}`;
+  }
+  if (isAround(matrix, x, y, 'ice')) {
+    const chance = Math.floor(Math.random() * 10);
+    if (chance < 3) {
+      breakIce(matrix, x, y);
+      newCoord = [x, y];
+      return `${newCoord[0]}${newCoord[1]}`;
+    }
   }
 
   const { availableDirections, canGoFurther } = filterAvailableDirections(x, y, matrix);

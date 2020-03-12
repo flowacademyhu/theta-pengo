@@ -6,9 +6,11 @@ stdin.setEncoding('utf8');
 const objects = require('./objects');
 const enemyMovement = require('./enemyMovement');
 const player = objects.player;
+
 const turnPlayer = (direction) => { // ( player, direction helyett csak direstion mivel ugyis csak azt adod meg a végén elvileg akkor az objectet is érteni fogja így)
   player.direction = direction;
 };
+
 const isPlayerDead = (matrix) => {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
@@ -19,7 +21,9 @@ const isPlayerDead = (matrix) => {
   }
   return true;
 };
+
 const lifeCounter = () => {
+  console.log('Lives:');
   for (let i = 0; i < objects.player.lives; i++) {
     process.stdout.write(objects.player.symbol + ' ');
   }
@@ -37,6 +41,7 @@ const findSafePlaceForPlayer = (matrix) => {
   }
   return floors;
 };
+
 const randomPlacePlayer = (matrix) => {
   const floors = findSafePlaceForPlayer(matrix);
   const randomIndex = Math.floor(Math.random() * floors.length);
@@ -47,6 +52,7 @@ const randomPlacePlayer = (matrix) => {
   objects.player.x = x;
   objects.player.y = y;
 };
+
 const movePlayer = (player, direction, matrix) => {
   if (direction === 'up' && player.x > 0 && matrix[player.x - 1][player.y].type === 'floor') {
     player.x--;
