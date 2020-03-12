@@ -112,7 +112,6 @@ const loop = () => {
     }
   }, 100);
 };
-
 init();
 loop();
 keyProcessor();
