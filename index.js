@@ -109,7 +109,9 @@ const loop = () => {
       playerLives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0) {
-      sfx.play('./sfx/winner.mp3');
+      setTimeout(() => {
+        sfx.play('./sfx/winner.mp3');
+      }, 5000);
       console.clear();
       console.log('GG');
       clearInterval(t);
