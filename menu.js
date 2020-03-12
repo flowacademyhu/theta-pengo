@@ -5,7 +5,7 @@ const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
 const game = require('./index');
 
-const menuOptions = ['play', 'maps', 'exit'];
+const menuOptions = [ 'maps', 'play', 'scores', 'exit'];
 let currentSelected = 0;
 
 const timeout = (time) => {
@@ -174,43 +174,41 @@ const menu = async () => {
 
   let index = '';
   
-  upSlide(base, button.play)
-  
   while(true) {
     
-    let key = readlineSync.keyIn();  
+    let key = readlineSync.keyIn('PRESS W/S/E for UP/DOWN/ENTER', 'wseWSE ');  
 
-    if (key === 's' && currentSelected < 2) {
+    if (key === 's' || key === 'S' && currentSelected < 3) {
       isRunningFlag = true;
       await downSlide(base, button[menuOptions[currentSelected+1]]);
       currentSelected++;
       counter2 = 1;
     }
-      if(menuOptions[currentSelected] === 'exit' && key === 'e') {
+      if(menuOptions[currentSelected] === 'exit' && (key === 'e' || key === 'E')) {
         
         process.exit(0);
 
       };
 
-      if (menuOptions[currentSelected] === 'play' &&  key === 'e') {
+      if (menuOptions[currentSelected] === 'play' &&  (key === 'e'|| key === 'E')) {
 
           game.main();
           break;
       }
 
-    else if(key === 'w' && currentSelected > 0){
+    else if(key === 'w' || key === 'W' && currentSelected > 0){
       isRunningFlag = true;
       await upSlide(base, button[menuOptions[currentSelected-1]]);
       currentSelected--;
       counter = 6;
     }
-      if(menuOptions[currentSelected] === 'exit' && key === 'e') {
+      if(menuOptions[currentSelected] === 'exit' && (key === 'e'|| key === 'E')) {
 
         process.exit(0);
 
       };
 
-      if (menuOptions[currentSelected] === 'play' && key === 'e') {
+      if (menuOptions[currentSelected] === 'play' && (key === 'e'|| key === 'E')) {
 
          game.main();
           break;

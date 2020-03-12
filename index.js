@@ -104,11 +104,14 @@ const loop = () => {
       console.clear();
       console.log('REKT');
       clearInterval(t);
+      keyPress('q');
     }
     if (enemyMovement.enemyCount === 0) {
       console.clear();
       console.log('GG');
       clearInterval(t);
+      // menuLoader = require('./menu').menu();
+
     }
   }, 75);
 };
