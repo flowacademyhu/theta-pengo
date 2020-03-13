@@ -1,6 +1,5 @@
 const fs = require('fs');
 const readline = require('readline');
-const table = require('table');
 
 /*const readLineInterface = readline.createInterface({
   input: fs.createReadStream('scores.txt'),

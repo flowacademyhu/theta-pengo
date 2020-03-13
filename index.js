@@ -7,8 +7,8 @@ const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
-const scores = require('./scores');
 const mpg = require('mpg123');
+const scores = require('./scores');
 const sfx = new mpg.MpgPlayer();
 
 let stdin;
