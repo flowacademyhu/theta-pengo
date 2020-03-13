@@ -199,4 +199,4 @@ const iWillEatYou = (xCoord, yCoord, matrix) => {
   }
 };
 
-module.exports = { moveEnemy, filterAvailableDirections, iWillEatYou, countEnemies, isAround };
+module.exports = { moveEnemy, filterAvailableDirections, iWillEatYou, countEnemies, isAround, eggsRemaining };

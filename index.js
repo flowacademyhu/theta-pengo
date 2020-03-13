@@ -98,20 +98,21 @@ const loop = () => {
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
-      scores.init(objects.player.score);
       clearInterval(t);
+      scores.init(objects.player.score);
+
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
       objects.player.score -= 50;
       objects.player.lives--;
     }
-    if (enemyMovement.countEnemies(matrix) === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
       console.clear();
       console.log('GG');
-      scores.init();
-
       clearInterval(t);
+      scores.init(objects.player.score);
+
     }
   }, 175);
 };
