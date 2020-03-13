@@ -13,7 +13,7 @@ const scores = require('./scores');
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
-let isRandom;
+let isRandom = false;
 const matrix = matrixFunctions.generateMatrix(xSize, ySize);
 const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
@@ -121,7 +121,10 @@ const loop = () => {
   }, 175);
 };
 
-const main = () => {
+const main = (isRandom) => {
+  objects.enemy.eggsRemaining = 3,
+  objects.player.score = 0;
+  objects.player.lives = 3;
   if (isRandom) {
     fileName = 'random_map.txt';
     xSize = 22;
