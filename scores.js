@@ -53,11 +53,13 @@ const printScores = (data) => {
   }
 };
 
-const init = (score) => {
+const writeScore = (score) => {
   const name = askForName(score);
   writeScoreToFile(score, name);
+
+};
+const readScore = () => {
   console.log('Pontszámok: ');
   printScores(modifyDataFromFile(readFromFile()));
-};
-
-module.exports = { init };
+}
+module.exports = { writeScore, readScore };

@@ -7,8 +7,9 @@
     "axel": "0.0.3",
     "chalk": "^3.0.0",
     "menu-string": "^1.3.0",
+    "read": "^1.0.7",
     "readline-sync": "^1.4.10",
-    "table": "^5.4.6"
+    "semistandard": "^14.2.0"
   },
   "devDependencies": {},
   "scripts": {

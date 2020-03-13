@@ -1,7 +1,3 @@
-const stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf8');
 
 // Requirements :
 const mapGen = require('./mapGen.js');
@@ -10,12 +6,15 @@ const objects = require('./objects');
 const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
+let stdin;
+let t;
 const fs = require('fs');
 const scores = require('./scores');
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
-if (process.argv[2] === 'random') {
+let isRandom;
+if (isRandom) {
   fileName = 'random_map.txt';
   xSize = 22;
   ySize = 22;
@@ -29,35 +28,43 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
 
 // KeyPress Action:
 // turnPlayer megváltoztatva turnplayer(player, direstion ) ===> (direstion) -re
-const keyProcessor = () => {
-  stdin.on('data', (key) => {
-    if (key === 'w') {
-      playerMovement.turnPlayer('up');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 's') {
-      playerMovement.turnPlayer('down');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'a') {
-      playerMovement.turnPlayer('left');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'd') {
-      playerMovement.turnPlayer('right');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'k') {
-      iceAlteration.pushIce(objects.player, matrix);
-    }
-    if (key === 'l') {
-      iceAlteration.destroyIce(objects.player, matrix);
-    }
-    if (key === 'q') {
-      process.exit(0);
-    }
+
+const keyPress = (key) => {
+  if (key === 'w' || key === 'W') {
+    playerMovement.turnPlayer('up');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  );
+  if (key === 's'|| key === 'S') {
+    playerMovement.turnPlayer('down');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'a' || key === 'A') {
+    playerMovement.turnPlayer('left');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'd' || key === 'D') {
+    playerMovement.turnPlayer('right');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'k' || key === 'K'|| key === '\u0020') {
+    iceAlteration.pushIce(objects.player, matrix);
+  }
+  if (key === 'l'|| key === 'L') {
+    iceAlteration.destroyIce(objects.player, matrix);
+  }
+  if (key === 'q'|| key === 'Q') {
+    stdin.removeAllListeners('data');
+    clearInterval(t)
+    const menuLoader = require('./menu').menu();
+  }
+}
+
+const keyProcessor = () => {
+  stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.resume();
+  stdin.setEncoding('utf8');
+  stdin.on('data', keyPress);
 };
 
 // Initialising matrix and its functions from matrixFunction.js :
@@ -74,7 +81,7 @@ let countingVar = 0;
 const countingMax = 3;
 
 const loop = () => {
-  const t = setInterval(() => {
+   t = setInterval(() => {
     console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
@@ -99,7 +106,8 @@ const loop = () => {
       console.log('REKT');
       objects.player.score -= 50;
       clearInterval(t);
-      scores.init(objects.player.score);
+      scores.writeScore(objects.player.score);
+      keyPress('q' || 'Q');
 
     }
     if (playerMovement.isPlayerDead(matrix)) {
@@ -111,14 +119,12 @@ const loop = () => {
       console.clear();
       console.log('GG');
       clearInterval(t);
-      scores.init(objects.player.score);
+      scores.writeScore(objects.player.score);
+      keyPress('q' || 'Q');
 
     }
   }, 175);
 };
-init();
-loop();
-keyProcessor();
 
 module.exports = { init, loop, keyProcessor };
 const main = () => {
