@@ -77,7 +77,7 @@ const init = () => {
 
 // STEP FUNCTION :
 let countingVar = 0;
-const countingMax = 3;
+const countingMax = 2;
 
 const loop = () => {
     t = setInterval(() => {
@@ -95,8 +95,8 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    console.log('lives: ', objects.player.lives);
-    console.log('enemies:', enemyMovement.countEnemies(matrix));
+    // console.log('lives: ', objects.player.lives);
+    // console.log('enemies:', enemyMovement.countEnemies(matrix));
     playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
@@ -116,7 +116,7 @@ const loop = () => {
       playerMovement.randomPlacePlayer(matrix);
       objects.player.lives--;
     }
-    if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0 && objects.enemy.eggsRemaining === 0) {
       /*setTimeout(() => {
         sfx.play('./sfx/winner.mp3');
       }, 5000);*/
@@ -127,7 +127,7 @@ const loop = () => {
       keyPress('q' || 'Q');
 
     }
-  }, 175);
+  }, 100);
 };
 
 const main = (isRandom) => {
