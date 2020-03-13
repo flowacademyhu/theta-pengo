@@ -23,3 +23,6 @@
 395: wd
 -50: s
 400: adw
+45: wasd
+-60: dasd
+150: sqq asdq
