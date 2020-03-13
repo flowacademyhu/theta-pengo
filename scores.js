@@ -25,7 +25,7 @@ const readFromFile = () => {
 const modifyDataFromFile = (dataFromFile) => {
   let howManyLines = 10;
   let data = dataFromFile.split('\n');
-  const splitData = new Array(data.length - 1);
+  let  splitData = new Array(data.length - 1);
   for (let i = 0; i < data.length - 1; i++) {
     splitData[i] = data[i].split(':');
   }
