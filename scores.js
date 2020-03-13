@@ -22,7 +22,7 @@ const readFromFile = () => {
   return dataFromFile;
 };
 
-const modifyDataFromFile = (dataFromFile) => {
+const modifyDataFromFile = (dataFromFile) => { // ha 10 alatt van a scoreboard, elszáll
   let howManyLines = 10;
   let data = dataFromFile.split('\n');
   let splitData = new Array(data.length - 1);
