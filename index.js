@@ -6,11 +6,12 @@ const objects = require('./objects');
 const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
-let stdin;
-let t;
 const fs = require('fs');
 const mpg = require('mpg123');
+const scores = require('./scores');
 const sfx = new mpg.MpgPlayer();
+let stdin;
+let t;
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
@@ -25,7 +26,6 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
-
 // Matrix Dimension: (wall included):
 
 // KeyPress Action:
@@ -36,7 +36,7 @@ const keyPress = (key) => {
     playerMovement.turnPlayer('up');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 's'|| key === 'S') {
+  if (key === 's' || key === 'S') {
     playerMovement.turnPlayer('down');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
@@ -48,13 +48,13 @@ const keyPress = (key) => {
     playerMovement.turnPlayer('right');
     playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  if (key === 'k' || key === 'K'|| key === '\u0020') {
+  if (key === 'k' || key === 'K' || key === '\u0020') {
     iceAlteration.pushIce(objects.player, matrix);
   }
-  if (key === 'l'|| key === 'L') {
+  if (key === 'l' || key === 'L') {
     iceAlteration.destroyIce(objects.player, matrix);
   }
-  if (key === 'q'|| key === 'Q') {
+  if (key === 'q' || key === 'Q') {
     stdin.removeAllListeners('data');
     clearInterval(t)
     const menuLoader = require('./menu').menu();
@@ -83,7 +83,7 @@ let countingVar = 0;
 const countingMax = 3;
 
 const loop = () => {
-   t = setInterval(() => {
+  t = setInterval(() => {
     console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
@@ -98,22 +98,24 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    console.log('lives: ', playerLives);
-    console.log('enemies:', enemyMovement.countEnemies(matrix));
+    playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix) && playerLives === 0) {
+    if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
       sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
+      objects.player.score -= 50;
+      scores.init(objects.player.score);
       clearInterval(t);
       keyPress('q' || 'Q');
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
-      playerLives--;
+      objects.player.score -= 50;
+      objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0) {
       setTimeout(() => {
@@ -121,6 +123,8 @@ const loop = () => {
       }, 5000);
       console.clear();
       console.log('GG');
+      scores.init();
+
       clearInterval(t);
       keyPress('q' || 'Q');
     }
