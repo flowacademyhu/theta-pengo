@@ -102,6 +102,7 @@ const isBetweenBlocksUp = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x - 1][y].type === 'wall') || matrix[x - 1][y].type === 'ice')) {
     sfx.play('./sfx/mmmonstakill.mp3');
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -110,6 +111,7 @@ const isBetweenBlocksDown = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x + 1][y].type === 'wall') || matrix[x + 1][y].type === 'ice')) {
     sfx.play('./sfx/mmmonstakill.mp3');
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -118,6 +120,7 @@ const isBetweenBlocksLeft = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y - 1].type === 'wall') || matrix[x][y - 1].type === 'ice')) {
     sfx.play('./sfx/mmmonstakill.mp3');
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -125,6 +128,7 @@ const isBetweenBlocksRight = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y + 1].type === 'wall') || matrix[x][y + 1].type === 'ice')) {
     sfx.play('./sfx/mmmonstakill.mp3');
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -153,6 +157,7 @@ const destroyIce = (player, matrix) => {
   } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
     matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
   }
+  player.score -= 5;
 };
 
 module.exports = { slide, pushIce, destroyIce, player };

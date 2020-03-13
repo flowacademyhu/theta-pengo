@@ -44,8 +44,8 @@ const fillMatrixFromFile = (matrix, data) => {
       }
       if (matrix[i][j] === 'P') {
         matrix[i][j] = objects.player;
-        objects.player.xCoord = i;
-        objects.player.yCoord = j;
+        objects.player.x = i;
+        objects.player.y = j;
       }
       if (matrix[i][j] === 'X') {
         matrix[i][j] = { type: 'wall', symbol: objects.wall.symbol };

@@ -25,7 +25,6 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
-
 // Matrix Dimension: (wall included):
 
 // KeyPress Action:
@@ -100,29 +99,35 @@ const loop = () => {
     matrixFunctions.printMatrix(matrix);
     console.log('lives: ', playerLives);
     console.log('enemies:', enemyMovement.countEnemies(matrix));
+    playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix) && playerLives === 0) {
-      sfx.play('./sfx/urdead.mp3');
+      if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
+        sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
+      objects.player.score -= 50;
       clearInterval(t);
+      scores.writeScore(objects.player.score);
       keyPress('q' || 'Q');
+
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
       playerLives--;
     }
-    if (enemyMovement.countEnemies(matrix) === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
       setTimeout(() => {
         sfx.play('./sfx/winner.mp3');
       }, 5000);
       console.clear();
       console.log('GG');
       clearInterval(t);
+      scores.writeScore(objects.player.score);
       keyPress('q' || 'Q');
+
     }
   }, 175);
 };
@@ -134,4 +139,4 @@ const main = () => {
 }
 
 
-module.exports = { main };
+module.exports = { main, isRandom };
