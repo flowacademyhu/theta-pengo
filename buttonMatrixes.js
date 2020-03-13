@@ -85,5 +85,16 @@ let fix = [
 
 ]
 
-module.exports = { play, exit, scores, maps, random, fix}
+let gg = [
+['                  '],
+['██████╗  ██████╗  '],
+['██╔════╝ ██╔════╝ '],
+['██║  ███╗██║  ███╗'],
+['██║   ██║██║   ██║'],
+['╚██████╔╝╚██████╔╝'],
+['╚═════╝  ╚═════╝  ']
+                    
+]
+
+module.exports = { play, exit, scores, maps, random, fix, gg, REKT}
 

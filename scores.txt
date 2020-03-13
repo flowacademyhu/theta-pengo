@@ -32,3 +32,9 @@
 50: aasdasd
 -95: wwasd
 -150: 
+-50: a123
+-60: dddasd
+300: asd
+395: dsasd
+370: q[Bwasd[A
+380: aaasd
