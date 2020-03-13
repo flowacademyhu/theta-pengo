@@ -80,7 +80,7 @@ let countingVar = 0;
 const countingMax = 3;
 
 const loop = () => {
-  const t = setInterval(() => {
+    t = setInterval(() => {
     console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
