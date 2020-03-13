@@ -1,6 +1,5 @@
 const fs = require('fs');
 const readline = require('readline');
-const table = require('table');
 
 /*const readLineInterface = readline.createInterface({
   input: fs.createReadStream('scores.txt'),
@@ -22,7 +21,7 @@ const readFromFile = () => {
   return dataFromFile;
 };
 
-const modifyDataFromFile = (dataFromFile) => {
+const modifyDataFromFile = (dataFromFile) => { // ha 10 alatt van a scoreboard, elszáll
   let howManyLines = 10;
   let data = dataFromFile.split('\n');
   let  splitData = new Array(data.length - 1);
@@ -53,11 +52,13 @@ const printScores = (data) => {
   }
 };
 
-const init = (score) => {
+const writeScore = (score) => {
   const name = askForName(score);
   writeScoreToFile(score, name);
+
+};
+const readScore = () => {
   console.log('Pontszámok: ');
   printScores(modifyDataFromFile(readFromFile()));
-};
-
-module.exports = { init };
+}
+module.exports = { writeScore, readScore };

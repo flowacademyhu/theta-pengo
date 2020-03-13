@@ -4,11 +4,13 @@
   "description": "Pengo game",
   "main": "index.js",
   "dependencies": {
-    "axel": "0.0.3",
     "chalk": "^3.0.0",
     "fs": "0.0.1-security",
     "menu-string": "^1.3.0",
+    "mpg123": "^0.2.3",
+    "read": "^1.0.7",
     "readline-sync": "^1.4.10",
+    "semistandard": "^14.2.0",
     "table": "^5.4.6"
   },
   "devDependencies": {},

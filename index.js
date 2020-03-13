@@ -1,7 +1,3 @@
-const stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf8');
 
 // Requirements :
 const mapGen = require('./mapGen.js');
@@ -11,15 +7,17 @@ const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
+const mpg = require('mpg123');
 const scores = require('./scores');
+const sfx = new mpg.MpgPlayer();
+
+let stdin;
+let t;
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
-if (process.argv[2] === 'random') {
-  fileName = 'random_map.txt';
-  xSize = 22;
-  ySize = 22;
-}
+let isRandom;
+
 const matrix = matrixFunctions.generateMatrix(xSize, ySize);
 const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
@@ -29,35 +27,43 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
 
 // KeyPress Action:
 // turnPlayer megváltoztatva turnplayer(player, direstion ) ===> (direstion) -re
-const keyProcessor = () => {
-  stdin.on('data', (key) => {
-    if (key === 'w') {
-      playerMovement.turnPlayer('up');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 's') {
-      playerMovement.turnPlayer('down');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'a') {
-      playerMovement.turnPlayer('left');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'd') {
-      playerMovement.turnPlayer('right');
-      playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
-    }
-    if (key === 'k') {
-      iceAlteration.pushIce(objects.player, matrix);
-    }
-    if (key === 'l') {
-      iceAlteration.destroyIce(objects.player, matrix);
-    }
-    if (key === 'q') {
-      process.exit(0);
-    }
+
+const keyPress = (key) => {
+  if (key === 'w' || key === 'W') {
+    playerMovement.turnPlayer('up');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
   }
-  );
+  if (key === 's'|| key === 'S') {
+    playerMovement.turnPlayer('down');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'a' || key === 'A') {
+    playerMovement.turnPlayer('left');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'd' || key === 'D') {
+    playerMovement.turnPlayer('right');
+    playerMovement.movePlayer(objects.player, objects.player.direction, matrix);
+  }
+  if (key === 'k' || key === 'K'|| key === '\u0020') {
+    iceAlteration.pushIce(objects.player, matrix);
+  }
+  if (key === 'l'|| key === 'L') {
+    iceAlteration.destroyIce(objects.player, matrix);
+  }
+  if (key === 'q'|| key === 'Q') {
+    stdin.removeAllListeners('data');
+    clearInterval(t);
+    const menuLoader = require('./menu').menu();
+  }
+}
+
+const keyProcessor = () => {
+  stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.resume();
+  stdin.setEncoding('utf8');
+  stdin.on('data', keyPress);
 };
 
 // Initialising matrix and its functions from matrixFunction.js :
@@ -89,35 +95,56 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
+    console.log('lives: ', objects.player.lives);
+    console.log('enemies:', enemyMovement.countEnemies(matrix));
     playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
     if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
+      //sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
       clearInterval(t);
-      scores.init(objects.player.score);
+      scores.writeScore(objects.player.score);
+      keyPress('q' || 'Q');
 
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
-      objects.player.score -= 50;
       objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
+      /*setTimeout(() => {
+        sfx.play('./sfx/winner.mp3');
+      }, 5000);*/
       console.clear();
       console.log('GG');
       clearInterval(t);
-      scores.init(objects.player.score);
+      scores.writeScore(objects.player.score);
+      keyPress('q' || 'Q');
 
     }
   }, 175);
 };
-init();
-loop();
-keyProcessor();
 
-module.exports = { init, loop, keyProcessor };
+const main = (isRandom) => {
+  objects.enemy.eggsRemaining = 3;
+  objects.player.score = 0;
+  objects.player.lives = 3;
+  if (isRandom) {
+    fileName = 'random_map.txt';
+    xSize = 22;
+    ySize = 22;
+  }
+  
+  init();
+  loop();
+  keyProcessor();
+
+}
+
+
+module.exports = { main, isRandom, init, loop, keyProcessor };

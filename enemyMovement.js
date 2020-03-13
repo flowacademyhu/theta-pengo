@@ -70,7 +70,7 @@ const countEnemies = (matrix) => {
       }
     }
   }
-  if (enemyCount < 3 && eggsRemaining > 0) {
+  if (enemyCount < 3 && objects.enemy.eggsRemaining > 0) {
     hatch(matrix);
   }
   return enemyCount;
@@ -83,6 +83,7 @@ const hatch = (matrix) => {
   const x = randomice[0];
   const y = randomice[1];
   matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
+  objects.enemy.eggsRemaining--;
   eggsRemaining--;
 };
 
@@ -161,6 +162,7 @@ const moveEnemy = (x, y, matrix) => {
 // ha irány UP, for x/y tengelyen
 
 const iWillEatYou = (xCoord, yCoord, matrix) => {
+
   const availableDirs = getAvailableDirections(xCoord, yCoord, matrix);
   if (availableDirs.includes('up')) {
     for (let x = xCoord; x >= 0; x--) {
