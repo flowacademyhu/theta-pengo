@@ -200,13 +200,11 @@ const menu = async () => {
       // }
     }
     if (menuOptions[currentSelected] === 'random' && (key === '\u0020')) {
-      game.isRandom === true;
-      game.main();
+      game.main(true);
       break;
     }
     if (menuOptions[currentSelected] === 'fix' && (key === '\u0020')) {
-      game.isRandom === false;
-      game.main();
+      game.main(false);
       break;
     }
   }
