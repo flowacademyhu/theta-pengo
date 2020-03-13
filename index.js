@@ -8,7 +8,6 @@ const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
 const fs = require('fs');
 const mpg = require('mpg123');
-<<<<<<< HEAD
 const scores = require('./scores');
 const sfx = new mpg.MpgPlayer();
 
@@ -19,13 +18,6 @@ let xSize = 17;
 let ySize = 15;
 let isRandom;
 
-=======
-const sfx = new mpg.MpgPlayer();
-let fileName = 'map_prototype.txt';
-let xSize = 17;
-let ySize = 15;
-let isRandom = false;
->>>>>>> develop
 const matrix = matrixFunctions.generateMatrix(xSize, ySize);
 const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
@@ -103,20 +95,15 @@ const loop = () => {
       }
     }
     matrixFunctions.printMatrix(matrix);
-    console.log('lives: ', playerLives);
+    console.log('lives: ', objects.player.lives);
     console.log('enemies:', enemyMovement.countEnemies(matrix));
     playerMovement.lifeCounterAndScoreCounter();
     countingVar++;
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-<<<<<<< HEAD
     if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
-      sfx.play('./sfx/urdead.mp3');
-=======
-      if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
-        sfx.play('./sfx/urdead.mp3');
->>>>>>> develop
+      //sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
@@ -127,12 +114,12 @@ const loop = () => {
     }
     if (playerMovement.isPlayerDead(matrix)) {
       playerMovement.randomPlacePlayer(matrix);
-      playerLives--;
+      objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
-      setTimeout(() => {
+      /*setTimeout(() => {
         sfx.play('./sfx/winner.mp3');
-      }, 5000);
+      }, 5000);*/
       console.clear();
       console.log('GG');
       clearInterval(t);
@@ -144,11 +131,7 @@ const loop = () => {
 };
 
 const main = (isRandom) => {
-<<<<<<< HEAD
   objects.enemy.eggsRemaining = 3;
-=======
-  objects.enemy.eggsRemaining = 3,
->>>>>>> develop
   objects.player.score = 0;
   objects.player.lives = 3;
   if (isRandom) {
@@ -156,6 +139,7 @@ const main = (isRandom) => {
     xSize = 22;
     ySize = 22;
   }
+  
   init();
   loop();
   keyProcessor();
@@ -163,9 +147,4 @@ const main = (isRandom) => {
 }
 
 
-<<<<<<< HEAD
 module.exports = { main, isRandom, init, loop, keyProcessor };
-=======
-
-module.exports = { main, isRandom };
->>>>>>> develop
