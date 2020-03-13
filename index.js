@@ -94,7 +94,7 @@ const loop = () => {
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
+    if (playerMovement.isPlayerDead(matrix) && objects.player.lives <= 0) {
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
@@ -107,7 +107,7 @@ const loop = () => {
       objects.player.score -= 50;
       objects.player.lives--;
     }
-    if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0 && objects.enemy.eggsRemaining === 0) {
       console.clear();
       console.log('GG');
       clearInterval(t);
@@ -121,3 +121,14 @@ loop();
 keyProcessor();
 
 module.exports = { init, loop, keyProcessor };
+const main = () => {
+  objects.enemy.eggsRemaining = 3;
+  objects.player.score = 0;
+  objects.player.lives = 3;
+  init();
+  loop();
+  keyProcessor();
+}
+
+
+module.exports = { main, isRandom };

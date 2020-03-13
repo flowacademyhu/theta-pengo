@@ -70,7 +70,7 @@ const countEnemies = (matrix) => {
       }
     }
   }
-  if (enemyCount < 3 && eggsRemaining > 0) {
+  if (enemyCount < 3 && objects.enemy.eggsRemaining > 0) {
     hatch(matrix);
   }
   return enemyCount;
@@ -83,6 +83,7 @@ const hatch = (matrix) => {
   const x = randomice[0];
   const y = randomice[1];
   matrix[x][y] = { type: 'enemy', direction: 'up', symbol: objects.enemy.symbol, isSliding: false };
+  objects.enemy.eggsRemaining--;
   eggsRemaining--;
 };
 
