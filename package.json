@@ -6,6 +6,7 @@
   "dependencies": {
     "axel": "0.0.3",
     "chalk": "^3.0.0",
+    "fs": "0.0.1-security",
     "menu-string": "^1.3.0",
     "readline-sync": "^1.4.10",
     "table": "^5.4.6"
