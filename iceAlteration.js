@@ -33,7 +33,6 @@ const slide = (matrix, x, y) => {
     return `${x}${y - 1}`;
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'enemy') {
     matrix[x][y + 1].isSliding = 'true';
-
     pushEnemyRight(matrix, x, y);
     return `${x}${y + 1}`;
   } else if (matrix[x][y].direction === 'right' && matrix[x][y + 1].type === 'floor') {
@@ -98,6 +97,7 @@ const pushEnemyRight = (matrix, x, y) => {
 const isBetweenBlocksUp = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x - 1][y].type === 'wall') || matrix[x - 1][y].type === 'ice')) {
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -105,6 +105,7 @@ const isBetweenBlocksUp = (matrix, x, y) => {
 const isBetweenBlocksDown = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x + 1][y].type === 'wall') || matrix[x + 1][y].type === 'ice')) {
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
@@ -112,38 +113,41 @@ const isBetweenBlocksDown = (matrix, x, y) => {
 const isBetweenBlocksLeft = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y - 1].type === 'wall') || matrix[x][y - 1].type === 'ice')) {
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
 const isBetweenBlocksRight = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y + 1].type === 'wall') || matrix[x][y + 1].type === 'ice')) {
     console.log('nyekk');
+    objects.player.score += 100;
     return true;
   } else return false;
 };
 
 const pushIce = (player, matrix) => {
-  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
-    matrix[player.xCoord - 1][player.yCoord] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
-  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
-    matrix[player.xCoord + 1][player.yCoord] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
-  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
-    matrix[player.xCoord][player.yCoord - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
-  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
-    matrix[player.xCoord][player.yCoord + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
+  if (player.direction === 'up' && matrix[player.x - 1][player.y].type === 'ice') {
+    matrix[player.x - 1][player.y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
+  } else if (player.direction === 'down' && matrix[player.x + 1][player.y].type === 'ice') {
+    matrix[player.x + 1][player.y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'down' };
+  } else if (player.direction === 'left' && matrix[player.x][player.y - 1].type === 'ice') {
+    matrix[player.x][player.y - 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'left' };
+  } else if (player.direction === 'right' && matrix[player.x][player.y + 1].type === 'ice') {
+    matrix[player.x][player.y + 1] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'right' };
   }
 };
 
 const destroyIce = (player, matrix) => {
-  if (player.direction === 'up' && matrix[player.xCoord - 1][player.yCoord].type === 'ice') {
-    matrix[player.xCoord - 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
-  } else if (player.direction === 'down' && matrix[player.xCoord + 1][player.yCoord].type === 'ice') {
-    matrix[player.xCoord + 1][player.yCoord] = { type: 'floor', symbol: objects.floor.symbol };
-  } else if (player.direction === 'left' && matrix[player.xCoord][player.yCoord - 1].type === 'ice') {
-    matrix[player.xCoord][player.yCoord - 1] = { type: 'floor', symbol: objects.floor.symbol };
-  } else if (player.direction === 'right' && matrix[player.xCoord][player.yCoord + 1].type === 'ice') {
-    matrix[player.xCoord][player.yCoord + 1] = { type: 'floor', symbol: objects.floor.symbol };
+  if (player.direction === 'up' && matrix[player.x - 1][player.y].type === 'ice') {
+    matrix[player.x - 1][player.y] = { type: 'floor', symbol: objects.floor.symbol };
+  } else if (player.direction === 'down' && matrix[player.x + 1][player.y].type === 'ice') {
+    matrix[player.x + 1][player.y] = { type: 'floor', symbol: objects.floor.symbol };
+  } else if (player.direction === 'left' && matrix[player.x][player.y - 1].type === 'ice') {
+    matrix[player.x][player.y - 1] = { type: 'floor', symbol: objects.floor.symbol };
+  } else if (player.direction === 'right' && matrix[player.x][player.y + 1].type === 'ice') {
+    matrix[player.x][player.y + 1] = { type: 'floor', symbol: objects.floor.symbol };
   }
+  player.score -= 5;
 };
 
 module.exports = { slide, pushIce, destroyIce, player };

@@ -1,5 +1,4 @@
 const fs = require('fs');
-const enemyMovement = require('./enemyMovement');
 const createArray = (x, y, num) => {
   const array = [];
   for (let i = 0; i < x; i++) {
@@ -21,16 +20,24 @@ const placePlayer = (map) => { // át lehetne írni az enemyMovement.hatch mint�
   }
 };
 
-const placeEnemies = (map) => {
+const placeEnemies = (map) => { // ezt is
   for (let i = 0; i < 3; i++) {
     const x = Math.floor(Math.random() * map.length);
     const y = Math.floor(Math.random() * map[0].length);
-    if (map[x][y] === 1 || map[x][y] === 0) {
+    if (map[x][y] === 0 && !isPlayerAround(map, x, y)) {
       map[x][y] = 'E';
     } else {
       i--;
     }
   }
+};
+
+const isPlayerAround = (matrix, x, y) => {
+  if (matrix[x + 1][y] === 'P' || matrix[x - 1][y] === 'P' ||
+    matrix[x][y + 1] === 'P' || matrix[x][y - 1] === 'P') {
+    return true;
+  }
+  return false;
 };
 
 const createMap = () => {

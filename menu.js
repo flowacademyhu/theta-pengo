@@ -5,7 +5,7 @@ const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
 const game = require('./index');
 
-const menuOptions = [ 'play', 'maps', 'scores', 'exit'];
+const menuOptions = ['fix','random', 'scores', 'exit'];
 let currentSelected = 0;
 
 const timeout = (time) => {
@@ -13,14 +13,14 @@ const timeout = (time) => {
 }
 
 const stepDown = (base) => {
-  for(let x = base.length - 2; x >= 0; x--) {
-    base[x+1] = base[x];
+  for (let x = base.length - 2; x >= 0; x--) {
+    base[x + 1] = base[x];
   }
 }
 
 const stepUp = (base) => {
-  for (let x = 0; x < base.length-1; x++) {
-    base[x] = base[x+1];
+  for (let x = 0; x < base.length - 1; x++) {
+    base[x] = base[x + 1];
   }
 }
 
@@ -50,58 +50,56 @@ let basePrint = () => {
 let counter = 6;
 const upSlide = async (base, slide) => {
 
-  if(counter > 1) stepDown(base);
+  if (counter > 1) stepDown(base);
   console.clear();
   headLine.headlinePrinter();
-  
-  for ( let i = 0, k = slide.length - 1; i < base.length, k >= 0; i++, k--) {
-    if ( counter === 6) {
+
+  for (let i = 0, k = slide.length - 1; i < base.length, k >= 0; i++, k--) {
+    if (counter === 6) {
       base[0] = slide[slide.length - 1];
-      
-    } 
-    if ( base[0] === slide[slide.length - 1] && counter === 5) {
+
+    }
+    if (base[0] === slide[slide.length - 1] && counter === 5) {
       base[0] = slide[slide.length - 2];
       base[1] = slide[slide.length - 1];
-      
-      
+
+
     }
-    if ( base[0] === slide[slide.length - 2] && counter === 4) {
+    if (base[0] === slide[slide.length - 2] && counter === 4) {
       base[0] = slide[slide.length - 3];
       base[1] = slide[slide.length - 2];
       base[2] = slide[slide.length - 1];
-      
-      
+
+
     }
-    if ( base[0] === slide[slide.length - 3] && counter === 3) {
+    if (base[0] === slide[slide.length - 3] && counter === 3) {
       base[0] = slide[slide.length - 4];
       base[1] = slide[slide.length - 3];
       base[2] = slide[slide.length - 2];
       base[3] = slide[slide.length - 1];
-      
-      
+
+
     }
-    if ( base[0] === slide[slide.length - 4] && counter === 2) {
+    if (base[0] === slide[slide.length - 4] && counter === 2) {
       base[0] = slide[slide.length - 5];
       base[1] = slide[slide.length - 4];
       base[2] = slide[slide.length - 3];
       base[3] = slide[slide.length - 2];
       base[4] = slide[slide.length - 1];
-      
-      
+
+
     }
-    if ( base[0] === slide[slide.length - 5] && counter === 1) {
+    if (base[0] === slide[slide.length - 5] && counter === 1) {
       base[0] = slide[slide.length - 6];
       base[1] = slide[slide.length - 5];
       base[2] = slide[slide.length - 4];
       base[3] = slide[slide.length - 3];
       base[4] = slide[slide.length - 2];
       base[5] = slide[slide.length - 1];
-      
-      
     }
-  };
+  }
   chalk.blue(basePrint(base));
-  counter -= 1
+  counter -= 1;
   // for (let i = 0; i < base.length; i++) {
   //   for (let j = 0; j < base[i].length; j++) {
   //     if ( base[i][j] !== ' ' && counter >= 0 ) {
@@ -109,25 +107,25 @@ const upSlide = async (base, slide) => {
   //     }
   //   }
   // }
-  if(counter >= 0) {
+  if (counter >= 0) {
     await timeout(100);
-    await upSlide(base, slide)
+    await upSlide(base, slide);
   }
 };
-  
+
 let counter2 = 1;
 
 const downSlide = async (base, slide) => {
 
-  if (counter2 < 6) { stepUp(base) }
+  if (counter2 < 6) { stepUp(base)}
   console.clear();
   headLine.headlinePrinter();
-  
-  
-  for ( let i = base.length - 1, k = 0; i >= 0, k < slide.length; i--, k++) {
-    if ( counter2 === 1) {
-      base[base.length - 1]= slide[0];
-    } 
+
+
+  for (let i = base.length - 1, k = 0; i >= 0, k < slide.length; i--, k++) {
+    if (counter2 === 1) {
+      base[base.length - 1] = slide[0];
+    }
     if (counter2 === 2) {
       base[base.length - 2] = slide[0];
       base[base.length - 1] = slide[1];
@@ -159,68 +157,63 @@ const downSlide = async (base, slide) => {
       base[base.length - 1] = slide[5];
     }
   };
-  
+
   basePrint(base);
-  counter2 ++;
+  counter2++;
 
   if (counter2 <= 6) {
     await timeout(100);
     await downSlide(base, slide)
-  } 
+  }
 };
 
 
 
 const menu = async () => {
-
-  let index = '';
-  
-  while(true) {
-    
-    let key = readlineSync.keyIn(chalk.blue('  PRESS W/S/SPACE for UP/DOWN/ENTER'), 'wsWS ');  
+  while (true) {
+    const key = readlineSync.keyIn(chalk.blue('  PRESS W/S/SPACE for UP/DOWN/ENTER'), 'wsWS ');
 
     await downSlide(base, button[menuOptions[currentSelected]]);
 
     if ((key === 's' || key === 'S') && currentSelected < 3) {
-      isRunningFlag = true;
       await downSlide(base, button[menuOptions[currentSelected + 1]]);
       currentSelected++;
       counter2 = 1;
     }
-      if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
-        
-        console.clear();
-        process.exit(0);
-
-      };
-
-      if (menuOptions[currentSelected] === 'play' &&  (key === '\u0020')) {
-
-          game.main();
-          break;
-      }
-
-    else if((key === 'w' || key === 'W') && currentSelected > 0 ){
-      isRunningFlag = true;
+    else if ((key === 'w' || key === 'W') && currentSelected > 0) {
       await upSlide(base, button[menuOptions[currentSelected - 1]]);
       currentSelected--;
       counter = 6;
     }
-      if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
-        console.clear();
-        process.exit(0);
+    if (menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
 
-      };
+      console.clear();
+      process.exit(0);
 
-      if (menuOptions[currentSelected] === 'play' && (key === '\u0020')) {
+    }
+    if (menuOptions[currentSelected] === 'scores' && (key === '\u0020')) {
+      const scores = require('./scores');
+      scores.readScore();
+      // if ( key === '\u0020') {
 
-         game.main();
-          break;
-      }  
+      //   await downSlide(base, button[menuOptions[currentSelected]]);
+      // }
+    }
+    if (menuOptions[currentSelected] === 'random' && (key === '\u0020')) {
+      game.isRandom === true;
+      game.main();
+      break;
+    }
+    if (menuOptions[currentSelected] === 'fix' && (key === '\u0020')) {
+      game.isRandom === false;
+      game.main();
+      break;
+    }
   }
-}
+};
 
-menu().then(() => {});
+
+menu().then(() => { });
 // downSlide(base, button.maps);
 // upSlide(base, button.maps);
 
