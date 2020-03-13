@@ -5,7 +5,7 @@ const headLine = require('./headlinePENGO');
 const button = require('./buttonMatrixes');
 const game = require('./index');
 
-const menuOptions = ['play', 'maps', 'scores', 'exit'];
+const menuOptions = ['fix','random', 'scores', 'exit'];
 let currentSelected = 0;
 
 const timeout = (time) => {
@@ -191,11 +191,6 @@ const menu = async () => {
       process.exit(0);
 
     }
-    if (menuOptions[currentSelected] === 'play' && (key === '\u0020')) {
-
-      game.main();
-      break;
-    }
     if (menuOptions[currentSelected] === 'scores' && (key === '\u0020')) {
       const scores = require('./scores');
       scores.readScore();
@@ -203,6 +198,14 @@ const menu = async () => {
 
       //   await downSlide(base, button[menuOptions[currentSelected]]);
       // }
+    }
+    if (menuOptions[currentSelected] === 'random' && (key === '\u0020')) {
+      game.main(true);
+      break;
+    }
+    if (menuOptions[currentSelected] === 'fix' && (key === '\u0020')) {
+      game.main(false);
+      break;
     }
   }
 };

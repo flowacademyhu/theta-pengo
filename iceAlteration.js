@@ -66,6 +66,7 @@ const pushEnemyUp = (matrix, x, y) => {
     matrix[x - 1][y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
   }
 };
+
 const pushEnemyDown = (matrix, x, y) => {
   if (matrix[x][y].direction === 'down' && matrix[x + 1][y].type === 'enemy') {
     if (!isBetweenBlocksDown(matrix, x + 1, y)) {

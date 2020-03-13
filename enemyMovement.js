@@ -162,6 +162,7 @@ const moveEnemy = (x, y, matrix) => {
 // ha irány UP, for x/y tengelyen
 
 const iWillEatYou = (xCoord, yCoord, matrix) => {
+
   const availableDirs = getAvailableDirections(xCoord, yCoord, matrix);
   if (availableDirs.includes('up')) {
     for (let x = xCoord; x >= 0; x--) {
