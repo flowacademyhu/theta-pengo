@@ -25,7 +25,6 @@ const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
   return data;
 });
-const scoreBoard = 'scores.txt';
 // Matrix Dimension: (wall included):
 
 // KeyPress Action:

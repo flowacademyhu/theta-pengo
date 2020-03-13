@@ -1,4 +1,5 @@
 const fs = require('fs');
+const readline = require('readline');
 
 const writeScoreToFile = (score, name) => {
   fs.appendFileSync('scores.txt', `${score}: ${name}\n`, function (err) {

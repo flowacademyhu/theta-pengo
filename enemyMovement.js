@@ -125,7 +125,6 @@ const collectIceBlocksAtTheEdge = (matrix) => {
   return iceBlocks;
 };
 
-
 const moveEnemy = (x, y, matrix) => {
   let newCoord = [];
   const eatYouAlive = iWillEatYou(x, y, matrix);
