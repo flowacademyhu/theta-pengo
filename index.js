@@ -11,7 +11,6 @@ const mpg = require('mpg123');
 const scores = require('./scores');
 const sfx = new mpg.MpgPlayer();
 
-
 let stdin;
 let t;
 let fileName = 'map_prototype.txt';
@@ -54,7 +53,7 @@ const keyPress = (key) => {
   }
   if (key === 'q'|| key === 'Q') {
     stdin.removeAllListeners('data');
-    clearInterval(t)
+    clearInterval(t);
     const menuLoader = require('./menu').menu();
   }
 }
@@ -101,7 +100,8 @@ const loop = () => {
     if (countingVar === countingMax + 1) {
       countingVar = 0;
     }
-    if (playerMovement.isPlayerDead(matrix) && objects.player.lives <= 0) {
+    if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
+      sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
@@ -115,7 +115,10 @@ const loop = () => {
       objects.player.score -= 50;
       objects.player.lives--;
     }
-    if (enemyMovement.countEnemies(matrix) === 0 && objects.enemy.eggsRemaining === 0) {
+    if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
+      setTimeout(() => {
+        sfx.play('./sfx/winner.mp3');
+      }, 5000);
       console.clear();
       console.log('GG');
       clearInterval(t);

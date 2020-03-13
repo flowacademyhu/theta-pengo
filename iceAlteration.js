@@ -4,7 +4,9 @@ stdin.resume();
 stdin.setEncoding('utf8');
 
 const objects = require('./objects');
+const mpg = require('mpg123');
 const player = objects.player;
+const sfx = new mpg.MpgPlayer();
 
 const slide = (matrix, x, y) => {
   if (matrix[x][y].direction === 'up' && matrix[x - 1][y].type === 'floor') {
@@ -96,6 +98,7 @@ const pushEnemyRight = (matrix, x, y) => {
 
 const isBetweenBlocksUp = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x - 1][y].type === 'wall') || matrix[x - 1][y].type === 'ice')) {
+    sfx.play('./sfx/mmmonstakill.mp3');
     objects.player.score += 100;
     return true;
   } else return false;
@@ -103,6 +106,7 @@ const isBetweenBlocksUp = (matrix, x, y) => {
 
 const isBetweenBlocksDown = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x + 1][y].type === 'wall') || matrix[x + 1][y].type === 'ice')) {
+    sfx.play('./sfx/mmmonstakill.mp3');
     objects.player.score += 100;
     return true;
   } else return false;
@@ -110,18 +114,21 @@ const isBetweenBlocksDown = (matrix, x, y) => {
 
 const isBetweenBlocksLeft = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y - 1].type === 'wall') || matrix[x][y - 1].type === 'ice')) {
+    sfx.play('./sfx/mmmonstakill.mp3');
     objects.player.score += 100;
     return true;
   } else return false;
 };
 const isBetweenBlocksRight = (matrix, x, y) => {
   if (matrix[x][y].type === 'enemy' && ((matrix[x][y + 1].type === 'wall') || matrix[x][y + 1].type === 'ice')) {
+    sfx.play('./sfx/mmmonstakill.mp3');
     objects.player.score += 100;
     return true;
   } else return false;
 };
 
 const pushIce = (player, matrix) => {
+  sfx.play('./sfx/push.mp3');
   if (player.direction === 'up' && matrix[player.x - 1][player.y].type === 'ice') {
     matrix[player.x - 1][player.y] = { type: 'slidingBlock', symbol: objects.slidingBlock.symbol, direction: 'up' };
   } else if (player.direction === 'down' && matrix[player.x + 1][player.y].type === 'ice') {
@@ -134,6 +141,7 @@ const pushIce = (player, matrix) => {
 };
 
 const destroyIce = (player, matrix) => {
+  sfx.play('./sfx/icebreak.mp3');
   if (player.direction === 'up' && matrix[player.x - 1][player.y].type === 'ice') {
     matrix[player.x - 1][player.y] = { type: 'floor', symbol: objects.floor.symbol };
   } else if (player.direction === 'down' && matrix[player.x + 1][player.y].type === 'ice') {
