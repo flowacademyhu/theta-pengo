@@ -6,19 +6,19 @@ const objects = require('./objects');
 const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
+const fs = require('fs');
+const mpg = require('mpg123');
+const scores = require('./scores');
+const sfx = new mpg.MpgPlayer();
+
+
 let stdin;
 let t;
-const fs = require('fs');
-const scores = require('./scores');
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
 let isRandom;
-if (isRandom) {
-  fileName = 'random_map.txt';
-  xSize = 22;
-  ySize = 22;
-}
+
 const matrix = matrixFunctions.generateMatrix(xSize, ySize);
 const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
@@ -81,7 +81,7 @@ let countingVar = 0;
 const countingMax = 3;
 
 const loop = () => {
-   t = setInterval(() => {
+  const t = setInterval(() => {
     console.clear();
     const storingArr = [];
     const storingEnemyCoord = [];
@@ -126,15 +126,19 @@ const loop = () => {
   }, 175);
 };
 
-module.exports = { init, loop, keyProcessor };
-const main = () => {
+const main = (isRandom) => {
   objects.enemy.eggsRemaining = 3;
   objects.player.score = 0;
   objects.player.lives = 3;
+  if (isRandom) {
+    fileName = 'random_map.txt';
+    xSize = 22;
+    ySize = 22;
+  }
   init();
   loop();
   keyProcessor();
 }
 
 
-module.exports = { main, isRandom };
+module.exports = { main, isRandom, init, loop, keyProcessor };
