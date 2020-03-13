@@ -1,6 +1,12 @@
 const fs = require('fs');
 const readline = require('readline');
 
+/*const readLineInterface = readline.createInterface({
+  input: fs.createReadStream('scores.txt'),
+  output: process.stdout,
+  console: false
+});*/
+
 const writeScoreToFile = (score, name) => {
   fs.appendFileSync('scores.txt', `${score}: ${name}\n`, function (err) {
     if (err) throw err;
