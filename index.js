@@ -14,11 +14,6 @@ let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
 let isRandom;
-if (isRandom) {
-  fileName = 'random_map.txt';
-  xSize = 22;
-  ySize = 22;
-}
 const matrix = matrixFunctions.generateMatrix(xSize, ySize);
 const dataFromFile = fs.readFileSync(fileName, 'utf-8', (err, data) => {
   if (err) throw err;
@@ -127,10 +122,17 @@ const loop = () => {
 };
 
 const main = () => {
+  if (isRandom) {
+    fileName = 'random_map.txt';
+    xSize = 22;
+    ySize = 22;
+  }
   init();
   loop();
   keyProcessor();
+
 }
+
 
 
 module.exports = { main, isRandom };
