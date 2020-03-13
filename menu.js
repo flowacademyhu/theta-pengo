@@ -189,6 +189,7 @@ const menu = async () => {
     }
       if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
         
+        console.clear();
         process.exit(0);
 
       };
@@ -206,7 +207,7 @@ const menu = async () => {
       counter = 6;
     }
       if(menuOptions[currentSelected] === 'exit' && (key === '\u0020')) {
-
+        console.clear();
         process.exit(0);
 
       };
