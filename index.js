@@ -6,10 +6,13 @@ const objects = require('./objects');
 const playerMovement = require('./playerMovement');
 const enemyMovement = require('./enemyMovement');
 const iceAlteration = require('./iceAlteration');
-let stdin;
-let t;
 const fs = require('fs');
 const scores = require('./scores');
+const mpg = require('mpg123');
+const sfx = new mpg.MpgPlayer();
+
+let stdin;
+let t;
 let fileName = 'map_prototype.txt';
 let xSize = 17;
 let ySize = 15;
@@ -102,6 +105,7 @@ const loop = () => {
       countingVar = 0;
     }
     if (playerMovement.isPlayerDead(matrix) && objects.player.lives === 0) {
+      sfx.play('./sfx/urdead.mp3');
       console.clear();
       console.log('REKT');
       objects.player.score -= 50;
@@ -116,6 +120,9 @@ const loop = () => {
       objects.player.lives--;
     }
     if (enemyMovement.countEnemies(matrix) === 0 && enemyMovement.eggsRemaining === 0) {
+      setTimeout(() => {
+        sfx.play('./sfx/winner.mp3');
+      }, 5000);
       console.clear();
       console.log('GG');
       clearInterval(t);
