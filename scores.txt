@@ -38,3 +38,7 @@
 395: dsasd
 370: q[Bwasd[A
 380: aaasd
+-50: asd
+45: sasd
+300: aSkatole
+50: sSKatole
